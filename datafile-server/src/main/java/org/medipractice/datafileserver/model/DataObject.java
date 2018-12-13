@@ -1,26 +1,34 @@
 package org.medipractice.datafileserver.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
-@Entity
 @Table
-public class DataObject extends Auditable<String> {
-
+@Entity
+@NoArgsConstructor
+public class DataObject {
     @Id
-    private UUID id = UUID.randomUUID();
+    @JsonIgnore
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
-    @Column(nullable = false, unique=true)
-    private String dataType;
+    private String type;
 
-    @OneToMany(fetch= FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<DataObject> datas = new HashSet<>();
+    @JsonIgnore
+    private UUID dataFileId;
+
+    @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "dataObjectId")
+    private List<DataValue> values = new ArrayList<>();
+
+    public DataObject(String dataType, List<DataValue> dataValues) {
+        this.type = dataType;
+        this.values = dataValues;
+    }
 }

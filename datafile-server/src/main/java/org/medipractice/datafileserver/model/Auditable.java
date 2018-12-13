@@ -7,13 +7,14 @@ import org.springframework.data.annotation.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
-@Getter(AccessLevel.PROTECTED)
-@Setter(AccessLevel.PROTECTED)
+@Getter
+@Setter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class Auditable<U> {
+public abstract class Auditable<U> implements Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column( nullable = false, updatable = false)
@@ -30,5 +31,13 @@ public abstract class Auditable<U> {
 
     @LastModifiedBy
     private U updatedBy;
+
+    private boolean archived;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date archivedAt;
+
+    private U archivedBy;
+
 
 }

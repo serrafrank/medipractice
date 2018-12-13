@@ -2,32 +2,30 @@ package org.medipractice.datafileserver.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.io.Serializable;
+import java.util.*;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table
-public class DataFile extends Auditable<String> {
+@NoArgsConstructor
+public class DataFile extends Auditable<String>  {
+
     @Id
-    private UUID id = UUID.randomUUID();
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<DataObject> datas = new HashSet<>();
+    @JoinColumn(name = "dataFileId")
+    private List<DataObject> datas = new ArrayList<>();
 
-    private boolean archived;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date archivedAt;
-
-    private String archivedBy;
-    
 
 }
