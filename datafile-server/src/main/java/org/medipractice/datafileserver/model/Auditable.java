@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -16,26 +17,23 @@ import java.util.Date;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class Auditable<U> implements Serializable {
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column( nullable = false, updatable = false)
     @CreatedDate
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @CreatedBy
     @Column( nullable = false, updatable = false)
     private U createdBy;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     @LastModifiedBy
     private U updatedBy;
 
     private boolean archived;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date archivedAt;
+    private LocalDateTime archivedAt;
 
     private U archivedBy;
 

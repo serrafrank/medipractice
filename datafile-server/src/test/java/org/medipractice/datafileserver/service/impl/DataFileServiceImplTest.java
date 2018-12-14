@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -44,9 +45,11 @@ public class DataFileServiceImplTest {
 
     @Test
     public void update() {
-        dataFile.getDatas().get(0).getValues().get(0).setDataValue("Ducobut");
+        UUID id = dataFile.getDataType("lastname").getValues().get(0).getId();
+        dataFile.getDataType("lastname").getValue(id).setValue("Ducobut");
+
         dataFileService.update(dataFile);
-        Assert.assertTrue(dataFile.getDatas().get(0).getValues().get(0).isArchived()  );
+        Assert.assertTrue(dataFile.getDataType("lastname").getValue(id).isArchived()  );
 
 
     }

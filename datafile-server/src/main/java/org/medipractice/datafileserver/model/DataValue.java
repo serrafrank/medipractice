@@ -1,16 +1,17 @@
 package org.medipractice.datafileserver.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
-@EqualsAndHashCode(callSuper = false)
+
 @Data
+@EqualsAndHashCode(of = {"id", "value", "date"}, callSuper = false)
+@ToString(of = {"id", "value", "date"})
 @NoArgsConstructor
 @Entity
 @Table
@@ -26,19 +27,24 @@ public class DataValue extends Auditable<String> {
     private UUID parentId ;
 
     @Column(nullable = false)
-    private String dataValue;
+    private String value;
 
     @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataDate = new Date();
+    private LocalDateTime date = LocalDateTime.now();
 
     public DataValue(String dataValue) {
-        this.dataValue = dataValue;
+        this.value = dataValue;
     }
 
-    public DataValue(String dataValue, Date dataDate) {
-        this.dataValue = dataValue;
-        this.dataDate = dataDate;
+    public DataValue(DataValue dataValue) {
+        this.parentId = dataValue.getParentId();
+        this.value = dataValue.getValue();
+        this.date = dataValue.getDate();
+    }
+
+    public DataValue(String dataValue, LocalDateTime dataDate) {
+        this.value = dataValue;
+        this.date = dataDate;
     }
 
 

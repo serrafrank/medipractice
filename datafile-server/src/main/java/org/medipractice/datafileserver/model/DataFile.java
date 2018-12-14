@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(of = {"id", "datas"}, callSuper = false)
 @Data
 @Entity
 @Table
@@ -27,5 +27,10 @@ public class DataFile extends Auditable<String>  {
     private List<DataObject> datas = new ArrayList<>();
 
 
+    public DataObject getDataType(String dataType){
+        return datas.stream()
+                .filter(t -> t.getType().equals(dataType))
+                .findAny().orElse(null);
+    }
 
 }

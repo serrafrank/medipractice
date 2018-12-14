@@ -5,7 +5,7 @@ import org.medipractice.datafileserver.model.DataFile;
 import java.util.UUID;
 
 public interface DataFileService {
-    abstract DataFile findById(UUID id);
+    DataFile findById(UUID id);
 
     void update(DataFile dataFile);
 

@@ -30,25 +30,42 @@ public class DataFileServiceImpl implements DataFileService {
         return this.dataFileRepository.findById(id).get();
     }
 
+
     @Override
     public void update(DataFile dataFile) {
+
+        Optional<DataFile> optDataFile = dataFileRepository.findById(dataFile.getId());
+
         dataFile.getDatas().forEach(dataObject -> dataObject.getValues().forEach(dataValue -> {
-            Optional<DataValue> optValue = dataValuesRepository.findById(dataValue.getId());
-            if (optValue.isPresent()) {
-                DataValue value = optValue.get();
-                if (!value.equals(dataValue)) {
-                    value.setArchived(true);
-                    dataValuesRepository.save(value);
-                    dataValue.setId(UUID.randomUUID());
-                    dataValue.setParentId(value.getId());
+
+            if (optDataFile.isPresent()) {
+
+                Optional<DataValue> optValue = optDataFile.get().getDatas()
+                        .stream()
+                        .filter(t -> t.getId().equals(dataObject.getId()))
+                        .flatMap(t -> t.getValues().stream())
+                        .filter(v -> v.getId().equals(dataValue.getId())).findFirst();
+
+                if (optValue.isPresent()) {
+                    System.out.println("optValue : " + optValue.get());
+                    System.out.println("dataValue : " + optValue.get());
+
+                    if (!optValue.get().equals(dataValue)) {
+                        DataValue newData = new DataValue(dataValue) ;
+                        dataValue.setArchived(true);
+                        newData.setParentId(dataValue.getId());
+                        dataValuesRepository.save(newData);
+                        dataValuesRepository.save(dataValue);
+                    }
                 }
             }
-            dataValuesRepository.save(dataValue);
 
         }));
 
+        dataFileRepository.save(dataFile);
 
     }
+
 
 
     @Override
