@@ -5,10 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @EqualsAndHashCode(of = {"id", "datas"}, callSuper = false)
 @Data
@@ -32,14 +29,14 @@ public class DataFile extends Auditable<String> {
                 .findAny().orElse(null);
     }
 
-    public DataObject getIfAbsentPutDataType(String dataType) {
-        DataObject dataObject = getDataType(dataType);
-        if(dataObject == null){
-            dataObject = new DataObject(dataType);
-            datas.add(dataObject);
-        }
 
-        return dataObject;
+    public void setDataType(String dataType, DataValue dataValue){
+        datas.add(new DataObject(dataType, dataValue));
     }
+
+    public void setDataType(String dataType, List<DataValue> dataValue){
+        datas.add(new DataObject(dataType, dataValue));
+    }
+
 
 }

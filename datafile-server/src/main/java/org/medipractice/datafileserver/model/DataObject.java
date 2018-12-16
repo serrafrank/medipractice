@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,6 +36,11 @@ public class DataObject {
     public DataObject(String dataType, List<DataValue> dataValues) {
         this.type = dataType;
         this.values = dataValues;
+    }
+
+    public DataObject(String dataType, DataValue dataValues) {
+        this.type = dataType;
+        this.values = Arrays.asList(dataValues);
     }
 
     public DataObject(String dataType){

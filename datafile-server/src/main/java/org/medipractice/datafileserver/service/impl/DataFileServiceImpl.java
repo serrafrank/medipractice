@@ -1,12 +1,14 @@
 package org.medipractice.datafileserver.service.impl;
 
+import org.medipractice.datafileserver.exception.BadRequestException;
+import org.medipractice.datafileserver.exception.ResourceNotFoundException;
 import org.medipractice.datafileserver.model.DataFile;
 import org.medipractice.datafileserver.repository.DataFileRepository;
-import org.medipractice.datafileserver.repository.DataValuesRepository;
 import org.medipractice.datafileserver.service.DataFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -14,24 +16,22 @@ import java.util.UUID;
 public class DataFileServiceImpl implements DataFileService {
 
     private final DataFileRepository dataFileRepository;
-    private final DataValuesRepository dataValuesRepository;
 
     @Autowired
-    public DataFileServiceImpl(DataFileRepository dataFileRepository, DataValuesRepository dataValuesRepository) {
+    public DataFileServiceImpl(DataFileRepository dataFileRepository) {
         this.dataFileRepository = dataFileRepository;
-        this.dataValuesRepository = dataValuesRepository;
     }
 
 
     @Override
     public DataFile findById(UUID id) {
-        return this.dataFileRepository.findById(id).orElse(null);
+        return this.dataFileRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not found : " + id ));
     }
 
 
     @Override
-    public void save(DataFile dataFile) {
-        if(dataFile.getId() != null) {
+    public DataFile save(DataFile dataFile) {
+        if (dataFile.getId() != null) {
             Optional<DataFile> optDataFile = dataFileRepository.findById(dataFile.getId());
 
             if (optDataFile.isPresent()) {
@@ -51,7 +51,12 @@ public class DataFileServiceImpl implements DataFileService {
 
         dataFileRepository.save(dataFile);
 
+        return dataFile;
     }
 
 
+    @Override
+    public List<DataFile> findAllByDataTypesAndValue(List<String> types, String value) {
+        return dataFileRepository.findAllByDataTypesAndValue(types, value).orElseThrow((BadRequestException::new));
+    }
 }

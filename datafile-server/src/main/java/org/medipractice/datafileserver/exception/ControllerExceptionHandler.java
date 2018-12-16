@@ -1,4 +1,4 @@
-package org.medipractice.datafileserver.controller;
+package org.medipractice.datafileserver.exception;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolationException;
