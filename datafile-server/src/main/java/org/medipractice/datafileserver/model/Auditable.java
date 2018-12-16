@@ -31,8 +31,6 @@ public abstract class Auditable<U> implements Serializable {
     @LastModifiedBy
     private U updatedBy;
 
-    private boolean archived;
-
     private LocalDateTime archivedAt;
 
     private U archivedBy;

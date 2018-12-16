@@ -7,7 +7,6 @@ import java.util.UUID;
 public interface DataFileService {
     DataFile findById(UUID id);
 
-    void update(DataFile dataFile);
 
     void save(DataFile dataFile);
 }

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -47,9 +48,9 @@ public class DataFileServiceImplTest {
     public void update() {
         UUID id = dataFile.getDataType("lastname").getValues().get(0).getId();
         dataFile.getDataType("lastname").getValue(id).setValue("Ducobut");
-
-        dataFileService.update(dataFile);
-        Assert.assertTrue(dataFile.getDataType("lastname").getValue(id).isArchived()  );
+        dataFile.getIfAbsentPutDataType("birthday").setValue(new DataValue(LocalDate.now().toString()));
+        dataFileService.save(dataFile);
+        Assert.assertNotNull(dataFile.getDataType("lastname").getValue(id).getArchivedBy());
 
 
     }
