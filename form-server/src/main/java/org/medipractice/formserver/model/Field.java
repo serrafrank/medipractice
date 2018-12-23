@@ -1,13 +1,13 @@
 package org.medipractice.formserver.model;
 
 import lombok.Data;
+import org.medipractice.formserver.model.fields.CommonProperties;
 
 import javax.persistence.*;
 import java.util.UUID;
 
 @Data
-public class Form {
-
+public class Field {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -15,7 +15,12 @@ public class Form {
     @Column(unique = true)
     private String name;
 
-    @OneToMany
-    private FormCat formCat;
+    @ManyToOne
+    protected CommonProperties fieldType;
+
+    @ManyToOne
+    protected FieldCat fieldCat;
+
+
 
 }

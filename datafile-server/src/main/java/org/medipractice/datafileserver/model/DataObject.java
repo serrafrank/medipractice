@@ -30,7 +30,6 @@ public class DataObject {
     private UUID dataFileId;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "dataObjectId")
     private List<DataValue> values = new ArrayList<>();
 
     public DataObject(String dataType, List<DataValue> dataValues) {

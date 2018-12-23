@@ -13,7 +13,7 @@ public interface DataFileRepository extends JpaRepository<DataFile, UUID> {
 
     Optional<DataFile> findById(UUID id);
 
-    @Query("SELECT d FROM DataFile d LEFT JOIN d.datas o ON o.dataFileId = d.id  LEFT JOIN o.values v  ON v.dataObjectId = o.id WHERE o.type IN :datatypes AND lower(v.value) like lower(concat('%', :datavalue,'%'))")
+    @Query("SELECT d FROM DataFile d LEFT JOIN d.datas o LEFT JOIN o.values v  WHERE o.type IN :datatypes AND lower(v.value) like lower(concat('%', :datavalue,'%'))")
     Optional<List<DataFile>> findAllByDataTypesAndValue(@Param("datatypes") List<String> datatypes, @Param("datavalue") String datavalue);
 
 }

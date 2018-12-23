@@ -19,9 +19,7 @@ public class DataFile extends Auditable<String> {
     private UUID id;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "dataFileId")
     private List<DataObject> datas = new ArrayList<>();
-
 
     public DataObject getDataType(String dataType) {
         return datas.stream()

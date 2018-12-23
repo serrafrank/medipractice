@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service("dataFileService")
@@ -25,28 +24,26 @@ public class DataFileServiceImpl implements DataFileService {
 
     @Override
     public DataFile findById(UUID id) {
-        return this.dataFileRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not found : " + id ));
+        return this.dataFileRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not found : " + id));
     }
 
 
     @Override
     public DataFile save(DataFile dataFile) {
         if (dataFile.getId() != null) {
-            Optional<DataFile> optDataFile = dataFileRepository.findById(dataFile.getId());
+            DataFile dataFileToUpdate = findById(dataFile.getId());
 
-            if (optDataFile.isPresent()) {
-                DataFile dataFileToUpdate = optDataFile.get();
-                dataFile.getDatas().forEach(dataObject -> {
-                    if (dataFileToUpdate.getDataType(dataObject.getType()) != null) {
-                        dataObject.getValues().forEach(dataValue ->
-                                dataFileToUpdate.getDataType(dataObject.getType()).setValue(dataValue)
-                        );
-                    } else {
-                        dataFileToUpdate.getDatas().add(dataObject);
-                    }
-                });
-                dataFile = dataFileToUpdate;
-            }
+            dataFile.getDatas().forEach(dataObject -> {
+                if (dataFileToUpdate.getDataType(dataObject.getType()) != null) {
+                    dataObject.getValues().forEach(dataValue ->
+                            dataFileToUpdate.getDataType(dataObject.getType()).setValue(dataValue)
+                    );
+                } else {
+                    dataFileToUpdate.getDatas().add(dataObject);
+                }
+            });
+            dataFile = dataFileToUpdate;
+
         }
 
         dataFileRepository.save(dataFile);
