@@ -3,13 +3,13 @@ package org.medipractice.formserver.model;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.UUID;
 
+
 @Data
+@Entity
+@Table
 public class FieldCat {
 
     @Id

@@ -5,7 +5,10 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.UUID;
 
+
 @Data
+@Entity
+@Table
 public class Form {
 
     @Id
@@ -15,7 +18,9 @@ public class Form {
     @Column(unique = true)
     private String name;
 
-    @OneToMany
+    @ManyToOne
     private FormCat formCat;
+
+    private String schema;
 
 }
