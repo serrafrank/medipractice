@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>org.medipractice</groupId>
-	<artifactId>form-server</artifactId>
+	<artifactId>page-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>form-server</name>
-	<description>Service de gestion des formulaires</description>
+	<name>page-server</name>
+	<description>Service de gestion des pages</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -62,6 +62,12 @@
 			<artifactId>springfox-data-rest</artifactId>
 			<version>2.8.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20180813</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

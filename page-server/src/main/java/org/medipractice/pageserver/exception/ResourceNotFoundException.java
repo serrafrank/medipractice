@@ -1,4 +1,4 @@
-package org.medipractice.formserver.exception;
+package org.medipractice.pageserver.exception;
 
 import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;

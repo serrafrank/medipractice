@@ -1,4 +1,4 @@
-package org.medipractice.formserver.exception;
+package org.medipractice.pageserver.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
