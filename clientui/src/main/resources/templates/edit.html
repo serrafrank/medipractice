@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-58453303-6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-58453303-6');
+    </script>
+
+    <link href="https://formio.github.io/formio.js/app/syntax.css" rel="stylesheet">
+    <link href="https://formio.github.io/formio.js/app/main.css" rel="stylesheet">
+    <link href="https://formio.github.io/formio.js/app/fontawesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://formio.github.io/formio.js/app/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <link href="https://formio.github.io/formio.js/app/bootswatch/yeti/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://formio.github.io/formio.js/dist/formio.full.min.css" rel="stylesheet">
+    <script src="https://formio.github.io/formio.js/app/jquery/jquery.slim.min.js"></script>
+    <script src="https://formio.github.io/formio.js/app/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://formio.github.io/formio.js/dist/formio.full.min.js"></script>
+
+    <script type="text/javascript">Formio.icons = 'fontawesome';</script>
+    <script type="text/javascript">Formio.setUser(null);</script>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-8">
+            <h3 class="text-center text-muted">The <a href="https://github.com/formio/formio.js" target="_blank">Page Builder</a> allows you to build a <select class="page-control" id="page-select" style="display: inline-block; width: 150px;"><option value="page">Page</option><option value="wizard">Wizard</option><option value="pdf">PDF</option></select></h3>
+            <div id="builder"></div>
+        </div>
+        <div class="col-sm-4">
+            <h3 class="text-center text-muted">as JSON Schema</h3>
+            <div class="card card-body bg-light jsonviewer">
+                <pre id="json"></pre>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-sm-8 offset-sm-2">
+            <h3 class="text-center text-muted">which <a href="https://github.com/formio/ngFormio" target="_blank">Renders as a Page</a> in your Application</h3>
+            <div id="formio" class="card card-body bg-light"></div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-sm-8 offset-sm-2">
+            <h3 class="text-center text-muted">which creates a Submission JSON</h3>
+            <div class="card card-body bg-light jsonviewer">
+                <pre id="subjson"></pre>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <script type="text/javascript">
+        var jsonElement = document.getElementById('json');
+        var formElement = document.getElementById('formio');
+        var subJSON = document.getElementById('subjson');
+        var builder = new Formio.FormBuilder(document.getElementById("builder"), [(${page})] );
+
+        var onForm = function(page) {
+            page.on('change', function() {
+                subJSON.innerHTML = '';
+                subJSON.appendChild(document.createTextNode(JSON.stringify(page.submission, null, 4)));
+            });
+        };
+
+        var setDisplay = function(display) {
+            builder.setDisplay(display).then(function(instance) {
+                instance.on('change', function(page) {
+                    if (page.components) {
+                        formElement.innerHTML = '';
+                        jsonElement.innerHTML = '';
+                        jsonElement.appendChild(document.createTextNode(JSON.stringify(page, null, 4)));
+                        Formio.createForm(formElement, page).then(onForm);
+                    }
+                });
+            });
+        };
+
+        // Handle the page selection.
+        var formSelect = document.getElementById('page-select');
+        formSelect.addEventListener("change", function() {
+            setDisplay(this.value);
+        });
+
+        setDisplay('page');
+    </script>
+
+
+</div>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+</html>

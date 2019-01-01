@@ -1,18 +1,54 @@
 package org.medipractice.clientui.controller;
 
 
+import org.medipractice.clientui.beans.NavigationBean;
+import org.medipractice.clientui.beans.PageBean;
+import org.medipractice.clientui.proxies.PageProxy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 
 @Controller
 public class ClientController {
 
-    @RequestMapping("/")
-    public String accueil(Model model){
+    private final PageProxy pageProxy;
 
-        return "Accueil";
+    @Autowired
+    public ClientController(PageProxy pageProxy) {
+        this.pageProxy = pageProxy;
     }
+
+
+    @RequestMapping("/{formName}")
+    public String index(@PathVariable String formName, Model model) {
+        List<NavigationBean> navigation = pageProxy.findAllNavigation();
+
+        model.addAttribute("formName", formName);
+        model.addAttribute("navigation", navigation);
+
+        return "index";
+    }
+
+    /*
+    @RequestMapping("/{formName}/edit")
+    public String edit(@PathVariable String formName, Model model) {
+        model.addAttribute("formName", formName);
+        return "edit";
+    }
+    */
+
+
+    @RequestMapping(value = "/page/{formName}", produces = "application/json")
+    @ResponseBody
+    public String ajaxReturn(@PathVariable String formName, Model model) {
+        return pageProxy.getPage(formName).getSchema();
+    }
+
 
 }
