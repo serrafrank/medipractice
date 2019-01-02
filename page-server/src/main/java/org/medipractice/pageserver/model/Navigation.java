@@ -1,23 +1,27 @@
 package org.medipractice.pageserver.model;
 
-import lombok.Data;
+import lombok.*;
+import org.medipractice.pageserver.utils.NormalizeName;
 
 import javax.persistence.*;
+import java.text.Normalizer;
 import java.util.List;
 import java.util.UUID;
 
-@Data
+
 @Entity
 @Table
+@Data
+@Builder
 public class Navigation {
 
-
     @Id
+    @Getter
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @Column(unique = true)
-    private String name;
+    private static String name;
 
     private String label;
 
@@ -30,5 +34,11 @@ public class Navigation {
 
     private UUID parent;
 
+
+    public void setLabel(String label) {
+        this.label = label;
+        name = NormalizeName.of(label).toString();
+
+    }
 
 }

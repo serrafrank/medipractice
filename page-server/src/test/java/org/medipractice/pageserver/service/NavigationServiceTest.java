@@ -20,15 +20,10 @@ public class NavigationServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        index = new Navigation();
-
-        index.setLabel("Accueil");
-        index.setPage("index");
-
-
-    }
-    @Test
-    public void findAllNavigation() {
+        index = Navigation.builder()
+                .label("Accueil")
+                .page("index")
+                .build();
     }
 
     @Test

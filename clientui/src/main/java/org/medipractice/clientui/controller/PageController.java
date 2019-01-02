@@ -7,6 +7,7 @@ import org.medipractice.clientui.proxies.PageProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,22 +16,26 @@ import java.util.List;
 
 
 @Controller
-public class ClientController {
+public class PageController {
 
     private final PageProxy pageProxy;
 
     @Autowired
-    public ClientController(PageProxy pageProxy) {
+    public PageController(PageProxy pageProxy) {
         this.pageProxy = pageProxy;
     }
 
 
-    @RequestMapping("/{formName}")
-    public String index(@PathVariable String formName, Model model) {
-        List<NavigationBean> navigation = pageProxy.findAllNavigation();
+    @ModelAttribute("navigationMenu")
+    private List<NavigationBean> getNavitationMenu(){
+        return pageProxy.findAllNavigation();
+    }
 
-        model.addAttribute("formName", formName);
-        model.addAttribute("navigation", navigation);
+
+    @RequestMapping("/{formName}")
+    public String index(@PathVariable @ModelAttribute("formName")  String formName, Model model) {
+        if(formName.isEmpty())
+            formName = "index";
 
         return "index";
     }
@@ -44,11 +49,6 @@ public class ClientController {
     */
 
 
-    @RequestMapping(value = "/page/{formName}", produces = "application/json")
-    @ResponseBody
-    public String ajaxReturn(@PathVariable String formName, Model model) {
-        return pageProxy.getPage(formName).getSchema();
-    }
 
 
 }

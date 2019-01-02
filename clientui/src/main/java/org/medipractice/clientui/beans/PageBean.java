@@ -9,9 +9,12 @@ public class PageBean {
 
     private UUID id;
 
-    private String name;
+    private static String name;
 
-    private String category;
+    private String title;
+
+    private String subTitle;
 
     private String schema;
+
 }

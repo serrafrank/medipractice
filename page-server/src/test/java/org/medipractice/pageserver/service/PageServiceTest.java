@@ -29,7 +29,7 @@ public class PageServiceTest {
                 "            \"label\": \"index\",\n" +
                 "            \"className\": \"\",\n" +
                 "            \"attrs\": [],\n" +
-                "            \"content\": \"<h1>Accueil</h1>\",\n" +
+                "            \"content\": \"<h2>Bienvenue !</h2>\",\n" +
                 "            \"refreshOnChange\": false,\n" +
                 "            \"mask\": false,\n" +
                 "            \"tableView\": true,\n" +
@@ -44,17 +44,10 @@ public class PageServiceTest {
     }
 
 
-    @Test
-    public void findById() throws Exception {
-        /*
-        JSONObject json = formService.findById(UUID.fromString("6b6d94ee-b2ea-4d1a-aa85-a9d89450da1a"));
-        Assert.assertNotNull(json);
-        */
-    }
 
     @Test
     public void save() throws Exception {
-        Page page = new Page("index", formObject.toString());
+        Page page = new Page("Accueil", null, formObject.toString());
         pageService.save(page);
     }
 

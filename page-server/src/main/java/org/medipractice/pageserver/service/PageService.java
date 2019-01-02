@@ -7,6 +7,7 @@ import org.medipractice.pageserver.model.Field;
 import org.medipractice.pageserver.model.Page;
 import org.medipractice.pageserver.repository.FieldRepository;
 import org.medipractice.pageserver.repository.PageRepository;
+import org.medipractice.pageserver.utils.NormalizeName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
@@ -46,8 +47,8 @@ public class PageService {
 
     public Page save(Page page) {
         JSONObject extractFields = extractFields(new JSONObject(page.getSchema()));
-
-        return pageRepository.save(new Page(page.getName(), extractFields.toString()));
+        page.setSchema(extractFields.toString());
+        return pageRepository.save(page);
     }
 
 
@@ -87,7 +88,7 @@ public class PageService {
                 if (field.getId() == null) {
                     if (component.has(COMPO_TYPE) && this.supportedComponents.contains(component.getString(COMPO_TYPE))) {
 
-                        String fieldKey = normalizeKey(component.getString(COMPO_TYPE) + "_" + component.getString(COMPO_LABEL));
+                        String fieldKey = NormalizeName.of(component.getString(COMPO_TYPE) + "_" + component.getString(COMPO_LABEL)).toString();
 
                         component.put(COMPO_KEY, fieldKey);
                         
@@ -112,11 +113,5 @@ public class PageService {
         return page;
     }
 
-    private String normalizeKey(String label) {
-        String key = Normalizer.normalize(label, Normalizer.Form.NFD).toLowerCase();
-        key = key.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
-        key = key.replaceAll("[^a-zA-Z0-9]", "-");
-        return key;
-    }
 
 }
