@@ -46,150 +46,15 @@
     <div class="pcoded-overlay-box"></div>
     <div class="pcoded-container navbar-wrapper">
         <!-- [ Header ] start -->
-        <nav th:include="header" class="navbar header-navbar pcoded-header">
-
-
-
+        <nav th:include="fragment/header" class="navbar header-navbar pcoded-header">
         </nav>
         <!-- [ Header ] end -->
 
-        <div class="pcoded-main-container">
+        <div  class="pcoded-main-container">
             <div class="pcoded-wrapper">
                 <!-- [ navigation menu ] start -->
-                <nav class="pcoded-navbar">
-                    <div class="nav-list">
-                        <div class="pcoded-inner-navbar main-menu">
-                            <div class="pcoded-navigation-label">Navigation</div>
-                            <ul class="pcoded-item pcoded-left-item">
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
-                                        <span class="pcoded-mtext">Dashboard</span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class="">
-                                            <a href="index" class="waves-effect waves-dark">
-                                                <span class="pcoded-mtext">Default</span>
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="dashboard-crm.html" class="waves-effect waves-dark">
-                                                <span class="pcoded-mtext">CRM</span>
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="dashboard-analytics.html" class="waves-effect waves-dark">
-                                                <span class="pcoded-mtext">Analytics</span>
-                                                <span class="pcoded-badge label label-info ">NEW</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                        <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
-                                        <span class="pcoded-mtext">Page layouts</span>
-                                        <span class="pcoded-badge label label-warning">NEW</span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=" pcoded-hasmenu">
-                                            <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                                <span class="pcoded-mtext">Vertical</span>
-                                            </a>
-                                            <ul class="pcoded-submenu">
-                                                <li class="">
-                                                    <a href="menu-static.html" class="waves-effect waves-dark">
-                                                        <span class="pcoded-mtext">Static Layout</span>
-                                                    </a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="menu-header-fixed.html" class="waves-effect waves-dark">
-                                                        <span class="pcoded-mtext">Header Fixed</span>
-                                                    </a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="menu-compact.html" class="waves-effect waves-dark">
-                                                        <span class="pcoded-mtext">Compact</span>
-                                                    </a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="menu-sidebar.html" class="waves-effect waves-dark">
-                                                        <span class="pcoded-mtext">Sidebar Fixed</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class=" pcoded-hasmenu">
-                                            <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                                <span class="pcoded-mtext">Horizontal</span>
-                                            </a>
-                                            <ul class="pcoded-submenu">
-                                                <li class="">
-                                                    <a href="menu-horizontal-static.html" target="_blank" class="waves-effect waves-dark">
-                                                        <span class="pcoded-mtext">Static Layout</span>
-                                                    </a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="menu-horizontal-fixed.html" target="_blank" class="waves-effect waves-dark">
-                                                        <span class="pcoded-mtext">Fixed layout</span>
-                                                    </a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="menu-horizontal-icon.html" target="_blank" class="waves-effect waves-dark">
-                                                        <span class="pcoded-mtext">Static With Icon</span>
-                                                    </a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="menu-horizontal-icon-fixed.html" target="_blank" class="waves-effect waves-dark">
-                                                        <span class="pcoded-mtext">Fixed With Icon</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="">
-                                            <a href="menu-bottom.html" class="waves-effect waves-dark">
-                                                <span class="pcoded-mtext">Bottom Menu</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="">
-                                    <a href="navbar-light.html" class="waves-effect waves-dark">
-												<span class="pcoded-micon">
-													<i class="feather icon-menu"></i>
-												</span>
-                                        <span class="pcoded-mtext">Navigation</span>
-                                    </a>
-                                </li>
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)" class="waves-effect waves-dark">
-												<span class="pcoded-micon">
-													<i class="feather icon-layers"></i>
-												</span>
-                                        <span class="pcoded-mtext">Widget</span>
-                                        <span class="pcoded-badge label label-danger">100+</span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class="">
-                                            <a href="widget-statistic.html" class="waves-effect waves-dark">
-                                                <span class="pcoded-mtext">Statistic</span>
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="widget-data.html" class="waves-effect waves-dark">
-                                                <span class="pcoded-mtext">Data</span>
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="widget-chart.html" class="waves-effect waves-dark">
-                                                <span class="pcoded-mtext">Chart Widget</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                <nav th:include="fragment/menu"  class="pcoded-navbar">
+
                 </nav>
                 <!-- [ navigation menu ] end -->
                 <div class="pcoded-content">
@@ -198,22 +63,15 @@
                         <div class="row align-items-end">
                             <div class="col-lg-8">
                                 <div class="page-header-title">
-                                    <i class="feather icon-watch bg-c-blue"></i>
+                                    <i class="feather bg-c-blue" th:classappend="${page.icon}"></i>
                                     <div class="d-inline">
-                                        <div id="formio"></div>
+                                        <h3 th:text="${page.title}"></h3>
+                                        <span th:text="${page.subTitle}"></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
-                                <div class="page-header-breadcrumb">
-                                    <ul class=" breadcrumb breadcrumb-title">
-                                        <li class="breadcrumb-item">
-                                            <a href="index"><i class="feather icon-home"></i></a>
-                                        </li>
-                                        <li class="breadcrumb-item">
-                                            <a href="#!">Sample page</a>
-                                        </li>
-                                    </ul>
+                                <div th:include="fragment/breadcrumb" class="page-header-breadcrumb">
                                 </div>
                             </div>
                         </div>
@@ -228,7 +86,6 @@
                                         <div class="col-sm-12">
                                             <div class="card">
                                                 <div class="card-header">
-                                                    <h5>Hello card</h5>
                                                     <div class="card-header-right">
                                                         <ul class="list-unstyled card-option">
                                                             <li class="first-opt"><i class="feather icon-chevron-left open-card-option"></i></li>
@@ -240,10 +97,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="card-block">
-                                                    <p>
-                                                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                                                        in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                                                    </p>
+                                                    <div id="formio" class="card-block"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -265,47 +119,7 @@
 <!-- Warning Section Starts -->
 <!-- Older IE warning message -->
 <!--[if lt IE 10]>
-<div class="ie-warning">
-    <h1>Warning!!</h1>
-    <p>You are using an outdated version of Internet Explorer, please upgrade
-        <br/>to any of the following web browsers to access this website.
-    </p>
-    <div class="iew-container">
-        <ul class="iew-download">
-            <li>
-                <a href="http://www.google.com/chrome/">
-                    <img src="https://colorlib.com/polygon/admindek/files/assets/images/browser/chrome.png" alt="Chrome">
-                    <div>Chrome</div>
-                </a>
-            </li>
-            <li>
-                <a href="https://www.mozilla.org/en-US/firefox/new/">
-                    <img src="https://colorlib.com/polygon/admindek/files/assets/images/browser/firefox.png" alt="Firefox">
-                    <div>Firefox</div>
-                </a>
-            </li>
-            <li>
-                <a href="http://www.opera.com">
-                    <img src="https://colorlib.com/polygon/admindek/files/assets/images/browser/opera.png" alt="Opera">
-                    <div>Opera</div>
-                </a>
-            </li>
-            <li>
-                <a href="https://www.apple.com/safari/">
-                    <img src="https://colorlib.com/polygon/admindek/files/assets/images/browser/safari.png" alt="Safari">
-                    <div>Safari</div>
-                </a>
-            </li>
-            <li>
-                <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                    <img src="https://colorlib.com/polygon/admindek/files/assets/images/browser/ie.png" alt="">
-                    <div>IE (9 & above)</div>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <p>Sorry for the inconvenience!</p>
-</div>
+<div th:include="fragment/ie-warning" class="ie-warning"></div>
 <![endif]-->
 <!-- Warning Section Ends -->
 <!-- Required Jquery -->
@@ -324,7 +138,7 @@
 
 <script>
     Formio.icons = 'fontawesome';
-    Formio.createForm(document.getElementById('formio'), "http://localhost:8080/page/[(${formName})]", {
+    Formio.createForm(document.getElementById('formio'), [(${page.schema})], {
         readOnly: true,
         //    viewAsHtml: true
     });

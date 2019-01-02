@@ -37,16 +37,19 @@ public class PageController {
         if(formName.isEmpty())
             formName = "index";
 
+        model.addAttribute("page", pageProxy.getPage(formName));
+
         return "index";
     }
 
-    /*
     @RequestMapping("/{formName}/edit")
     public String edit(@PathVariable String formName, Model model) {
-        model.addAttribute("formName", formName);
+        if(formName.isEmpty())
+            formName = "index";
+
+        model.addAttribute("page", pageProxy.getPage(formName));
         return "edit";
     }
-    */
 
 
 

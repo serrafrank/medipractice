@@ -20,10 +20,6 @@ public class PageAjaxController {
     }
 
 
-    @RequestMapping(value = "/ajax_getPage/{formName}", produces = "application/json")
-    @ResponseBody
-    public String ajaxReturn(@PathVariable @ModelAttribute("formName")  String formName, Model model) {
-        return pageProxy.getPage(formName).getSchema();
-    }
+
 
 }

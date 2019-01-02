@@ -13,10 +13,10 @@ import java.util.UUID;
 @FeignClient(name = "microservice-page", url = "localhost:9091")
 public interface PageProxy {
 
-    @GetMapping(value = "/Page/{name}")
+    @GetMapping(value = "page/{name}")
     PageBean getPage(@PathVariable String name);
 
-    @GetMapping(value = "/Navigation/")
+    @GetMapping(value = "navigation")
     List<NavigationBean> findAllNavigation();
 
 

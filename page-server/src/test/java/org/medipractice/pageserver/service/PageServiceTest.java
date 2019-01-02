@@ -47,7 +47,12 @@ public class PageServiceTest {
 
     @Test
     public void save() throws Exception {
-        Page page = new Page("Accueil", null, formObject.toString());
+        Page page = new Page();
+        page.setTitle("Accueil");
+        page.setName("index");
+        page.setSchema(formObject.toString());
+
+        page.setIcon("icon-home");
         pageService.save(page);
     }
 

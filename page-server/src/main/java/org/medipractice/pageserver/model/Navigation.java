@@ -12,7 +12,6 @@ import java.util.UUID;
 @Entity
 @Table
 @Data
-@Builder
 public class Navigation {
 
     @Id
@@ -25,7 +24,7 @@ public class Navigation {
 
     private String label;
 
-    private String icone;
+    private String icon;
 
     private String page;
 
@@ -33,7 +32,6 @@ public class Navigation {
     private List<Navigation> children;
 
     private UUID parent;
-
 
     public void setLabel(String label) {
         this.label = label;

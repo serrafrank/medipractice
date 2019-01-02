@@ -20,10 +20,9 @@ public class NavigationServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        index = Navigation.builder()
-                .label("Accueil")
-                .page("index")
-                .build();
+        index = new Navigation();
+        index.setLabel("Accueil");
+        index.setPage("index");
     }
 
     @Test

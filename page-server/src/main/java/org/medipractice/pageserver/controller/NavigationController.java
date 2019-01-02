@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/Navigation")
+@RequestMapping("/navigation")
 public class NavigationController {
 
     private final NavigationService navigationService;
@@ -20,7 +20,7 @@ public class NavigationController {
         this.navigationService = navigationService;
     }
 
-    @GetMapping(value = "/")
+    @GetMapping
     public List<Navigation> findAll() {
         return navigationService.findAllNavigation();
 

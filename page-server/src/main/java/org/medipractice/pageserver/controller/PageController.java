@@ -10,7 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/Page")
+@RequestMapping("/page")
 public class PageController {
 
     private final PageService pageService;
@@ -20,7 +20,7 @@ public class PageController {
         this.pageService = pageService;
     }
 
-    @GetMapping(value = "/{name}")
+    @GetMapping(value = "{name}")
     public Page getPage(@PathVariable String name) {
         return pageService.findByName(name);
 

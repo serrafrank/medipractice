@@ -28,6 +28,8 @@ public class Page {
 
     private String title;
 
+    private String icon;
+
     @Type(type="text")
     private String subTitle;
 

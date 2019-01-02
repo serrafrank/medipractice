@@ -14,7 +14,7 @@ public class NavigationBean {
 
     private String label;
 
-    private String icone;
+    private String icon;
 
     private String page;
 
