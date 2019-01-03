@@ -1,6 +1,6 @@
 package org.medipractice.clientui.proxies;
 
-import org.medipractice.clientui.beans.DataFileBean;
+import org.medipractice.clientui.beans.data.DataFileBean;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

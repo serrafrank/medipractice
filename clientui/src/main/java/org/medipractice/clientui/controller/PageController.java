@@ -1,8 +1,8 @@
 package org.medipractice.clientui.controller;
 
 
-import org.medipractice.clientui.beans.NavigationBean;
-import org.medipractice.clientui.beans.PageBean;
+import org.medipractice.clientui.beans.menu.MenuBean;
+import org.medipractice.clientui.beans.menu.SubMenuBean;
 import org.medipractice.clientui.proxies.PageProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -26,9 +25,9 @@ public class PageController {
     }
 
 
-    @ModelAttribute("navigationMenu")
-    private List<NavigationBean> getNavitationMenu(){
-        return pageProxy.findAllNavigation();
+    @ModelAttribute("menu")
+    private List<MenuBean> getMenu(){
+        return pageProxy.findMenu();
     }
 
 

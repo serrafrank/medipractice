@@ -1,4 +1,4 @@
-package org.medipractice.clientui.beans;
+package org.medipractice.clientui.beans.menu;
 
 import lombok.Data;
 
@@ -6,21 +6,18 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-public class NavigationBean {
+public class MenuBean {
 
     private UUID id;
 
     private String name;
 
-    private String label;
-
     private String icon;
 
     private String page;
 
-    private List<NavigationBean> children;
+    private int order;
 
-    private UUID parent;
-
+    private List<MenuBean> children;
 
 }
