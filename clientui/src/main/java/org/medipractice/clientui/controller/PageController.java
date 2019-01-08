@@ -2,7 +2,6 @@ package org.medipractice.clientui.controller;
 
 
 import org.medipractice.clientui.beans.menu.MenuBean;
-import org.medipractice.clientui.beans.menu.SubMenuBean;
 import org.medipractice.clientui.proxies.PageProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
