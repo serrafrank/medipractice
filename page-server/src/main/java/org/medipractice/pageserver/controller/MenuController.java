@@ -1,7 +1,6 @@
 package org.medipractice.pageserver.controller;
 
 import org.medipractice.pageserver.model.Menu;
-import org.medipractice.pageserver.model.SubMenu;
 import org.medipractice.pageserver.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

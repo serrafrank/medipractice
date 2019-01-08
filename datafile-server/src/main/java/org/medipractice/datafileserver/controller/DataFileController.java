@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/DataFile")
+@RequestMapping("/datafile")
 public class DataFileController  {
 
     private final DataFileService dataFileService;
