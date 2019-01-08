@@ -2,4 +2,4 @@ INSERT INTO field (id, category, field_key, label, parameters) VALUES ('d356a263
 
 INSERT INTO page (id, name, schema, sub_title, title, icon) VALUES ('90889339-e314-4a76-bb7f-dfb5593af0a8', 'index', '{"components":[{"field_key":"htmlelement-index"}],"display":"form"}', null, 'Accueil', 'icon-home');
 
-
+INSERT INTO menu (id, icon, label, page, sort) VALUES ('cad32b3f-bf73-420f-96f5-9ee8b66ab1fe', null, 'Accueil', 'index', 1)
