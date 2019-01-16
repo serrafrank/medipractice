@@ -1059,7 +1059,7 @@ a.bg-danger:focus, a.bg-danger:hover {
     select {
         -webkit-appearance: none;
         -moz-appearance: none;
-        background: #fff url(../images/select-arrow.png) no-repeat 95% center
+        background: #fff url(../img/select-arrow.png) no-repeat 95% center
     }
 }
 
@@ -10574,12 +10574,12 @@ td.highlight {
 }
 
 td.details-control {
-    background: url(../images/details_open.png) no-repeat center center;
+    background: url(../img/details_open.png) no-repeat center center;
     cursor: pointer
 }
 
 tr.shown td.details-control {
-    background: url(../images/details_close.png) no-repeat center center
+    background: url(../img/details_close.png) no-repeat center center
 }
 
 #row-delete .selected, #row-select .selected {

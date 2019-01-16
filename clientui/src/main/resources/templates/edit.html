@@ -1,267 +1,193 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.springframework.org/schema/jdbc">
 
 <head>
-    <title>Admindek | Admin Template</title>
-    <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 10]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <!-- Meta -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/formiojs@latest/dist/formio.full.min.css">
-
-    <!-- Favicon icon -->
-    <link rel="icon" href="https://colorlib.com/polygon/admindek/files/assets/images/favicon.ico" type="image/x-icon">
-    <!-- Google font-->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Quicksand:500,700" rel="stylesheet">
-
-    <!-- Required Fremwork -->
-    <link rel="stylesheet" type="text/css"
-          href="https://colorlib.com/polygon/admindek/files/bower_components/bootstrap/css/bootstrap.min.css">
-
-    <!-- waves.css -->
-    <link rel="stylesheet" href="https://colorlib.com/polygon/admindek/files/assets/pages/waves/css/waves.min.css"
-          type="text/css" media="all">
-    <!-- feather icon -->
-    <link rel="stylesheet" type="text/css"
-          href="https://colorlib.com/polygon/admindek/files/assets/icon/feather/css/feather.css">
-    <!-- Style.css -->
-    <link rel="stylesheet" type="text/css" href="https://colorlib.com/polygon/admindek/files/assets/css/style.css">
-
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-58453303-6"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-
-        gtag('js', new Date());
-
-        gtag('config', 'UA-58453303-6');
-    </script>
-
-    <link href="https://formio.github.io/formio.js/app/syntax.css" rel="stylesheet">
-    <link href="https://formio.github.io/formio.js/app/main.css" rel="stylesheet">
-    <link href="https://formio.github.io/formio.js/app/fontawesome/css/font-awesome.min.css" rel="stylesheet">
-
-    <link href="https://formio.github.io/formio.js/dist/formio.full.min.css" rel="stylesheet">
-    <script src="https://formio.github.io/formio.js/app/jquery/jquery.slim.min.js"></script>
-    <script src="https://formio.github.io/formio.js/app/bootstrap/js/bootstrap.min.js"></script>
-    <script src="https://formio.github.io/formio.js/dist/formio.full.min.js"></script>
-
-    <script type="text/javascript">Formio.icons = 'fontawesome';</script>
-    <script type="text/javascript">Formio.setUser(null);</script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>SB Admin - Blank Page</title>
+    <!-- Bootstrap core CSS-->
+    <link th:href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link th:href="@{vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <!-- Page level plugin CSS-->
+    <link th:href="@{vendor/datatables/dataTables.bootstrap4.css]" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link th:href="@{css/sb-admin-2.css}" rel="stylesheet">
 </head>
 
-<body>
-<!-- [ Pre-loader ] start -->
-<div class="loader-bg">
-    <div class="loader-bar"></div>
+<body id="page-top">
+
+<nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+
+    <a class="navbar-brand mr-1" href="index.html">Start Bootstrap</a>
+
+    <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Navbar Search -->
+    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Navbar -->
+    <ul class="navbar-nav ml-auto ml-md-0">
+        <li class="nav-item dropdown no-arrow mx-1">
+            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell fa-fw"></i>
+                <span class="badge badge-danger">9+</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown no-arrow mx-1">
+            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-envelope fa-fw"></i>
+                <span class="badge badge-danger">7</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-user-circle fa-fw"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">Settings</a>
+                <a class="dropdown-item" href="#">Activity Log</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+            </div>
+        </li>
+    </ul>
+
+</nav>
+
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="sidebar navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Pages</span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                <h6 class="dropdown-header">Login Screens:</h6>
+                <a class="dropdown-item" href="login.html">Login</a>
+                <a class="dropdown-item" href="register.html">Register</a>
+                <a class="dropdown-item" href="forgot-password.html">Forgot Password</a>
+                <div class="dropdown-divider"></div>
+                <h6 class="dropdown-header">Other Pages:</h6>
+                <a class="dropdown-item" href="404.html">404 Page</a>
+                <a class="dropdown-item active" href="blank.html">Blank Page</a>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="charts.html">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>Charts</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="tables.html">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Tables</span></a>
+        </li>
+    </ul>
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="index.html">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">Blank Page</li>
+            </ol>
+
+            <!-- Page Content -->
+            <h1>Blank Page</h1>
+            <hr>
+            <p>This is a great starting point for new custom pages.</p>
+
+        </div>
+        <!-- /.container-fluid -->
+
+        <!-- Sticky Footer -->
+        <footer class="sticky-footer">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright © Your Website 2018</span>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.content-wrapper -->
+
 </div>
-<!-- [ Pre-loader ] end -->
-<div id="pcoded" class="pcoded">
-    <div class="pcoded-overlay-box"></div>
-    <div class="pcoded-container navbar-wrapper">
-        <!-- [ Header ] start -->
-        <nav th:include="fragment/header" class="navbar header-navbar pcoded-header">
-        </nav>
-        <!-- [ Header ] end -->
+<!-- /#wrapper -->
 
-        <div class="pcoded-main-container">
-            <div class="pcoded-wrapper">
-                <!-- [ navigation menu ] start -->
-                <nav th:include="fragment/menu" class="pcoded-navbar">
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
 
-                </nav>
-                <!-- [ navigation menu ] end -->
-                <div class="pcoded-content">
-                    <!-- [ breadcrumb ] start -->
-                    <div class="page-header card">
-                        <div class="row align-items-end">
-                            <div class="col-lg-8">
-                                <div class="page-header-title">
-                                    <i class="feather bg-c-blue" th:classappend="${page.icon}"></i>
-                                    <div class="d-inline">
-                                        <h3 th:text="${page.title}"></h3>
-                                        <span th:text="${page.subTitle}"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div th:include="fragment/breadcrumb" class="page-header-breadcrumb">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- [ breadcrumb ] end -->
-                    <div class="pcoded-inner-content">
-                        <div class="main-body">
-                            <div class="page-wrapper">
-                                <div class="page-body">
-                                    <!-- [ page content ] start -->
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <div class="card-header-right">
-                                                        <ul class="list-unstyled card-option">
-                                                            <li class="first-opt"><i
-                                                                    class="feather icon-chevron-left open-card-option"></i>
-                                                            </li>
-                                                            <li><i class="feather icon-maximize full-card"></i></li>
-                                                            <li><i class="feather icon-minus minimize-card"></i></li>
-                                                            <li><i class="feather icon-refresh-cw reload-card"></i></li>
-                                                            <li><i class="feather icon-trash close-card"></i></li>
-                                                            <li>
-                                                                <i class="feather icon-chevron-left open-card-option"></i>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="card-block">
-                                                    <div class="container-fluid">
-                                                        <div class="row">
-                                                            <div class="col-sm-8 offset-sm-2">
-                                                                <h3 class="text-center text-muted">Style : <select
-                                                                        class="page-control" id="page-select"
-                                                                        style="display: inline-block; width: 150px;">
-                                                                    <option value="page">Page</option>
-                                                                    <option value="wizard">Wizard</option>
-                                                                </select></h3>
-                                                            </div>
-
-                                                            <div class="card card-body bg-light jsonviewer">
-                                                                <div id="builder"></div>
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-sm-8 offset-sm-2">
-                                                                <h3 class="text-center text-muted">Schema JSON </h3>
-                                                                <div class="card card-body bg-light jsonviewer">
-                                                                    <pre id="json"></pre>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-sm-8 offset-sm-2">
-                                                                <h3 class="text-center text-muted">Aperçu</h3>
-                                                                <div id="formio" class="card card-body bg-light"></div>
-                                                            </div>
-                                                            <div class="clearfix"></div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-sm-8 offset-sm-2">
-                                                                <h3 class="text-center text-muted">Data JSON</h3>
-                                                                <div class="card card-body bg-light jsonviewer">
-                                                                    <pre id="subjson"></pre>
-                                                                </div>
-                                                            </div>
-                                                            <div class="clearfix"></div>
-                                                        </div>
-
-                                                        <script type="text/javascript">
-                                                            var jsonElement = document.getElementById('json');
-                                                            var formElement = document.getElementById('formio');
-                                                            var subJSON = document.getElementById('subjson');
-                                                            var builder = new Formio.FormBuilder(document.getElementById("builder"), [(${page.schema})]);
-
-                                                            var onForm = function (page) {
-                                                                page.on('change', function () {
-                                                                    subJSON.innerHTML = '';
-                                                                    subJSON.appendChild(document.createTextNode(JSON.stringify(page.submission, null, 4)));
-                                                                });
-                                                            };
-
-                                                            var setDisplay = function (display) {
-                                                                builder.setDisplay(display).then(function (instance) {
-                                                                    instance.on('change', function (page) {
-                                                                        if (page.components) {
-                                                                            formElement.innerHTML = '';
-                                                                            jsonElement.innerHTML = '';
-                                                                            jsonElement.appendChild(document.createTextNode(JSON.stringify(page, null, 4)));
-                                                                            Formio.createForm(formElement, page).then(onForm);
-                                                                        }
-                                                                    });
-                                                                });
-                                                            };
-
-                                                            // Handle the page selection.
-                                                            var formSelect = document.getElementById('page-select');
-                                                            formSelect.addEventListener("change", function () {
-                                                                setDisplay(this.value);
-                                                            });
-
-                                                            setDisplay('page');
-                                                        </script>
-
-
-                                                    </div>
-                                                    <script async defer
-                                                            src="https://buttons.github.io/buttons.js"></script>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- [ page content ] end -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- [ style Customizer ] start -->
-                <div id="styleSelector">
-                </div>
-                <!-- [ style Customizer ] end -->
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
             </div>
         </div>
     </div>
 </div>
-<!-- Warning Section Starts -->
-<!-- Older IE warning message -->
-<!--[if lt IE 10]>
-<div th:include="fragment/ie-warning" class="ie-warning"></div>
-<![endif]-->
-<!-- Warning Section Ends -->
-<!-- Required Jquery -->
-<script type="text/javascript"
-        src="https://colorlib.com/polygon/admindek/files/bower_components/jquery/js/jquery.min.js"></script>
-<script type="text/javascript"
-        src="https://colorlib.com/polygon/admindek/files/bower_components/jquery-ui/js/jquery-ui.min.js"></script>
-<script type="text/javascript"
-        src="https://colorlib.com/polygon/admindek/files/bower_components/popper.js/js/popper.min.js"></script>
-<script type="text/javascript"
-        src="https://colorlib.com/polygon/admindek/files/bower_components/bootstrap/js/bootstrap.min.js"></script>
-<!-- waves js -->
-<script src="https://colorlib.com/polygon/admindek/files/assets/pages/waves/js/waves.min.js"></script>
-<!-- jquery slimscroll js -->
-<script type="text/javascript"
-        src="https://colorlib.com/polygon/admindek/files/bower_components/jquery-slimscroll/js/jquery.slimscroll.js"></script>
-<script src="https://colorlib.com/polygon/admindek/files/assets/js/pcoded.min.js"></script>
-<script src="https://colorlib.com/polygon/admindek/files/assets/js/vertical/vertical-layout.min.js"></script>
-<!-- Custom js -->
-<script type="text/javascript" src="https://colorlib.com/polygon/admindek/files/assets/js/script.min.js"></script>
 
-<script>
-    Formio.icons = 'fontawesome';
-    Formio.createForm(document.getElementById('formio'), [(${page.schema})], {
-        readOnly: true,
-        //    viewAsHtml: true
-    });
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
-</script>
+<!-- Core plugin JavaScript-->
+<script th:src="@{vendor/jquery-easing/jquery.easing.min.js}"></script>
 
+<!-- Custom scripts for all pages-->
+<script th:src="@{js/sb-admin-2.min.js}"></script>
 
 </body>
+
 </html>
