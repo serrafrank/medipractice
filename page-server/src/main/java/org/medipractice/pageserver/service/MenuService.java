@@ -19,7 +19,7 @@ public class MenuService {
     }
 
     public List<Menu> findAll(){
-        return menuRepository.findAllByOrderBySortAsc();
+        return menuRepository.findAllByRootIsTrueOrderBySortAsc();
     }
 
     public void save(Menu menu){

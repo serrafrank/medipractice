@@ -28,6 +28,8 @@ public class Menu {
     @Column(nullable = false)
     private int sort;
 
+    private boolean root;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = javax.persistence.CascadeType.ALL)
     private List<Menu> children;
 

@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+    <ul class="pcoded-submenu" >
+        <li th:class="${menu.children} == null ? pcoded-hasmenu : '' "  th:each="finalmenu : ${submenu.children}">
+            <a th:href="${finalmenu.page} ? @{finalmenu.page} : " class="waves-effect waves-dark">
+                <span class="pcoded-mtext" th:text="${finalmenu.label}"></span>
+            </a>
+        </li>
+    </ul>
+</html>

@@ -10,6 +10,6 @@ import java.util.UUID;
 @Repository
 public interface MenuRepository extends CrudRepository<Menu, UUID> {
 
-    List<Menu> findAllByOrderBySortAsc();
+    List<Menu> findAllByRootIsTrueOrderBySortAsc();
 
 }

@@ -53,8 +53,10 @@
         <div  class="pcoded-main-container">
             <div class="pcoded-wrapper">
                 <!-- [ navigation menu ] start -->
-                <nav th:include="fragment/menu"  class="pcoded-navbar">
 
+                <nav class="pcoded-navbar">
+                    <div class="nav-list" th:include="fragment/menu"  th:with="menu=${menu}"  >
+                    </div>
                 </nav>
                 <!-- [ navigation menu ] end -->
                 <div class="pcoded-content">

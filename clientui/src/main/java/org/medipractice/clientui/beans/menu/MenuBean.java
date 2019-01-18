@@ -18,6 +18,8 @@ public class MenuBean {
 
     private int order;
 
+    private boolean root;
+
     private List<MenuBean> children;
 
 }
