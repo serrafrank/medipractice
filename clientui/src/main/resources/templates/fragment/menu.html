@@ -1,30 +1,12 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<div class="pcoded-inner-navbar main-menu">
-
-    <div class="pcoded-navigation-label">Navigation</div>
-    <ul class="pcoded-item pcoded-left-item">
+<div class="pcoded-inner-navbar main-menu" th:each="menu : ${menu_list}">
+    <div class="pcoded-navigation-label" th:text="${menu.label}"></div>
+    <ul class="pcoded-item pcoded-left-item" th:each="submenu : ${menu.children}">
         <li class="pcoded-hasmenu">
-
-            <a href="javascript:void(0)" class="waves-effect waves-dark">
-                <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
-                <span class="pcoded-mtext" th:text="${menu.label}"></span>
+            <a th:href="@{(${submenu.page} != null AND ${submenu.page} != '' ? ${submenu.page} : 'javascript:void(0)')}" class="waves-effect waves-dark">
+                <span class="pcoded-micon"><i class="feather" th:classappend="${submenu.icon}"></i></span>
+                <span class="pcoded-mtext" th:text="${submenu.label}"></span>
             </a>
-
-                <ul class="pcoded-submenu" th:fragment="submenu">
-                    <li th:class="${!menu.children.empty}? pcoded-hasmenu : ''" th:each="submenu : ${menuItemsList}">
-                        <a th:href="${submenu.page}? ${submenu.page} : javascript:void(0)" class="waves-effect waves-dark">
-                            <span class="pcoded-mtext" th:text="${submenu.label}"></span>
-                        </a>
-                        <i  th:replace="menu/fragment :: submenu" th:with="menu=${submenu.children}"></i>
-                    </li>
-                </ul>
-            </section>
-
+            <div  th:with="menu = ${submenu}" th:include="fragment/menu/submenu" th:remove="tag" />
         </li>
     </ul>
 </div>
-
-
-
-</html>

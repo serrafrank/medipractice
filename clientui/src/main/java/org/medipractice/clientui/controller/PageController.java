@@ -24,7 +24,7 @@ public class PageController {
     }
 
 
-    @ModelAttribute("menu")
+    @ModelAttribute("menu_list")
     private List<MenuBean> getMenu(){
         return pageProxy.findMenu();
     }

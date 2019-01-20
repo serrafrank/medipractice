@@ -10,7 +10,7 @@ public class MenuBean {
 
     private UUID id;
 
-    private String name;
+    private String label;
 
     private String icon;
 

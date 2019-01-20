@@ -46,7 +46,7 @@
     <div class="pcoded-overlay-box"></div>
     <div class="pcoded-container navbar-wrapper">
         <!-- [ Header ] start -->
-        <nav th:include="fragment/header" class="navbar header-navbar pcoded-header">
+        <nav th:include="fragment/header" class="navbar header-navbar pcoded-header[header-theme="theme6"]>
         </nav>
         <!-- [ Header ] end -->
 
@@ -55,7 +55,7 @@
                 <!-- [ navigation menu ] start -->
 
                 <nav class="pcoded-navbar">
-                    <div class="nav-list" th:include="fragment/menu"  th:with="menu=${menu}"  >
+                    <div class="nav-list" th:include="fragment/menu"  th:with="menu_list=${menu_list}"  >
                     </div>
                 </nav>
                 <!-- [ navigation menu ] end -->
