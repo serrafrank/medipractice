@@ -1,14 +1,10 @@
 spring:
     application:
-        name: gateway-server
+        name: ${project.name}
     cloud:
         config:
             uri: http://localhost:9101
-    datasource:
-        initialization-mode: always
-        password: 123456
-        url: jdbc:postgresql://localhost:5432/medipractice
-        username: postgres
+
     jpa:
         hibernate:
             ddl-auto: create

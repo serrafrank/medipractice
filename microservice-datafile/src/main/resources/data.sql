@@ -1,0 +1,9 @@
+INSERT INTO data_file (id,  archived_at, archived_by, created_at, created_by, updated_at, updated_by) VALUES ('eb1ad49a-703b-44dd-92af-6312da341896',  null, null, '2018-12-14 13:27:05.504000', 'System', '2018-12-14 13:27:05.504000', 'System');
+
+INSERT INTO data_object (id, data_file_id, type) VALUES ('328d3ce5-49b6-46f1-a613-9d783d8b3986', null, 'lastname');
+INSERT INTO data_object (id, data_file_id, type) VALUES ('8fe7d92c-92bf-4e20-9da5-0a011d44384f', null, 'firstname');
+
+INSERT INTO data_value (id,  archived_at, archived_by, created_at, created_by, updated_at, updated_by, data_object_id, date, parent_id, value) VALUES ('fc644f3d-8f63-4501-be9b-7c11f4c837dd',  null, null, '2018-12-14 13:27:05.630000', 'System', '2018-12-14 13:27:05.630000', 'System', null, '2018-12-14 13:27:05.422000', 'ac0ad100-1560-49ec-9b08-a6817f1d2e57', 'Ducobut');
+INSERT INTO data_value (id,  archived_at, archived_by, created_at, created_by, updated_at, updated_by, data_object_id, date, parent_id, value) VALUES ('bb263219-12d4-46e6-b1e0-78caa63e97c4',  null, null, '2018-12-14 13:27:05.551000', 'System', '2018-12-14 13:27:05.654000', 'System', null, '2018-12-14 13:27:05.422000', null, 'Jean');
+INSERT INTO data_value (id,  archived_at, archived_by, created_at, created_by, updated_at, updated_by, data_object_id, date, parent_id, value) VALUES ('bb854f97-afa6-4cc6-b233-c19d39cc1a3e',  null, null, '2018-12-14 13:27:05.550000', 'System', '2018-12-14 13:27:05.655000', 'System', null, '2018-12-14 13:27:05.422000', null, 'Marc');
+INSERT INTO data_value (id,  archived_at, archived_by, created_at, created_by, updated_at, updated_by, data_object_id, date, parent_id, value) VALUES ('ac0ad100-1560-49ec-9b08-a6817f1d2e57',  null, null, '2018-12-14 13:27:05.549000', 'System', '2018-12-14 13:27:05.655000', 'System', null, '2018-12-14 13:27:05.422000', null, 'Ducobut');

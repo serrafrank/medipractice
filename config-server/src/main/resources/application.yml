@@ -2,7 +2,7 @@ server:
     port: 9101
 spring:
     application:
-        name: config-server
+        name: ${project.name}
     cloud:
         config:
             server:
