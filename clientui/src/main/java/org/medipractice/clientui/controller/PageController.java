@@ -30,13 +30,16 @@ public class PageController {
     }
 
 
+
+    @RequestMapping("/")
+    public String index( Model model) {
+        model.addAttribute("page", pageProxy.getPage("index"));
+        return "index";
+    }
+
     @RequestMapping("/{formName}")
-    public String index(@PathVariable @ModelAttribute("formName")  String formName, Model model) {
-        if(formName.isEmpty())
-            formName = "index";
-
+    public String index(@PathVariable @ModelAttribute("formName") String formName, Model model) {
         model.addAttribute("page", pageProxy.getPage(formName));
-
         return "index";
     }
 

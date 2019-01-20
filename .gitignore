@@ -32,3 +32,4 @@ soapui-errors.log
 soapui.log
 
 */target
+*/.mvn
