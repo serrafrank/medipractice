@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.UUID;
 
 
-@FeignClient(name = "zuul-server")
+@FeignClient(name = "gateway-server")
 @RibbonClient(name = "microservice-datafile")
 public interface DataProxy {
 

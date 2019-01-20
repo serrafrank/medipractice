@@ -1,0 +1,20 @@
+spring:
+    application:
+        name: gateway-server
+    cloud:
+        config:
+            uri: http://localhost:9101
+    datasource:
+        initialization-mode: always
+        password: 123456
+        url: jdbc:postgresql://localhost:5432/medipractice
+        username: postgres
+    jpa:
+        hibernate:
+            ddl-auto: create
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+                jdbc:
+                    lob:
+                        non_contextual_creation: true

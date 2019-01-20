@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "zuul-server")
+@FeignClient(name = "gateway-server")
 @RibbonClient(name = "microservice-page")
 public interface PageProxy {
 
