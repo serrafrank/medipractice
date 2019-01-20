@@ -22,7 +22,8 @@ FILE=$SERVICE_TARGET_DIR/$SERVICE*-exec.jar
 if [ -f $FILE ]
 then
     . ./bash/env-$SERVICE*.sh
-    ./$FILE start
+    java -jar ./$FILE &
+    sleep 10
 else
     echoRed "the jar file does not exist ($FILE)"
 fi

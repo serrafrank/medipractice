@@ -6,7 +6,7 @@ set -e
 ./stop.sh config-server
 ./stop.sh discovery-server
 ./stop.sh gateway-server
-./stop.sh microservice-datafile
-./stop.sh microservice-page
+./stop.sh datafile-service
+./stop.sh page-service
 ./stop.sh clientui
 #./stop.sh oauth-server

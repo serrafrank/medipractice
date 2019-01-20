@@ -6,6 +6,6 @@ set -e
 ./start.sh config-server
 ./start.sh discovery-server
 ./start.sh gateway-server
-./start.sh microservice-datafile
-./start.sh microservice-page
+./start.sh datafile-service
+./start.sh page-service
 ./start.sh clientui

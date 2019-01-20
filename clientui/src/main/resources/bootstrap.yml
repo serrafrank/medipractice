@@ -1,6 +1,6 @@
 spring:
     application:
-        name: ${project.name}
+        name: clientui
     cloud:
         config:
             uri: http://localhost:9101

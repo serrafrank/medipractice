@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export APP_NAME=microservice-page
+export APP_NAME=datafile-service
 . ./bash/env.sh
 
 export JAVA_OPTS=-Xmx1024M

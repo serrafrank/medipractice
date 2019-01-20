@@ -8,7 +8,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients("org.medipractice.clientui")
+@EnableFeignClients
 public class ClientuiApplication {
 
 	public static void main(String[] args) {

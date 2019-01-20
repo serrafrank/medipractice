@@ -20,7 +20,7 @@
 # chkconfig:         {{initInfoChkconfig:2345 99 01}}
 ### END INIT INFO
 
-. env-microservice-datafile.sh
+. env-datafile-service.sh
 
 # ANSI Colors
 echoRed() { echo $'\e[0;31m'"$1"$'\e[0m'; }

@@ -5,7 +5,6 @@ spring:
         name: config-server
     cloud:
         config:
-            label: dev
             server:
                 git:
                     uri: https://github.com/SERRAFrank/medipractice-repo.git

@@ -3,22 +3,20 @@ package org.medipractice.clientui.proxies;
 import org.medipractice.clientui.beans.data.DataFileBean;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 
-@FeignClient(name = "zuul-server")
-@RibbonClient(name = "microservice-datafile")
+@FeignClient(name = "gateway-server")
+@RibbonClient(name = "datafile-service")
+@RequestMapping("datafile-service")
 public interface DataProxy {
 
-    @GetMapping(value = "/microservice-datafile/datafile/{id}")
-    DataFileBean getDataFile(@PathVariable UUID id);
+    @GetMapping(value = "datafile/{id}")
+    DataFileBean getDataFile(@PathVariable(name = "id") UUID id);
 
-    @PostMapping(value = "/microservice-datafile/datafile/")
+    @PostMapping(value = "datafile/")
     DataFileBean postDataFile(@RequestBody DataFileBean dataFile);
 
 }
