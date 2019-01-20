@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <prerequisites>
+        <maven>3.2.5</maven>
+    </prerequisites>
+
+    <groupId>org.medipractice</groupId>
+    <artifactId>medipractice</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <spring-boot.version>2.1.1.RELEASE</spring-boot.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <spring-cloud.version>Greenwich.RC1</spring-cloud.version>
+    </properties>
+
+    <modules>
+        <!-- backends-->
+        <module>datafile-service</module>
+        <module>microservice-page</module>
+        <!-- API Gateway (eureka&zuul)-->
+        <module>discovery-server</module>
+        <module>config-server</module>
+        <module>gateway-server</module>
+        <module>clientui</module>
+
+        <!--         Oauth2 server
+                <module>oauth-server</module>    External account : In Progress
+                <module>uaa-server</module>      login/mdp-->
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <executions>
+                        <execution>
+                            <!-- make a "Spring-boot" executable JAR-->
+                            <id>repackage</id>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+
+                        <execution>
+                            <!-- add build info for Actuator -->
+                            <id>generate build info</id>
+                            <goals>
+                                <goal>build-info</goal>
+                            </goals>
+                            <configuration>
+                                <additionalProperties>
+                                    <encoding.source>${project.build.sourceEncoding}</encoding.source>
+                                    <encoding.reporting>${project.reporting.outputEncoding}</encoding.reporting>
+                                </additionalProperties>
+                            </configuration>
+                        </execution>
+
+                    </executions>
+                    <configuration>
+                        <!-- executable mode for build & packaging -->
+                        <classifier>exec</classifier>
+                        <executable>true</executable>
+                        <!-- auto reload mode for dev -->
+                        <fork>true</fork>
+                    </configuration>
+                </plugin>
+
+                <!-- replace maven delimiter/placeholder :
+                    @maven@ vs ${spring-boot} -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.7</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.maven.shared</groupId>
+                            <artifactId>maven-filtering</artifactId>
+                            <version>1.3</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
+                <!-- git info for Actuator -->
+                <plugin>
+                    <groupId>pl.project13.maven</groupId>
+                    <artifactId>git-commit-id-plugin</artifactId>
+                    <version>2.1.11</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>revision</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <verbose>true</verbose>
+                        <dateFormat>yyyy-MM-dd'T'HH:mm:ssZ</dateFormat>
+                        <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                        <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties
+                        </generateGitPropertiesFilename>
+                    </configuration>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <!-- JAVA 8 -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+        </repository>
+    </repositories>
+
+</project>
