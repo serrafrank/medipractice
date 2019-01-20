@@ -1,0 +1,11 @@
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+spring:
+    application:
+        name: datafile-service
+    cloud:
+        config:
+            uri: http://localhost:9101
