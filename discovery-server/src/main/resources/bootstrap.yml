@@ -5,10 +5,7 @@ management:
                 include: '*'
 spring:
     application:
-        name: ${project.name}
+        name: discovery-server
     cloud:
         config:
             uri: http://localhost:9101
-
-logging:
-    file: logs/@project.name@.log
