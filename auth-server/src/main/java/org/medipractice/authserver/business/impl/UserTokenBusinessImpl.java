@@ -17,11 +17,15 @@ import java.util.Optional;
 @Service(value = "userTokenBusiness")
 public class UserTokenBusinessImpl implements UserTokenBusiness, UserDetailsService {
 
+	private final UserTokenRepository userTokenRepository;
+
 	@Autowired
-	private UserTokenRepository userTokenRepository;
+	public UserTokenBusinessImpl(UserTokenRepository userTokenRepository) {
+		this.userTokenRepository = userTokenRepository;
+	}
 
 
-    @Override
+	@Override
     public Optional<UserToken> getByUsername(String username) {
     	return userTokenRepository.findByUsername(username);
     }

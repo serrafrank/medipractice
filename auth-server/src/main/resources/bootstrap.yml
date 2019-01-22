@@ -1,13 +1,12 @@
 management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
+    endpoints:
+        web:
+            exposure:
+                include: '*'
 spring:
-  application:
-    name: auth-server
-
-  cloud:
-    config:
-      uri: http://localhost:9101
+    application:
+        name: auth-server
+    cloud:
+        config:
+            uri: http://localhost:9101
 

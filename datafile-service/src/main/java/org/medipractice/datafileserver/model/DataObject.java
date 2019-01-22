@@ -21,7 +21,7 @@ import java.util.UUID;
 public class DataObject {
     @Id
     @JsonIgnore
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     private String type;

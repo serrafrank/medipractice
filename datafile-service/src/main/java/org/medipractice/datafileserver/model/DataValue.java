@@ -18,7 +18,7 @@ import java.util.UUID;
 public class DataValue extends Auditable<String> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id ;
 
     @JsonIgnore
