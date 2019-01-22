@@ -15,7 +15,7 @@ public class Menu {
 
     @Id
     @Getter
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
 
     @Column(unique = true, nullable = false)

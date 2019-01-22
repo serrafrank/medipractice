@@ -15,7 +15,7 @@ import java.util.*;
 public class DataFile extends Auditable<String> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
