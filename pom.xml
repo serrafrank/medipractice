@@ -32,10 +32,7 @@
         <module>config-server</module>
         <module>gateway-server</module>
         <module>clientui</module>
-
-        <!--         Oauth2 server
-                <module>oauth-server</module>    External account : In Progress
-                <module>uaa-server</module>      login/mdp-->
+        <module>auth-server</module>
     </modules>
 
     <dependencyManagement>
