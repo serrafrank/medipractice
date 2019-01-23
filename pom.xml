@@ -19,22 +19,23 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <docker.skip.build>false</docker.skip.build>
         <spring-cloud.version>Greenwich.RC1</spring-cloud.version>
+        <docker.skip.build>false</docker.skip.build>
+        <mybatis.spring.version>1.3.0</mybatis.spring.version>
+        <dbunit.version>2.5.3</dbunit.version>
+        <jwt.version>2.2.0</jwt.version>
+        <oval.version>1.85</oval.version>
     </properties>
 
     <modules>
-        <!-- backends-->
+        <module>config-server</module>
+        <module>discovery-server</module>
+        <module>gateway-server</module>
+        <module>auth-server</module>
         <module>datafile-service</module>
         <module>page-service</module>
-        <!-- API Gateway (eureka&zuul)-->
-        <module>discovery-server</module>
-        <module>config-server</module>
-        <module>gateway-server</module>
         <module>clientui</module>
-
-        <!--         Oauth2 server
-                <module>oauth-server</module>    External account : In Progress
-                <module>uaa-server</module>      login/mdp-->
     </modules>
 
     <dependencyManagement>
