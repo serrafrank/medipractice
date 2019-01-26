@@ -1,6 +1,5 @@
 package org.medipractice.authserver.config;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +18,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-@Slf4j
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {

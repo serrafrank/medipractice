@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @SuppressWarnings("serial")
 @ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
-public class NotSupportedException extends GenericException {
+public class NotSupportedException extends  GenericException {
 
         public NotSupportedException() {
             super("Not Supported Exception");
