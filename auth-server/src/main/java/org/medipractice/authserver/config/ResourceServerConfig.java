@@ -26,7 +26,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .cors().and()
                 .anonymous().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll()
                 .antMatchers(ANT_MATCHERS).authenticated()
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
