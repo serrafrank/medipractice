@@ -1,4 +1,4 @@
-package org.medipractice.authserver.security;
+package org.medipractice.authserver.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,9 +9,10 @@ import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHand
 
 @Configuration
 @EnableResourceServer
-public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
-
-	private static final String RESOURCE_ID = "my_rest_api";
+public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+	private static final String RESOURCE_ID = "auth_server";
+	private static final String ANT_MATCHERS = "/**"; 
+	
 	
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) {
@@ -20,12 +21,11 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		http.
-		anonymous().disable()
-		.requestMatchers().antMatchers("/user*/**")
-		.and().authorizeRequests()
-		.antMatchers("/user*/**").permitAll()
-		.and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
+        http
+        	.cors().and()
+        	.anonymous().disable()
+            .authorizeRequests()
+            .antMatchers(ANT_MATCHERS).authenticated()
+            .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
 	}
-
 }
