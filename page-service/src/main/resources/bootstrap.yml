@@ -1,11 +1,15 @@
-management:
-    endpoints:
-        web:
-            exposure:
-                include: '*'
 spring:
     application:
-        name: page-business
+        name: page-service
     cloud:
         config:
             uri: http://localhost:9101
+
+    security:
+        user:
+            name: root
+            password: password
+        oauth2:
+            resource:
+                loadBalanced: true
+                userInfoUri: http://localhost:9090/oauth/token/user

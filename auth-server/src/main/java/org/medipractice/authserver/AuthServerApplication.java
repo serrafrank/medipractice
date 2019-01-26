@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableTransactionManagement
 @EnableJpaRepositories
-@EnableJpaAuditing
 @RefreshScope
 @EnableDiscoveryClient
 public class AuthServerApplication {
