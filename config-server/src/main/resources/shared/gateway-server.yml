@@ -1,0 +1,15 @@
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:9102/eureka/
+server:
+    port: 9004
+
+
+zuul:
+    routes:
+        auth-server:
+            path: /auth/**
+            sensitive-headers: 'Cookie,Set-Cookie'
+            service-id: auth-server
+            strip-prefix: false

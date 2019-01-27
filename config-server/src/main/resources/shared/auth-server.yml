@@ -1,0 +1,27 @@
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:9102/eureka/
+server:
+    port: 9090
+
+spring:
+    datasource:
+        initialization-mode: always
+        url: jdbc:postgresql://localhost:5432/medipractice
+        username: postgres
+        password: 123456
+    jpa:
+        hibernate:
+            ddl-auto: create
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+                jdbc:
+                    lob:
+                        non_contextual_creation: true
+
+oauth2:
+    client:
+        id: medipractice
+        secret: medipractice_secret
