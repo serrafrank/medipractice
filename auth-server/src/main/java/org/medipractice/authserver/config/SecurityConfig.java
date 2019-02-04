@@ -1,53 +1,47 @@
 package org.medipractice.authserver.config;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.medipractice.common.JwtAuthenticationConfig;
-import org.medipractice.common.JwtUsernamePasswordAuthenticationFilter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+
+@Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Autowired JwtAuthenticationConfig config;
+    @Autowired
+    private UserDetailsService userDetailsServiceImpl;
 
     @Bean
-    public JwtAuthenticationConfig jwtConfig() {
-        return new JwtAuthenticationConfig();
-    }
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("admin").password("{noop}admin").roles("ADMIN", "USER").and()
-                .withUser("user").password("{noop}user").roles("USER");
+    public PasswordEncoder passwordEncoder() {
+        return new MyBCryptPasswordEncoder();
     }
 
     @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                //.cors().and()
                 .csrf().disable()
-                .logout().disable()
-                .formLogin().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                    .anonymous()
-                .and()
-                    .exceptionHandling().authenticationEntryPoint(
-                            (req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
-                .and()
-                    .addFilterAfter(new JwtUsernamePasswordAuthenticationFilter(config, authenticationManager()),
-                            UsernamePasswordAuthenticationFilter.class)
+                .anonymous().disable()
                 .authorizeRequests()
-                    .antMatchers(config.getUrl()).permitAll()
-                    .anyRequest().authenticated();
+                .antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder());
+    }
+
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }
-

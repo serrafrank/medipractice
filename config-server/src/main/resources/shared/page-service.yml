@@ -16,3 +16,10 @@ spring:
                 jdbc:
                     lob:
                         non_contextual_creation: true
+
+security:
+    oauth2:
+        resource:
+            id: page-service
+            user-info-uri: http://localhost:9090/user
+            prefer-token-info: false

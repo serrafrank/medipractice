@@ -33,7 +33,6 @@
         <module>datafile-service</module>
         <module>page-service</module>
 
-        <module>common</module>
 
         <module>clientui</module>
     </modules>
@@ -59,12 +58,6 @@
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
                 <version>0.7.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.medipractice</groupId>
-                <artifactId>common</artifactId>
-                <version>${parent.version}</version>
             </dependency>
 
         </dependencies>
