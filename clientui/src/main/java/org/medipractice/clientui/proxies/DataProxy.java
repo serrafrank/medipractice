@@ -9,14 +9,13 @@ import java.util.UUID;
 
 
 @FeignClient(name = "gateway-server")
-@RibbonClient(name = "datafile-business")
-@RequestMapping("datafile-service")
+@RequestMapping("api/datafile")
 public interface DataProxy {
 
-    @GetMapping(value = "datafile/{id}")
+    @GetMapping(value = "{id}")
     DataFileBean getDataFile(@PathVariable(name = "id") UUID id);
 
-    @PostMapping(value = "datafile/")
+    @PostMapping(value = "/")
     DataFileBean postDataFile(@RequestBody DataFileBean dataFile);
 
 }

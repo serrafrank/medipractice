@@ -54,10 +54,7 @@
             <div class="pcoded-wrapper">
                 <!-- [ navigation menu ] start -->
 
-                <nav class="pcoded-navbar">
-                    <div class="nav-list" th:include="fragment/menu"  th:with="menu_list=${menu}"  >
-                    </div>
-                </nav>
+                <div th:if="${menu}" th:include="fragment/menu"  th:with="menu_list=${menu}"  th:remove="tag" />
                 <!-- [ navigation menu ] end -->
                 <div class="pcoded-content">
                     <!-- [ breadcrumb ] start -->

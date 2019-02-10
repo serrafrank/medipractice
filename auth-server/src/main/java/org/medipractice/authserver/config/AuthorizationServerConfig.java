@@ -25,9 +25,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     static final String WEBAPP_ID = "webapp";
     static final String GRANT_TYPE_PASSWORD = "password";
+    static final String CLIENT_CREDENTIALS = "client_credentials";
     static final String AUTHORIZATION_CODE = "authorization_code";
     static final String REFRESH_TOKEN = "refresh_token";
     static final String IMPLICIT = "implicit";
+    static final String SCOPE = "clientui";
 
 
     @Autowired
@@ -45,7 +47,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
                 .authenticationManager(authenticationManager)
-                .userDetailsService(userDetailsServiceImpl)//若无，refresh_token会有UserDetailsService is required错误
+                .userDetailsService(userDetailsServiceImpl)
                 .tokenStore(tokenStore());
     }
 
@@ -62,7 +64,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         clients.inMemory()
                 .withClient(CLIENT_ID)
                 .secret(CLIENT_SECRET)
-                .authorizedGrantTypes(GRANT_TYPE_PASSWORD, AUTHORIZATION_CODE, REFRESH_TOKEN)
+                .scopes(SCOPE)
+                .authorizedGrantTypes(GRANT_TYPE_PASSWORD, AUTHORIZATION_CODE, REFRESH_TOKEN, CLIENT_CREDENTIALS)
                 .and()
                 .withClient(WEBAPP_ID)
                 .authorizedGrantTypes(IMPLICIT);

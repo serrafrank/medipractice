@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @FeignClient(name = "gateway-server")
-@RequestMapping("page-service")
-@RibbonClient(name = "page-business")
+@RequestMapping("api/page")
 public interface PageProxy {
 
     @GetMapping(value = "page/{name}")
