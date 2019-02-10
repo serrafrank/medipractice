@@ -1,0 +1,29 @@
+server:
+    port: 9090
+
+
+spring:
+    datasource:
+        initialization-mode: always
+        username: postgres
+        password: 123456
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:5432/medipractice
+    jpa:
+        hibernate:
+            ddl-auto: create
+        show-sql: true
+    redis:
+        host: localhost
+        port: 6379
+
+
+security:
+    oauth2:
+        resource:
+            filter-order: 3
+
+medipractice:
+    client:
+        id: 'medipractice'
+        secret: 'medipractice'

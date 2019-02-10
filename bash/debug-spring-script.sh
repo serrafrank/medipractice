@@ -80,7 +80,7 @@ echoGreen "LG: $LOG_FOLDER"
 
 
 # Set up defaults
-[[ -z "$MODE" ]] && MODE="{{mode:auto}}" # modes are "auto", "service" or "run"
+[[ -z "$MODE" ]] && MODE="{{mode:auto}}" # modes are "auto", "business" or "run"
 [[ -z "$USE_START_STOP_DAEMON" ]] && USE_START_STOP_DAEMON="{{useStartStopDaemon:true}}"
 echoGreen "MODE: $MODE"
 
@@ -130,7 +130,7 @@ echoGreen "init_script: $init_script"
 
 # Determine the script mode
 action="run"
-if [[ "$MODE" == "auto" && -n "$init_script" ]] || [[ "$MODE" == "service" ]]; then
+if [[ "$MODE" == "auto" && -n "$init_script" ]] || [[ "$MODE" == "business" ]]; then
   echoYellow "here"
   action="$1"
   shift

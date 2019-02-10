@@ -1,0 +1,9 @@
+eureka:
+    client:
+        fetchRegistry: false
+        registerWithEureka: false
+        serviceUrl:
+            defaultZone: http://localhost:9102/eureka/
+
+server:
+    port: 9102

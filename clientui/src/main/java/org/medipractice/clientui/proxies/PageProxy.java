@@ -13,7 +13,7 @@ import java.util.List;
 
 @FeignClient(name = "gateway-server")
 @RequestMapping("page-service")
-@RibbonClient(name = "page-service")
+@RibbonClient(name = "page-business")
 public interface PageProxy {
 
     @GetMapping(value = "page/{name}")

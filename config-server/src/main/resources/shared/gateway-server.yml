@@ -1,0 +1,34 @@
+server:
+    port: 9004
+
+
+zuul:
+    routes:
+        auth-server:
+            path: /auth/**
+            service-id: auth-server
+            sensitiveHeaders: "*"
+
+        page-service:
+            path: /api/page/**
+            service-id: page-service
+            sensitiveHeaders: "*"
+
+        datafile-service:
+            path: /api/datafile/**
+            service-id: datafile-service
+            sensitiveHeaders: "*"
+    add-proxy-headers: true
+
+security:
+    oauth2:
+        client:
+            access-token-uri: http://localhost:9004/auth/oauth/token
+            user-authorization-uri: http://localhost:9004/auth/oauth/authorize
+            client-id: webapp
+        resource:
+            user-info-uri: http://localhost:9004/auth/user
+            prefer-token-info: false
+
+
+

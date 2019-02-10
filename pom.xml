@@ -20,19 +20,21 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <spring-cloud.version>Greenwich.RC1</spring-cloud.version>
-        <version.spring-security-oauth2>2.2.3.RELEASE</version.spring-security-oauth2>
+        <docker.skip.build>false</docker.skip.build>
+        <jwt.version>2.2.0</jwt.version>
+        <openfeign.version>2.0.0.M1</openfeign.version>
     </properties>
 
     <modules>
-        <!-- backends-->
+        <module>config-server</module>
+        <module>discovery-server</module>
+        <module>gateway-server</module>
+        <module>auth-server</module>
         <module>datafile-service</module>
         <module>page-service</module>
-        <!-- API Gateway (eureka&zuul)-->
-        <module>discovery-server</module>
-        <module>config-server</module>
-        <module>gateway-server</module>
+
+
         <module>clientui</module>
-        <module>auth-server</module>
     </modules>
 
     <dependencyManagement>
@@ -51,6 +53,11 @@
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>0.7.0</version>
             </dependency>
 
         </dependencies>
