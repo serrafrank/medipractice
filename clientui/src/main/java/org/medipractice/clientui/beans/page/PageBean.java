@@ -1,4 +1,4 @@
-package org.medipractice.clientui.beans;
+package org.medipractice.clientui.beans.page;
 
 import lombok.Data;
 
@@ -12,6 +12,8 @@ public class PageBean {
     private static String name;
 
     private String title;
+
+    private ModuleBean module;
 
     private String icon;
 

@@ -1,4 +1,4 @@
-package org.medipractice.clientui.beans.menu;
+package org.medipractice.clientui.beans.page;
 
 import lombok.Data;
 

@@ -6,7 +6,6 @@ import org.medipractice.clientui.proxies.PageProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,28 +31,20 @@ public class PageController {
 
 
 
-    @GetMapping("/")
-    public String index( Model model) {
-        model.addAttribute("page", pageProxy.getPage("index"));
+    @RequestMapping("/")
+    public String index(Model model) {
+        model.addAttribute("page", pageProxy.getIndex());
         return "index";
     }
 
-//    @GetMapping("/{formName}")
-//    public String index(@PathVariable @ModelAttribute("formName") String formName, Model model) {
-//        model.addAttribute("page", pageProxy.getPage(formName));
-//        return "index";
-//    }
-//
-//    @GetMapping("/{formName}/edit")
-//    public String edit(@PathVariable String formName, Model model) {
-//        if(formName.isEmpty())
-//            formName = "index";
-//
-//        model.addAttribute("page", pageProxy.getPage(formName));
-//        return "edit";
-//    }
+    @RequestMapping("{module}/{name}/{action}")
+    public String index(@PathVariable String module, @PathVariable String name, @PathVariable String action, Model model) {
 
+        if (name == null) name = "index";
+        if (action == null) action = "read";
 
+        model.addAttribute("page", pageProxy.getPage(module, name));
+        return action;
+    }
 
-
-}
+}}

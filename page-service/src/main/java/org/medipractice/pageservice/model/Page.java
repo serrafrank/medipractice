@@ -17,12 +17,12 @@ import java.util.UUID;
 public class Page {
 
     @Id
-    @Getter
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Getter
-    @Column(unique = true)
+    @ManyToOne
+    private Module module;
+
     private String name;
 
     private String title;

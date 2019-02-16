@@ -20,9 +20,15 @@ public class PageController {
         this.pageService = pageService;
     }
 
-    @GetMapping(value = "{name}")
-    public Page getPage(@PathVariable String name) {
-        return pageService.findByName(name);
+    @GetMapping
+    public Page getIndex() {
+        return pageService.findByName("homepage", "index");
+
+    }
+
+    @GetMapping(value = "{module}/{name}")
+    public Page getPage(@PathVariable String module, @PathVariable String name) {
+        return pageService.findByName(module, name);
 
     }
 

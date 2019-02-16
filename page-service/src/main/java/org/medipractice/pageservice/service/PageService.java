@@ -35,8 +35,8 @@ public class PageService {
         this.fieldRepository = fieldRepository;
     }
 
-    public Page findByName(String name) {
-        Page page = pageRepository.findByName(name).orElseThrow(() -> new ResourceNotFoundException("Name not found : " + name));
+    public Page findByName(String module, String name) {
+        Page page = pageRepository.findByModule_NameAndName(module, name).orElseThrow(() -> new ResourceNotFoundException("Name not found : " + module + " / " + name));
         JSONObject json = new JSONObject(page.getSchema());
         page.setSchema( buildForms(json).toString() );
         return page;

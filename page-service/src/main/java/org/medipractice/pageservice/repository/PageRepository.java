@@ -11,6 +11,6 @@ import java.util.UUID;
 @Repository
 public interface PageRepository extends CrudRepository<Page, UUID> {
 
-    Optional<Page> findByName(@Param("name") String name);
+    Optional<Page> findByModule_NameAndName(@Param("Module") String module, @Param("name") String name);
 
 }
