@@ -1,7 +1,7 @@
 package org.medipractice.clientui.config;
 
 
-import org.medipractice.clientui.beans.interceptor.AuthInterceptor;
+import org.medipractice.clientui.interceptor.AuthInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

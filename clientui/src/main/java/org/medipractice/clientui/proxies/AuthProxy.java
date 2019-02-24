@@ -23,5 +23,5 @@ public interface AuthProxy {
     );
 
     @GetMapping(value = "current")
-    void GetCurrent();
+    void GetCurrent(@RequestHeader("X-Auth-Token") String token);
 }

@@ -13,9 +13,9 @@ import java.util.UUID;
 public interface DataProxy {
 
     @GetMapping(value = "{id}")
-    DataFileBean getDataFile(@PathVariable(name = "id") UUID id);
+    DataFileBean getDataFile(@RequestHeader("X-Auth-Token") String token, @PathVariable(name = "id") UUID id);
 
     @PostMapping(value = "/")
-    DataFileBean postDataFile(@RequestBody DataFileBean dataFile);
+    DataFileBean postDataFile(@RequestHeader("X-Auth-Token") String token, @RequestBody DataFileBean dataFile);
 
 }

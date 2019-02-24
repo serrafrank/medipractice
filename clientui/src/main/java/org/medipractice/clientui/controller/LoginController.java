@@ -19,13 +19,16 @@ public class LoginController {
 
     @Autowired
     public LoginController(AuthProxy authProxy) {
+        super();
         this.authProxy = authProxy;
     }
 
     @GetMapping("/login")
-    public String getLogin(HttpSession request , Model model) {
+    public String getToken(HttpSession request , Model model) {
 
-        request.setAttribute("token" , authProxy.PostLogin("password", "medipractice", "medipractice", "admin", "admin", "clientui"));
+        TokenBean tokenBean = authProxy.PostLogin("password", "medipractice", "medipractice", "admin", "admin", "clientui");
+
+        request.setAttribute("token" , tokenBean.getTokenType() + " " + tokenBean.getAccessToken()  );
 
         model.addAttribute("text", ((TokenBean) request.getAttribute("token")).getAccessToken());
 
@@ -33,12 +36,5 @@ public class LoginController {
         return "login";
     }
 
-    /*
-    @PostMapping("/login")
-    public void postLogin() {
 
-
-        return "login";
-    }
-    */
 }

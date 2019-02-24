@@ -1,4 +1,4 @@
-package org.medipractice.clientui.beans.interceptor;
+package org.medipractice.clientui.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.medipractice.clientui.beans.TokenBean;
@@ -23,12 +23,23 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws Exception {
 
-        TokenBean tokenBean = (TokenBean) httpSession.getAttribute("token");
+        String token = httpSession.getAttribute("token").toString();
 
-        if (tokenBean != null) {
-            response.setHeader("Authorization", tokenBean.getTokenType() + " " + tokenBean.getAccessToken());
-            log.info("Authorization : " + tokenBean.getTokenType() + " " + tokenBean.getAccessToken());
+        log.info(request.getRequestURI());
+
+        if (token != null) {
+            response.setHeader("Authorization", token);
+            log.info("------------ Authorization : " + token);
         }
+
+
+
+        if ( !request.getRequestURI().equals("/login")  && (token == null || response.getStatus() == HttpServletResponse.SC_UNAUTHORIZED)){
+            log.info("------------  ERROR 401 : redirection" );
+            response.sendRedirect("/login");
+            return false;
+        }
+
         return true;
     }
 
