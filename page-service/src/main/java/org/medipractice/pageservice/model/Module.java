@@ -9,7 +9,6 @@ import java.util.UUID;
 @Data
 @Entity
 @Table
-@NoArgsConstructor
 public class Module {
 
     @Id

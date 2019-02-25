@@ -7,3 +7,7 @@ security:
             id: clientui
             user-info-uri: http://localhost:9004/auth/user
             prefer-token-info: false
+
+spring:
+    thymeleaf:
+        cache: false

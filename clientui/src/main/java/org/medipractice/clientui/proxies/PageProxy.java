@@ -16,12 +16,12 @@ import java.util.List;
 public interface PageProxy {
 
     @GetMapping(value = "page/{module}/{name}")
-    PageBean getPage(@RequestHeader("X-Auth-Token") String token, @PathVariable(value = "module") String module, @PathVariable(value = "name") String name);
+    PageBean getPage(@RequestHeader("Authorization") String token, @PathVariable(value = "module") String module, @PathVariable(value = "name") String name);
 
     @GetMapping(value = "page")
-    PageBean getIndex(@RequestHeader("X-Auth-Token") String token);
+    PageBean getIndex(@RequestHeader("Authorization") String token);
 
     @GetMapping(value = "menu")
-    List<MenuBean> findMenu(@RequestHeader("X-Auth-Token") String token);
+    List<MenuBean> findMenu(@RequestHeader("Authorization") String token);
 
 }

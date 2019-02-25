@@ -10,7 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/page")
+@RequestMapping("page")
 public class PageController {
 
     private final PageService pageService;

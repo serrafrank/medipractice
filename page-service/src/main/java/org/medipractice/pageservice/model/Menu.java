@@ -21,6 +21,10 @@ public class Menu {
     @Column(unique = true, nullable = false)
     private String label;
 
+
+    @ManyToOne
+    private Module module;
+
     private String page;
 
     private String icon;

@@ -23,23 +23,13 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws Exception {
 
-        String token = httpSession.getAttribute("token").toString();
+        String token  = (httpSession.getAttribute("token") != null) ? httpSession.getAttribute("token").toString() : null;
 
-        log.info(request.getRequestURI());
-
-        if (token != null) {
-            response.setHeader("Authorization", token);
-            log.info("------------ Authorization : " + token);
-        }
-
-
-
-        if ( !request.getRequestURI().equals("/login")  && (token == null || response.getStatus() == HttpServletResponse.SC_UNAUTHORIZED)){
-            log.info("------------  ERROR 401 : redirection" );
-            response.sendRedirect("/login");
-            return false;
-        }
-
+            if (!request.getRequestURI().equals("/login") && (token == null || response.getStatus() == HttpServletResponse.SC_UNAUTHORIZED)) {
+                log.info("------------  Status : " + response.getStatus());
+                response.sendRedirect("/login");
+                return false;
+            }
         return true;
     }
 

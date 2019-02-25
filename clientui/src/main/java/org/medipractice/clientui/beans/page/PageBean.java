@@ -9,11 +9,11 @@ public class PageBean {
 
     private UUID id;
 
+    private ModuleBean module;
+
     private static String name;
 
     private String title;
-
-    private ModuleBean module;
 
     private String icon;
 

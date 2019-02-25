@@ -1,6 +1,7 @@
 package org.medipractice.clientui.controller;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.medipractice.clientui.beans.TokenBean;
 import org.medipractice.clientui.beans.page.MenuBean;
 import org.medipractice.clientui.beans.page.PageBean;
@@ -9,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 
@@ -21,43 +19,34 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RequestMapping("/")
+@SessionAttributes( value="token", types={String.class} )
 @Controller
+@Slf4j
 public class PageController {
 
     @Autowired
     private PageProxy pageProxy;
 
-    @Autowired
-    private HttpSession httpSession ;
-
-
-    private String token;
-
-    public PageController() {
-        token = httpSession.getAttribute("token").toString();
-
-    }
 
     @ModelAttribute("menu")
-    private List<MenuBean> getMenu() {
-        return pageProxy.findMenu(token);
+    private List<MenuBean> getMenu(HttpSession httpSession) {
+        return pageProxy.findMenu( httpSession.getAttribute("token").toString());
     }
 
 
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("page", pageProxy.getIndex(token));
+    public String index(HttpSession httpSession, Model model) {
+        model.addAttribute("page", pageProxy.getIndex( httpSession.getAttribute("token").toString()));
         return "index";
 
     }
 
     @GetMapping("{module}/{name}/{action}")
-    public String index(@PathVariable String module, @PathVariable String name, @PathVariable String action, Model model) {
+    public String index(@PathVariable String module, @PathVariable String name, @PathVariable String action, HttpSession httpSession, Model model) {
+            if (name == null) name = "index";
+            if (action == null) action = "read";
 
-        if (name == null) name = "index";
-        if (action == null) action = "read";
-
-        model.addAttribute("page", pageProxy.getPage(token, module, name));
+            model.addAttribute("page", pageProxy.getPage(httpSession.getAttribute("token").toString(), module, name));
         return action;
     }
 

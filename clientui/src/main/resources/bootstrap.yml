@@ -6,3 +6,4 @@ spring:
             uri: http://localhost:9101
     main:
         allow-bean-definition-overriding: true
+
