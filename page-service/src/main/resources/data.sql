@@ -4,7 +4,7 @@ VALUES ('d356a263-6127-40bc-813d-be0422d79b84', 'htmlelement', 'htmlelement-inde
 
 
 INSERT into module (id, label, name)
-VALUES ('43828d5b-75f8-4281-ae1b-e370329846e2', 'homepage', 'General');
+VALUES ('43828d5b-75f8-4281-ae1b-e370329846e2', 'General', 'homepage');
 
 INSERT INTO page (id, module_id, name, schema, sub_title, title, icon)
 VALUES ('90889339-e314-4a76-bb7f-dfb5593af0a8', '43828d5b-75f8-4281-ae1b-e370329846e2', 'index',
@@ -14,19 +14,19 @@ VALUES ('90889339-e314-4a76-bb7f-dfb5593af0a8', '43828d5b-75f8-4281-ae1b-e370329
 INSERT INTO menu (id, icon, label, module_id, page, sort, root)
 VALUES ('e8ae63e9-a45d-4302-8e86-ade0012b8104', null, 'Navigation', null, null,  0, true);
 INSERT INTO menu (id, icon, label, module_id, page, sort, root)
-VALUES ('2fd962ec-c9c5-40f7-9177-25ba0efea7a5', null, 'Index', '43828d5b-75f8-4281-ae1b-e370329846e2', 'index', 1,
+VALUES ('2fd962ec-c9c5-40f7-9177-25ba0efea7a5', null, 'Index', '43828d5b-75f8-4281-ae1b-e370329846e2', 'homepage/index', 1,
         false);
 INSERT INTO menu (id, icon, label, module_id, page, sort, root)
-VALUES ('ebe18aa1-15e3-4f86-87e5-73a99362c439', null, 'Index 1', '43828d5b-75f8-4281-ae1b-e370329846e2', 'index', 2,
+VALUES ('ebe18aa1-15e3-4f86-87e5-73a99362c439', null, 'Index 1', '43828d5b-75f8-4281-ae1b-e370329846e2', 'homepage/index', 2,
         false);
 INSERT INTO menu (id, icon, label, module_id, page, sort, root)
-VALUES ('06253b4a-a5e7-4c55-853f-4f68f07c821d', null, 'Index 2', '43828d5b-75f8-4281-ae1b-e370329846e2', 'index', 3,
+VALUES ('06253b4a-a5e7-4c55-853f-4f68f07c821d', null, 'Index 2', '43828d5b-75f8-4281-ae1b-e370329846e2', 'homepage/index', 3,
         false);
 INSERT INTO menu (id, icon, label, module_id, page, sort, root)
-VALUES ('ace60f7d-d5f8-4a1a-8f46-afb6b3ff80be', null, 'Index 3', '43828d5b-75f8-4281-ae1b-e370329846e2', 'index', 4,
+VALUES ('ace60f7d-d5f8-4a1a-8f46-afb6b3ff80be', null, 'Index 3', '43828d5b-75f8-4281-ae1b-e370329846e2', 'homepage/index', 4,
         false);
 INSERT INTO menu (id, icon, label, module_id, page, sort, root)
-VALUES ('a770f832-cc8e-4afd-a60c-9cc82df1e629', null, 'Index 4', '43828d5b-75f8-4281-ae1b-e370329846e2', 'index', 5,
+VALUES ('a770f832-cc8e-4afd-a60c-9cc82df1e629', null, 'Index 4', '43828d5b-75f8-4281-ae1b-e370329846e2', 'homepage/index', 5,
         false);
 
 INSERT INTO menu_children (menu_id, children_id)

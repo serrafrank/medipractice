@@ -26,7 +26,7 @@ public class PageController {
 
     }
 
-    @GetMapping(value = "{module}/{name}")
+    @GetMapping(value = "/{module}/{name}")
     public Page getPage(@PathVariable String module, @PathVariable String name) {
         return pageService.findByName(module, name);
 

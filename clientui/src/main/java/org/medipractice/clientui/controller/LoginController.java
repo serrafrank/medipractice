@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpSession;
 
@@ -29,13 +30,13 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String postToken(@RequestParam String login, @RequestParam String password, HttpSession request, Model model) {
+    public RedirectView  postToken(@RequestParam String login, @RequestParam String password, HttpSession request, Model model) {
 
         TokenBean tokenBean = authProxy.PostLogin("password", "medipractice", "medipractice", login, password, "clientui");
 
         request.setAttribute("token", tokenBean.getTokenType() + " " + tokenBean.getAccessToken());
 
-        return "index";
+        return new RedirectView("/");
     }
 
 

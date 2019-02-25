@@ -1,42 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-
-<head>
-    <title>Medipractice</title>
-    <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 10]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.3/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <!-- Meta -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/formiojs@latest/dist/formio.full.min.css">
-
-    <!-- Favicon icon -->
-    <link rel="icon" th:href="@{img/favicon.ico}" type="image/x-icon">
-    <!-- Google font-->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Quicksand:500,700" rel="stylesheet">
-
-    <!-- Required Fremwork -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" >
-
-    <!-- waves.css -->
-    <link rel="stylesheet" href="http://fian.my.id/Waves/static/waves.min.css" type="text/css" media="all">
-    <!-- icon icon -->
-    <link rel="stylesheet" type="text/css" th:href="@{icon/feather.css}">
-    <!-- Style.css -->
-    <link rel="stylesheet" type="text/css" th:href="@{css/style.css}">
-
-    <script src="https://unpkg.com/formiojs@latest/dist/formio.full.min.js"></script>
-</head>
-
-<body>
+<head th:include="fragment/head" ></head>
+<body themebg-pattern="theme6">
 <!-- [ Pre-loader ] start -->
 <div class="loader-bg">
     <div class="loader-bar"></div>
@@ -62,7 +27,7 @@
                         <div class="row align-items-end">
                             <div class="col-lg-8">
                                 <div class="page-header-title">
-                                    <i class="feather bg-c-blue" th:classappend="${page.icon}"></i>
+                                    <i class="feather bg-c-blue"  th:classappend="${page.icon}"></i>
                                     <div class="d-inline">
                                         <h3 th:text="${page.title}"></h3>
                                         <span th:text="${page.subTitle}"></span>
