@@ -3,6 +3,7 @@ server:
 
 
 zuul:
+    ignoredServices: "*"
     routes:
         auth-server:
             path: /auth/**
@@ -19,6 +20,17 @@ zuul:
             service-id: datafile-service
             sensitiveHeaders: "*"
     add-proxy-headers: true
+
+hystrix:
+    command:
+        default:
+            execution:
+                isolation:
+                    thread:
+                        timeoutInMilliseconds: 60000
+
+ribbon:
+    ReadTimeout: 60000
 
 security:
     oauth2:

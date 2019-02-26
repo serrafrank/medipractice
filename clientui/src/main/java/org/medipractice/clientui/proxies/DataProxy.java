@@ -9,6 +9,7 @@ import java.util.UUID;
 
 
 @FeignClient(name = "gateway-server")
+@RibbonClient(name = "datafile-service")
 @RequestMapping("api/datafile")
 public interface DataProxy {
 

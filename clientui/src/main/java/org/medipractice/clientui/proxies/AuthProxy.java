@@ -2,12 +2,14 @@ package org.medipractice.clientui.proxies;
 
 
 import org.medipractice.clientui.beans.TokenBean;
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @FeignClient(name = "gateway-server")
+@RibbonClient(name = "auth-server")
 @RequestMapping("auth")
 public interface AuthProxy {
 
