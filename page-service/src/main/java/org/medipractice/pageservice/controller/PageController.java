@@ -34,7 +34,6 @@ public class PageController {
 
     @PostMapping
     public ResponseEntity<Void> postPage(
-            @RequestBody String name,
             @RequestBody Page Page
             ) {
         Page page = pageService.save(Page);

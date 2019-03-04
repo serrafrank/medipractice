@@ -1,5 +1,5 @@
 server:
-    port: 9092
+    port: 19112
 
 spring:
     datasource:
@@ -22,5 +22,5 @@ security:
     oauth2:
         resource:
             id: datafile-service
-            user-info-uri: http://localhost:9090/user
+            user-info-uri: http://localhost:9090/auth/user
             prefer-token-info: false

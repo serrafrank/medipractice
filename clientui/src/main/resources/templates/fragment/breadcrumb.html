@@ -3,7 +3,7 @@
         <a href="/"><i class="feather icon-home"></i></a>
     </li>
     <li class="breadcrumb-item">
-        <a th:href="${page.module.name}" th:text="${page.module.label}"></a>
+        <a th:href="'/page/' + ${page.module.name}" th:text="${page.module.label}"></a>
     </li>
     <li class="breadcrumb-item">
         <a  th:text="${page.title}"></a>

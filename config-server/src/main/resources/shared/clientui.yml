@@ -5,7 +5,7 @@ security:
     oauth2:
         resource:
             id: clientui
-            user-info-uri: http://localhost:9004/auth/user
+            user-info-uri: http://localhost:9090/auth/user
             prefer-token-info: false
 
 spring:

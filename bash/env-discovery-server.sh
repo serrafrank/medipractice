@@ -4,5 +4,5 @@ export APP_NAME=discovery-server
 . ./bash/env.sh
 
 export JAVA_OPTS=-Xmx256M
-export SERVER_PORT=9102
+export SERVER_PORT=19102
 
