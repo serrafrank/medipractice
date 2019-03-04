@@ -1,0 +1,7 @@
+zuul:
+    routes:
+        auth-service:
+            path: /auth/**
+            sensitive-headers: 'Cookie,Set-Cookie   '
+            service-id: AUTH-SERVICE
+            strip-prefix: false
