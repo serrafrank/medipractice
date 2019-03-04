@@ -2,7 +2,7 @@
     <ul class="pcoded-submenu">
         <li th:each="submenu : ${menu.children}"
             th:class="${!submenu.children.empty && submenu.children != null } ? pcoded-hasmenu">
-            <a th:href="@{ (${submenu.page} != null AND ${submenu.page} != '') ?  ${menu.page} : 'javascript:void(0)'}">
+            <a th:href="@{ (${submenu.page} != null AND ${submenu.page} != '') ?  '/page/' + ${menu.page} : 'javascript:void(0)'}">
                 <span class="pcoded-mtext" th:text="${submenu.label}"></span>
             </a>
             <div th:with="menu = ${submenu}" th:include="::submenu" th:remove="tag"/>

@@ -17,17 +17,10 @@ public class CorsConfig implements WebMvcConfigurer {
     @Autowired
     private AuthInterceptor authInterceptor;
 
-
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
-        registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
-        registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");
-        registry.addResourceHandler("/icon/**").addResourceLocations("classpath:/static/icon/");
-        registry.addResourceHandler("/img/**").addResourceLocations("classpath:/static/img/");
-
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
     }
 
     @Override

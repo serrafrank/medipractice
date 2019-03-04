@@ -5,10 +5,8 @@ import org.medipractice.clientui.beans.page.MenuBean;
 import org.medipractice.clientui.beans.page.PageBean;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +23,8 @@ public interface PageProxy {
 
     @GetMapping(value = "menu")
     List<MenuBean> findMenu(@RequestHeader("Authorization") String token);
+
+    @PostMapping()
+    ResponseEntity postPage(@RequestHeader("Authorization") String token, @RequestBody PageBean Page );
 
 }

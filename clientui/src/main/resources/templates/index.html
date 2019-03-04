@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:include="fragment/head" ></head>
+<head th:include="fragment/head"></head>
 <body themebg-pattern="theme6">
 <!-- [ Pre-loader ] start -->
 <div class="loader-bg">
@@ -15,11 +15,11 @@
         </nav>
         <!-- [ Header ] end -->
 
-        <div  class="pcoded-main-container">
+        <div class="pcoded-main-container">
             <div class="pcoded-wrapper">
                 <!-- [ navigation menu ] start -->
 
-                <div th:if="${menu}" th:include="fragment/menu"  th:with="menu_list=${menu}"  th:remove="tag" />
+                <div th:if="${menu}" th:include="fragment/menu" th:with="menu_list=${menu}" th:remove="tag"/>
                 <!-- [ navigation menu ] end -->
                 <div class="pcoded-content">
                     <!-- [ breadcrumb ] start -->
@@ -27,7 +27,7 @@
                         <div class="row align-items-end">
                             <div class="col-lg-8">
                                 <div class="page-header-title">
-                                    <i class="feather bg-c-blue"  th:classappend="${page.icon}"></i>
+                                    <i class="feather bg-c-blue" th:classappend="${page.icon}"></i>
                                     <div class="d-inline">
                                         <h3 th:text="${page.title}"></h3>
                                         <span th:text="${page.subTitle}"></span>
@@ -52,16 +52,22 @@
                                                 <div class="card-header">
                                                     <div class="card-header-right">
                                                         <ul class="list-unstyled card-option">
-                                                            <li class="first-opt"><i class="feather icon-chevron-left open-card-option"></i></li>
+                                                            <li class="first-opt"><i
+                                                                    class="feather icon-chevron-left open-card-option"></i>
+                                                            </li>
                                                             <li><i class="feather icon-maximize full-card"></i></li>
                                                             <li><i class="feather icon-minus minimize-card"></i></li>
                                                             <li><i class="feather icon-refresh-cw reload-card"></i></li>
-                                                            <li><i class="feather icon-trash close-card"></i></li>                                                                 <li><i class="feather icon-chevron-left open-card-option"></i></li>
+                                                            <li><i class="feather icon-trash close-card"></i></li>
+                                                            <li>
+                                                                <i class="feather icon-chevron-left open-card-option"></i>
+                                                            </li>
                                                         </ul>
                                                     </div>
                                                 </div>
                                                 <div class="card-block">
                                                     <div id="formio" class="card-block"></div>
+                                                        <button onclick="submitJson()">Submit</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -88,7 +94,7 @@
 <!-- Warning Section Ends -->
 <!-- Required Jquery -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" ></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 
@@ -96,22 +102,41 @@
 <!-- waves js -->
 <script src="http://fian.my.id/Waves/static/waves.min.js"></script>
 <!-- jquery slimscroll js -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.js"></script>
 
 <script src="https://colorlib.com/polygon/admindek/files/assets/js/pcoded.min.js"></script>
 <script src="https://colorlib.com/polygon/admindek/files/assets/js/vertical/vertical-layout.min.js"></script>
 <!-- Custom js -->
 <script type="text/javascript" src="https://colorlib.com/polygon/admindek/files/assets/js/script.min.js"></script>
 
-<script>
+<script th:if="${action} == read" type="text/javascript">
     Formio.icons = 'fontawesome';
     Formio.createForm(document.getElementById('formio'), [(${page.schema})], {
-        readOnly: true,
-        //    viewAsHtml: true
+        readOnly: true
     });
 
 </script>
+<script th:if="${action} == edit" type="text/javascript">
+     var formio = Formio.builder(document.getElementById("formio"), [(${page.schema})], {});
 
+
+    function submitJson() {
+        var form = document.createElement("form");
+        form.setAttribute("method", "POST");
+        form.setAttribute("action", "[[${url}]]" );
+
+        var champCache = document.createElement("input");
+        champCache.setAttribute("type", "hidden");
+        champCache.setAttribute("name", "json");
+        champCache.setAttribute("value", JSON.stringify(formio, null, 4));
+        form.appendChild(champCache);
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+</script>
 
 </body>
 </html>
