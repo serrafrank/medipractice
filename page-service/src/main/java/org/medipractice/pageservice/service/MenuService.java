@@ -1,7 +1,7 @@
 package org.medipractice.pageservice.service;
 
 import org.medipractice.pageservice.model.Menu;
-import org.medipractice.pageservice.repository.MenuRepository;
+import org.medipractice.pageservice.dao.repository.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

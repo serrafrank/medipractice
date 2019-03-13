@@ -17,12 +17,12 @@ import java.util.UUID;
 public class Page {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private UUID id = UUID.randomUUID();
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Module module;
 
+    @Column(nullable = false)
     private String name;
 
     private String title;
@@ -34,17 +34,4 @@ public class Page {
 
     @Type(type="text")
     private String schema;
-
-    public Page(String title, String subTitle, String schema) {
-        this.title = title;
-        this.subTitle = subTitle;
-        this.schema = schema;
-    }
-
-    public void getTitle(String title){
-        this.title = title;
-        this.name = NormalizeName.of(title).toString();
-    }
-
-
 }

@@ -1,8 +1,11 @@
 package org.medipractice.clientui.controller;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.medipractice.clientui.beans.page.MenuBean;
+import org.medipractice.clientui.beans.page.ModuleBean;
 import org.medipractice.clientui.beans.page.PageBean;
 import org.medipractice.clientui.proxies.PageProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +35,9 @@ public class PageController {
 
     @GetMapping("/")
     public String getIndex(HttpSession httpSession, Model model) {
-        model.addAttribute("page", pageProxy.getIndex(httpSession.getAttribute("token").toString()));
+        PageBean pageBean = pageProxy.getIndex(httpSession.getAttribute("token").toString());
+        model.addAttribute("page", pageBean);
+        model.addAttribute("url", "/page/" + pageBean.getModule().getName() + "/" + pageBean.getName());
         model.addAttribute("action", "read");
         return "index";
 
@@ -40,26 +45,47 @@ public class PageController {
 
     @GetMapping("/page/{module}")
     public String getIndex(@PathVariable String module, HttpSession httpSession, Model model) {
-        model.addAttribute("page", pageProxy.getPage(httpSession.getAttribute("token").toString(), module, "index"));
-        model.addAttribute("action", "read");
+        getPageContent(module, "index", httpSession, model, "read");
         return "index";
     }
 
-    @PostMapping(value = "/page/{module}/{name}/edit",
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
-            produces = {MediaType.APPLICATION_ATOM_XML_VALUE,  MediaType.APPLICATION_JSON_VALUE})
-    public void postIndex(@PathVariable String module, @PathVariable String name, @RequestBody PageBean page , HttpServletResponse httpServletResponse, HttpSession httpSession, Model model) {
-        model.addAttribute("page", pageProxy.postPage(httpSession.getAttribute("token").toString(), page));
-
-        httpServletResponse.setHeader("Location", "/page/" +module+ "/" + name);
+    @GetMapping("/page/{module}/{name}")
+    public String getIndex(@PathVariable String module, @PathVariable String name, HttpSession httpSession, Model model) {
+        getPageContent(module, name, httpSession, model, "read");
+        return "index";
     }
 
     @GetMapping("/page/{module}/{name}/{action}")
     public String getIndex(@PathVariable String module, @PathVariable String name, @PathVariable String action, HttpSession httpSession, Model model) {
-        model.addAttribute("url", "/page/" +module+ "/" + name + "/"+action);
-        model.addAttribute("page", pageProxy.getPage(httpSession.getAttribute("token").toString(), module, name));
-        model.addAttribute("action", action);
+        getPageContent(module, name, httpSession, model, action);
         return "index";
+    }
+
+
+    @PostMapping(value = "/page/{module}/{name}",
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void postIndex(@PathVariable String module, @PathVariable String name, @RequestBody PageBean page, HttpServletResponse httpServletResponse, HttpSession httpSession, Model model) {
+        model.addAttribute("page", pageProxy.postPage(httpSession.getAttribute("token").toString(), page));
+        httpServletResponse.setHeader("Location", "/page/" + module + "/" + name);
+    }
+
+    private void getPageContent(String module, String name, HttpSession httpSession, Model model, String action) {
+        PageBean pageBean;
+        try {
+            pageBean = pageProxy.getPage(httpSession.getAttribute("token").toString(), module, name);
+            action = (action != null) ? action : "read";
+        } catch (Exception e) {
+            pageBean = new PageBean();
+            pageBean.setModule(new ModuleBean());
+            pageBean.getModule().setName(module);
+            pageBean.setName(name);
+            pageBean.setSchema("{}");
+            action = "create";
+        }
+
+        model.addAttribute("page", pageBean);
+        model.addAttribute("url", "/page/" + module + "/" + name);
+        model.addAttribute("action", action);
     }
 
 }
