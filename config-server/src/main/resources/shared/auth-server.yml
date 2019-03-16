@@ -10,6 +10,7 @@ spring:
         driver-class-name: org.postgresql.Driver
         url: jdbc:postgresql://localhost:5432/medipractice
     jpa:
+        show-sql: true
         hibernate:
             ddl-auto: create
         properties:
@@ -18,6 +19,7 @@ spring:
                 jdbc:
                     lob:
                         non_contextual_creation: true
+                format_sql: true
     redis:
         host: localhost
         port: 6379

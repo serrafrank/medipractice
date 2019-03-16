@@ -10,6 +10,7 @@ import org.medipractice.clientui.beans.page.PageBean;
 import org.medipractice.clientui.proxies.PageProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -62,12 +63,7 @@ public class PageController {
     }
 
 
-    @PostMapping(value = "/page/{module}/{name}",
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void postIndex(@PathVariable String module, @PathVariable String name, @RequestBody PageBean page, HttpServletResponse httpServletResponse, HttpSession httpSession, Model model) {
-        model.addAttribute("page", pageProxy.postPage(httpSession.getAttribute("token").toString(), page));
-        httpServletResponse.setHeader("Location", "/page/" + module + "/" + name);
-    }
+
 
     private void getPageContent(String module, String name, HttpSession httpSession, Model model, String action) {
         PageBean pageBean;

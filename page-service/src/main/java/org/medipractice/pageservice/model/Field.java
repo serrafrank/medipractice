@@ -15,9 +15,6 @@ public class Field {
     private UUID id = UUID.randomUUID();
 
     @Column(unique = true)
-    private String label;
-
-    @Column(unique = true)
     @Type(type="text")
     private String parameters;
 

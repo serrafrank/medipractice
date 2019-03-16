@@ -145,11 +145,12 @@ public class PageService {
                 }
 
 
+
                 //recuperation du field en base de donnée s'il existe, sinon creation d'un nouveau field
                 Field field = daoManager.getFieldRepository().findById(uuid).orElse(new Field());
 
                 //verification si le componement ne contient pas d'autres elements impbriqués
-                if (component.has(COMPO_TYPE) && this.supportedComponents.contains(component.getString(COMPO_TYPE))) {
+                if (field.getId() == null && component.has(COMPO_TYPE) && this.supportedComponents.contains(component.getString(COMPO_TYPE))) {
                     //mise a jour de la clef du componement
 
                     component.put(COMPO_KEY, uuid);
@@ -158,7 +159,6 @@ public class PageService {
                     //mise a jour des données en base
                     field.setId(uuid);
                     field.setCategory(component.getString(COMPO_TYPE));
-                    field.setLabel(component.getString(COMPO_LABEL));
                     field.setParameters(component.toString());
 
                     //enregistrement / mise a jour

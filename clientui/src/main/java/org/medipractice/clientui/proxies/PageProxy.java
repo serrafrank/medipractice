@@ -25,6 +25,6 @@ public interface PageProxy {
     List<MenuBean> findMenu(@RequestHeader("Authorization") String token);
 
     @PostMapping(value = "page")
-    ResponseEntity postPage(@RequestHeader("Authorization") String token, @RequestBody PageBean Page );
+    ResponseEntity<?> postPage(@RequestHeader("Authorization") String token, @RequestBody PageBean Page );
 
 }

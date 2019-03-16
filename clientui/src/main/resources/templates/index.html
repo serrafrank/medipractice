@@ -46,23 +46,27 @@
                             <div class="page-wrapper">
                                 <div class="page-body">
                                     <!-- [ page content ] start -->
-                                    <div th:if="${action} == create"  class="row">
+                                    <div th:if="${action} == create" class="row">
                                         <div th:if="!${page.module.label}" class="col-md-6 mb-3">
                                             <label for="label">Label</label>
-                                            <input type="text" class="form-control" id="label" placeholder="" value="" required>
+                                            <input type="text" class="form-control" id="label" placeholder="" value=""
+                                                   required>
                                             <div class="invalid-feedback">
                                                 Le label est requis
                                             </div>
-                                        </div>                                        <div class="col-md-6 mb-3">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
                                             <label for="title">Titre</label>
-                                            <input type="text" class="form-control" id="title" placeholder="" value="" required>
+                                            <input type="text" class="form-control" id="title" placeholder="" value=""
+                                                   required>
                                             <div class="invalid-feedback">
                                                 Le titre est requis
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label for="subTitle">Sous titre</label>
-                                            <input type="text" class="form-control" id="subTitle" placeholder="" value="" >
+                                            <input type="text" class="form-control" id="subTitle" placeholder=""
+                                                   value="">
                                         </div>
                                     </div>
 
@@ -88,7 +92,10 @@
                                                 </div>
                                                 <div class="card-block">
                                                     <div id="formio" class="card-block"></div>
-                                                    <button th:if="${action} != read" id="submit">Submit</button>
+
+                                                    <button th:if="${action} != read" id="submit"
+                                                            class="btn btn-primary">Enregistrer
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -100,8 +107,7 @@
                     </div>
                 </div>
                 <!-- [ style Customizer ] start -->
-                <div id="styleSelector">
-                </div>
+                <div id="styleSelector"></div>
                 <!-- [ style Customizer ] end -->
             </div>
         </div>
@@ -117,7 +123,14 @@
 
 <script th:if="${action} == read" type="text/javascript">
     Formio.icons = 'fontawesome';
-    Formio.createForm(document.getElementById('formio'), [(${page.schema})], {});
+    Formio.createForm(document.getElementById('formio'), [(${page.schema})], {}).then(function(form) {
+        form.on('submit', (submission) => {
+            console.log('The form was just submitted!!!');
+        });
+        form.on('error', (errors) => {
+            console.log('We have errors!');
+        })
+    });
 
 </script>
 <script th:if="${action} != read" type="text/javascript">
@@ -136,28 +149,26 @@
         $("#submit").click(function () {
             $.ajax
             ({
-                type: 'POST',
-                url: '[[${url}]]',
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                async: false,
-                //json object to sent to the authentication url
-                data: JSON.stringify({
-                    'id': '[[${page.id}]]',
-                    'name': '[[${page.name}]]',
-                    'module' : {'name': '[[${page.module.name}]]', 'label': $("#label").val()},
-                    'title':  ('[[${page.title}]]' == '' )? $("#title").val() : '[[${page.title}]]',
-                    'subTitle': ('[[${page.subTitle}]]' == '')? $("#subTitle").val() : '[[${page.subTitle}]]',
-                    'schema': JSON.stringify(formio).toString()
-                }),
-                success: function () {
-                    alert("Thanks!");
+                    type: 'POST',
+                    url: '/page',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    timeout: 1000,
+                    data: JSON.stringify({
+                        'id': '[[${page.id}]]',
+                        'name': '[[${page.name}]]',
+                        'module': {'name': '[[${page.module.name}]]', 'label': $("#label").val()},
+                        'title': ('[[${page.title}]]' == '') ? $("#title").val() : '[[${page.title}]]',
+                        'subTitle': ('[[${page.subTitle}]]' == '') ? $("#subTitle").val() : '[[${page.subTitle}]]',
+                        'schema': JSON.stringify(formio).toString()
+                    }),
+                    complete: function () {
+                        window.location.href = '[(${url})]';
+                    }
                 }
-            })
+            );
         });
-
     });
-
 </script>
 
 </body>

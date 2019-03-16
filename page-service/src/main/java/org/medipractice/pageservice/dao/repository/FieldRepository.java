@@ -12,6 +12,5 @@ import java.util.UUID;
 @Repository
 public interface FieldRepository extends JpaRepository<Field, UUID> {
 
-    Optional<List<Field>> findAllByLabelContaining(@Param("label") String label);
 
 }

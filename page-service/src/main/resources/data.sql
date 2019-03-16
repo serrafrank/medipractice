@@ -1,5 +1,5 @@
-INSERT INTO field (id, category, label, parameters)
-VALUES ('d356a263-6127-40bc-813d-be0422d79b84', 'htmlelement', 'index',
+INSERT INTO field (id, category, parameters)
+VALUES ('d356a263-6127-40bc-813d-be0422d79b84', 'index',
         '{"input":false,"alwaysEnabled":false,"tableView":true,"className":"","label":"index","refreshOnChange":false,"type":"htmlelement","content":"<h2>Bienvenue !<\/h2>","key":"d356a263-6127-40bc-813d-be0422d79b84","attrs":[],"mask":false}');
 
 
