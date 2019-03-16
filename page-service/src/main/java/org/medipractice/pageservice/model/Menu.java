@@ -2,6 +2,7 @@ package org.medipractice.pageservice.model;
 
 import lombok.Data;
 import lombok.Getter;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,17 +16,13 @@ public class Menu {
 
     @Id
     @Getter
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private UUID id = UUID.randomUUID();
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String label;
 
-
-    @ManyToOne
-    private Module module;
-
-    private String page;
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
+    private Page page;
 
     private String icon;
 

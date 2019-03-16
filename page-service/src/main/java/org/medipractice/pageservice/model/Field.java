@@ -12,14 +12,7 @@ import java.util.UUID;
 public class Field {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
-
-    @Column(unique = true)
-    private String fieldKey;
-
-    @Column(unique = true)
-    private String label;
+    private UUID id = UUID.randomUUID();
 
     @Column(unique = true)
     @Type(type="text")

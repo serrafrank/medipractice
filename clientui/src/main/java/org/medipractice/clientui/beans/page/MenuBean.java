@@ -14,9 +14,9 @@ public class MenuBean {
 
     private String icon;
 
-    private String page;
+    private PageBean page;
 
-    private int order;
+    private int sort;
 
     private boolean root;
 

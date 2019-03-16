@@ -2995,7 +2995,6 @@ table tbody .border-bottom-info td, table tbody .border-bottom-info th, table th
     text-align: center;
     text-transform: uppercase;
     width: 250px;
-    padding: 20px 10px;
     -webkit-box-shadow: 0 4px 4px -4px rgba(0, 0, 0, .1);
     box-shadow: 0 4px 4px -4px rgba(0, 0, 0, .1)
 }

@@ -8,6 +8,7 @@ spring:
         username: postgres
         password: 123456
     jpa:
+        show-sql: true
         hibernate:
             ddl-auto: create
         properties:
@@ -16,6 +17,7 @@ spring:
                 jdbc:
                     lob:
                         non_contextual_creation: true
+                format_sql: true
 
 
 security:

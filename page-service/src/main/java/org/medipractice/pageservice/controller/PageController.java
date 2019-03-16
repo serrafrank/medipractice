@@ -1,5 +1,6 @@
 package org.medipractice.pageservice.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.medipractice.pageservice.model.Page;
 import org.medipractice.pageservice.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
+@Slf4j
 @RestController
 @RequestMapping("page")
 public class PageController {
@@ -33,7 +35,7 @@ public class PageController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> postPage(
+    public ResponseEntity<?> postPage(
             @RequestBody Page Page
             ) {
         Page page = pageService.save(Page);
@@ -43,7 +45,6 @@ public class PageController {
                 .path("/{id}")
                 .buildAndExpand(page.getId())
                 .toUri();
-
         return ResponseEntity.created(location).build();
     }
 

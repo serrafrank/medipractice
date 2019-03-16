@@ -11,7 +11,7 @@ public class PageBean {
 
     private ModuleBean module;
 
-    private static String name;
+    private String name;
 
     private String title;
 

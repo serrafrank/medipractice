@@ -12,9 +12,7 @@ import java.util.UUID;
 public class Module {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
-
+    private UUID id = UUID.randomUUID();
 
     @Column(unique = true, nullable = false)
     private String name;
