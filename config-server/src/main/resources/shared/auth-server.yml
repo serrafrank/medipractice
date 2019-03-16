@@ -19,7 +19,7 @@ spring:
                 jdbc:
                     lob:
                         non_contextual_creation: true
-                format_sql: true
+
     redis:
         host: localhost
         port: 6379
