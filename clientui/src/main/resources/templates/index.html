@@ -73,7 +73,7 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="card">
-                                                <div class="card-header">
+                                                <div th:if="${page}" class="card-header">
                                                     <div class="card-header-right">
                                                         <ul class="list-unstyled card-option">
                                                             <li class="first-opt"><i
@@ -90,7 +90,7 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="card-block">
+                                                <div th:if="${page}"  class="card-block">
                                                     <div id="formio" class="card-block"></div>
 
                                                     <button th:if="${action} != read" id="submit"
@@ -121,7 +121,7 @@
 
 <div th:include="fragment/footer" th:remove="tag"/>
 
-<script th:if="${action} == read" type="text/javascript">
+<script th:if="${page} && ${action} == read" type="text/javascript">
     Formio.icons = 'fontawesome';
     Formio.createForm(document.getElementById('formio'), [(${page.schema})], {}).then(function(form) {
         form.on('submit', (submission) => {
@@ -133,7 +133,7 @@
     });
 
 </script>
-<script th:if="${action} != read" type="text/javascript">
+<script th:if="${page} && ${action} != read" type="text/javascript">
     $(document).ready(function () {
         $("#submit").prop('disabled', true);
         let formio;

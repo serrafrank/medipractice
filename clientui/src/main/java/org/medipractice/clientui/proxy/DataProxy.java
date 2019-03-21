@@ -1,4 +1,4 @@
-package org.medipractice.clientui.proxies;
+package org.medipractice.clientui.proxy;
 
 import org.medipractice.clientui.beans.data.DataFileBean;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
@@ -14,9 +14,9 @@ import java.util.UUID;
 public interface DataProxy {
 
     @GetMapping(value = "{id}")
-    DataFileBean getDataFile(@RequestHeader("X-Auth-Token") String token, @PathVariable(name = "id") UUID id);
+    DataFileBean getDataFile( @PathVariable(name = "id") UUID id);
 
     @PostMapping(value = "/")
-    DataFileBean postDataFile(@RequestHeader("X-Auth-Token") String token, @RequestBody DataFileBean dataFile);
+    DataFileBean postDataFile( @RequestBody DataFileBean dataFile);
 
 }

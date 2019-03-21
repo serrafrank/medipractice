@@ -1,4 +1,4 @@
-package org.medipractice.clientui.proxies;
+package org.medipractice.clientui.proxy;
 
 
 import org.medipractice.clientui.beans.page.MenuBean;
@@ -16,15 +16,15 @@ import java.util.List;
 public interface PageProxy {
 
     @GetMapping(value = "page/{module}/{name}")
-    PageBean getPage(@RequestHeader("Authorization") String token, @PathVariable(value = "module") String module, @PathVariable(value = "name") String name);
+    PageBean getPage( @PathVariable(value = "module") String module, @PathVariable(value = "name") String name);
 
     @GetMapping(value = "page")
-    PageBean getIndex(@RequestHeader("Authorization") String token);
+    PageBean getIndex();
 
     @GetMapping(value = "menu")
-    List<MenuBean> findMenu(@RequestHeader("Authorization") String token);
+    List<MenuBean> findMenu();
 
     @PostMapping(value = "page")
-    ResponseEntity<?> postPage(@RequestHeader("Authorization") String token, @RequestBody PageBean Page );
+    ResponseEntity<?> postPage( @RequestBody PageBean Page );
 
 }
