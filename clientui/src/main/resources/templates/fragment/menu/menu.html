@@ -2,19 +2,15 @@
 <nav class="pcoded-navbar">
     <div class="nav-list"  >
 
-<div class="pcoded-inner-navbar main-menu" th:each="nav : ${menu_list}">
+<div class="pcoded-inner-navbar main-menu" th:each="module : ${menu_list}">
 
-    <div class="pcoded-navigation-label" th:text="${nav.label}"></div>
-    <ul class="pcoded-item pcoded-left-item" th:each="menu : ${nav.children}">
-        <li th:class="@{ (${menu.page} != null AND ${menu.page} != '') ?  ${menu.page} : 'pcoded-hasmenu'}" >
-
-            <a th:href="@{ (${menu.page} != null ) ?   '/page/' + ${menu.page.module.name} + '/' + ${menu.page.name} : 'javascript:void(0)'}"  class="waves-effect waves-dark">
+    <div class="pcoded-navigation-label" th:text="${module.label}"></div>
+    <ul class="pcoded-item pcoded-left-item" th:each="page : ${module.pages}">
+        <li>
+            <a th:href="@{'/page/' + ${module.name} + '/' + ${page.name} }"  class="waves-effect waves-dark">
                 <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
-                <span class="pcoded-mtext" th:text="${menu.label}"></span>
+                <span class="pcoded-mtext" th:text="${page.title}"></span>
             </a>
-
-            <div th:with="submenu = ${menu}" th:include="fragment/menu/submenu" th:remove="tag" />
-
         </li>
     </ul>
 </div>

@@ -2,6 +2,7 @@ package org.medipractice.clientui.beans.page;
 
 import lombok.Data;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -12,5 +13,7 @@ public class ModuleBean {
     private String name;
 
     private String label;
+
+    private List<PageBean> pages;
 
 }

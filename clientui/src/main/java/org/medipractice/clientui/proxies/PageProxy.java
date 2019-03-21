@@ -1,7 +1,7 @@
 package org.medipractice.clientui.proxies;
 
 
-import org.medipractice.clientui.beans.page.MenuBean;
+import org.medipractice.clientui.beans.page.ModuleBean;
 import org.medipractice.clientui.beans.page.PageBean;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -22,7 +22,7 @@ public interface PageProxy {
     PageBean getIndex(@RequestHeader("Authorization") String token);
 
     @GetMapping(value = "menu")
-    List<MenuBean> findMenu(@RequestHeader("Authorization") String token);
+    List<ModuleBean> findMenu(@RequestHeader("Authorization") String token);
 
     @PostMapping(value = "page")
     ResponseEntity<?> postPage(@RequestHeader("Authorization") String token, @RequestBody PageBean Page );

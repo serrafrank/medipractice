@@ -2,7 +2,6 @@ package org.medipractice.pageservice.dao;
 
 import lombok.Data;
 import org.medipractice.pageservice.dao.repository.FieldRepository;
-import org.medipractice.pageservice.dao.repository.MenuRepository;
 import org.medipractice.pageservice.dao.repository.ModuleRepository;
 import org.medipractice.pageservice.dao.repository.PageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +13,6 @@ public class DaoManager {
 
      @Autowired
     private FieldRepository fieldRepository;
-
-     @Autowired
-    private MenuRepository menuRepository;
 
      @Autowired
     private ModuleRepository moduleRepository;

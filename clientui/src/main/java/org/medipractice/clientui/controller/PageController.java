@@ -1,23 +1,18 @@
 package org.medipractice.clientui.controller;
 
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import lombok.extern.slf4j.Slf4j;
-import org.medipractice.clientui.beans.page.MenuBean;
 import org.medipractice.clientui.beans.page.ModuleBean;
 import org.medipractice.clientui.beans.page.PageBean;
 import org.medipractice.clientui.proxies.PageProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 
 @SessionAttributes(value = "token", types = {String.class})
 @Controller
@@ -27,10 +22,13 @@ public class PageController {
     @Autowired
     private PageProxy pageProxy;
 
+    private List<ModuleBean> menu;
+
 
     @ModelAttribute("menu")
-    private List<MenuBean> getMenu(HttpSession httpSession) {
-        return pageProxy.findMenu(httpSession.getAttribute("token").toString());
+    private List<ModuleBean> getMenu(HttpSession httpSession) {
+        this.menu = pageProxy.findMenu(httpSession.getAttribute("token").toString());
+        return menu;
     }
 
 
@@ -38,7 +36,6 @@ public class PageController {
     public String getIndex(HttpSession httpSession, Model model) {
         PageBean pageBean = pageProxy.getIndex(httpSession.getAttribute("token").toString());
         model.addAttribute("page", pageBean);
-        model.addAttribute("url", "/page/" + pageBean.getModule().getName() + "/" + pageBean.getName());
         model.addAttribute("action", "read");
         return "index";
 
@@ -63,22 +60,22 @@ public class PageController {
     }
 
 
-
-
     private void getPageContent(String module, String name, HttpSession httpSession, Model model, String action) {
         PageBean pageBean;
         try {
+            ModuleBean curentPage = this.menu.stream().filter(m -> m.getName().equals(module)).findFirst().orElse(null);
+
             pageBean = pageProxy.getPage(httpSession.getAttribute("token").toString(), module, name);
             action = (action != null) ? action : "read";
         } catch (Exception e) {
             pageBean = new PageBean();
-            pageBean.setModule(new ModuleBean());
-            pageBean.getModule().setName(module);
             pageBean.setName(name);
             pageBean.setSchema("{}");
             action = "create";
         }
 
+
+        model.addAttribute("module", module);
         model.addAttribute("page", pageBean);
         model.addAttribute("url", "/page/" + module + "/" + name);
         model.addAttribute("action", action);

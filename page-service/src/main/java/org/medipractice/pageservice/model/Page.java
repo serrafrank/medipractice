@@ -1,5 +1,6 @@
 package org.medipractice.pageservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,13 +20,14 @@ public class Page {
     @Id
     private UUID id = UUID.randomUUID();
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Module module;
-
     @Column(nullable = false)
     private String name;
 
     private String title;
+
+    @JsonIgnore
+    @ManyToOne
+    private Module module;
 
     private String icon;
 
