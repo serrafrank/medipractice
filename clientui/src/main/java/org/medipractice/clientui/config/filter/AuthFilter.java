@@ -34,6 +34,7 @@ public class AuthFilter implements Filter {
 
         if (token != null) {
             log.info("Token : " + token.getValue());
+
             mutableRequest.putHeader("Authorization", "bearer " + URLDecoder.decode(token.getValue(), "utf-8"));
         }
 

@@ -19,9 +19,15 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws Exception {
         Cookie cookie = WebUtils.getCookie(request, "token");
 
+        log.info("------------  Status : " + response.getStatus());
 
         if (!request.getRequestURI().equals("/login") && (cookie == null || response.getStatus() == HttpServletResponse.SC_UNAUTHORIZED)) {
-            log.info("------------  Status : " + response.getStatus());
+
+
+
+            if(cookie != null)
+                new Cookie("token", "");
+
             response.sendRedirect("/login");
             return false;
         }
