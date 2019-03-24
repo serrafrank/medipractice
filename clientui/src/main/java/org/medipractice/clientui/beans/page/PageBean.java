@@ -9,8 +9,6 @@ public class PageBean {
 
     private UUID id;
 
-    private ModuleBean module;
-
     private String name;
 
     private String title;

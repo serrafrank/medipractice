@@ -1,6 +1,6 @@
 package org.medipractice.pageservice.controller;
 
-import org.medipractice.pageservice.model.Menu;
+import org.medipractice.pageservice.model.Module;
 import org.medipractice.pageservice.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +20,14 @@ public class MenuController {
     }
 
     @GetMapping
-    public List<Menu> findAll() {
+    public List<Module> findAll() {
         return menuService.findAll();
 
     }
 
     @PostMapping
-    public ResponseEntity<Void> postNavigation(
-            @RequestBody Menu navigation
+    public ResponseEntity<?> postNavigation(
+            @RequestBody Module navigation
     ) {
         menuService.save(navigation);
         return ResponseEntity.ok().build();

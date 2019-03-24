@@ -1,7 +1,7 @@
 package org.medipractice.pageservice.service;
 
-import org.medipractice.pageservice.model.Menu;
-import org.medipractice.pageservice.dao.repository.MenuRepository;
+import org.medipractice.pageservice.dao.repository.ModuleRepository;
+import org.medipractice.pageservice.model.Module;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,19 +10,19 @@ import java.util.List;
 @Service
 public class MenuService {
 
-    private final MenuRepository menuRepository;
+    private final ModuleRepository moduleRepository;
 
     @Autowired
-    public MenuService(MenuRepository menuRepository) {
-        this.menuRepository = menuRepository;
+    public MenuService(ModuleRepository moduleRepository) {
+        this.moduleRepository = moduleRepository;
     }
 
-    public List<Menu> findAll(){
-        return menuRepository.findAllByRootIsTrueOrderBySortAsc();
+    public void save(Module module){
+        this.moduleRepository.save(module);
     }
 
-    public void save(Menu menu){
-        menuRepository.save(menu);
+    public List<Module> findAll(){
+       return this.moduleRepository.findAll();
     }
 
 }

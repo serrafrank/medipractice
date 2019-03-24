@@ -5,7 +5,6 @@ import org.medipractice.clientui.beans.page.MenuBean;
 import org.medipractice.clientui.beans.page.PageBean;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

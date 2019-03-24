@@ -68,14 +68,6 @@ public class PageService {
         UUID id = (page.getId() != null) ? page.getId() : UUID.randomUUID();
         Page pageToSave = daoManager.getPageRepository().findById(id).orElse(new Page());
 
-        if (page.getModule() != null) {
-
-            if (page.getModule().getLabel() != null) {
-                Optional<Module> module = daoManager.getModuleRepository().findByLabel(page.getModule().getLabel());
-
-                if (module.isPresent()) pageToSave.setModule(page.getModule());
-            }
-        }
         if (page.getName() != null) pageToSave.setName(page.getName());
         if (page.getTitle() != null) pageToSave.setTitle(page.getTitle());
         if (page.getIcon() != null) pageToSave.setIcon(page.getIcon());

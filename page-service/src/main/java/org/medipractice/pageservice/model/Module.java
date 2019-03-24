@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -19,5 +20,8 @@ public class Module {
 
     @Column(unique = true, nullable = false)
     private String label;
+
+    @OneToMany(mappedBy = "module")
+    private List<Page> pages;
 
 }
