@@ -3,6 +3,7 @@ package org.medipractice.clientui.proxy;
 import org.medipractice.clientui.beans.data.DataFileBean;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -14,9 +15,9 @@ import java.util.UUID;
 public interface DataProxy {
 
     @GetMapping(value = "{id}")
-    DataFileBean getDataFile( @PathVariable(name = "id") UUID id);
+    DataFileBean getDataFile(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable(name = "id") UUID id);
 
     @PostMapping(value = "/")
-    DataFileBean postDataFile( @RequestBody DataFileBean dataFile);
+    DataFileBean postDataFile(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody DataFileBean dataFile);
 
 }

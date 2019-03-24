@@ -18,7 +18,7 @@ public class TokenBean {
     private String refreshToken;
 
     @JsonProperty(value = "expires_in")
-    private String expiresIn;
+    private Integer expiresIn;
 
     @JsonProperty(value = "scope")
     private String scope;

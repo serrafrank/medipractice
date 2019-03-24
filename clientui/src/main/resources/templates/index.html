@@ -27,11 +27,13 @@
                         <div class="row align-items-end">
                             <div class="col-lg-8">
                                 <div class="page-header-title">
-                                    <i class="feather bg-c-blue" th:classappend="${page.icon}"></i>
-                                    <div class="d-inline">
+                                    <i th:if="${page}" class="feather bg-c-blue" th:classappend="${page.icon}"></i>
+                                    <div class="d-inline" th:if="${page}" >
                                         <h3 th:text="${page.title}"></h3>
                                         <span th:text="${page.subTitle}"></span>
                                     </div>
+
+
                                 </div>
                             </div>
                             <div class="col-lg-4">

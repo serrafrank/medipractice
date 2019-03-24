@@ -4,6 +4,7 @@ package org.medipractice.clientui.proxy;
 import org.medipractice.clientui.beans.TokenBean;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,5 +25,5 @@ public interface AuthProxy {
     );
 
     @GetMapping(value = "current")
-    void getCurrent();
+    void GetCurrent(@RequestHeader(HttpHeaders.AUTHORIZATION) String token);
 }

@@ -31,7 +31,16 @@ public class LoginController {
 
         TokenBean tokenBean = this.proxyManager.getAuth().postLogin("password", "medipractice", "medipractice", login, password, "clientui");
 
-        request.addCookie(new Cookie("token", tokenBean.getAccessToken()));
+        Cookie tokenAccess = new Cookie("token_access", tokenBean.getAccessToken());
+        tokenAccess.setMaxAge(tokenBean.getExpiresIn());
+
+        Cookie tokenType = new Cookie("token_type", tokenBean.getTokenType());
+        tokenType.setMaxAge(tokenBean.getExpiresIn());
+
+
+        request.addCookie(tokenAccess);
+        request.addCookie(tokenType);
+
         return new RedirectView("/");
     }
 
