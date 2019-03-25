@@ -43,38 +43,4 @@ public class DataFileServiceImplTest {
     }
 
 
-
-    @Test
-    public void updateById() {
-        UUID id = dataFile.getDataType("firstname").getValues().get(0).getId();
-        dataFile.getDataType("firstname").getValue(id).setValue("Ducobut");
-
-        dataFileService.save(dataFile);
-
-        dataFile = dataFileService.findById(dataFile.getId());
-
-
-        Assert.assertNotNull(dataFile.getDataType("firstname").getValue(id).getArchivedBy());
-    }
-
-    @Test
-    public void updateByValue() {
-        DataValue dataValue = dataFile.getDataType("lastname").getValues().get(0);
-        dataValue.setValue("Ducobut");
-        UUID id = dataValue.getId();
-
-        dataFile.setDataType("lastname", dataValue);
-        dataFileService.save(dataFile);
-
-        dataFile = dataFileService.findById(dataFile.getId());
-
-        Assert.assertNotNull(dataFile.getDataType("lastname").getValue(id).getArchivedBy());
-    }
-
-
-    @Test
-    public void findAllByDataTypesAndValue(){
-        List<DataFile> dataFileList = dataFileService.findAllByDataTypesAndValue( Arrays.asList("firstname", "lastname"), "marc");
-        Assert.assertEquals(dataFileList.size(), 1);
-    }
 }
