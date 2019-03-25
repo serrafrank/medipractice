@@ -2,13 +2,15 @@ package org.medipractice.clientui.controller;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.medipractice.clientui.beans.page.MenuBean;
+import org.medipractice.clientui.beans.page.ModuleBean;
 import org.medipractice.clientui.beans.page.PageBean;
 import org.medipractice.clientui.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -20,10 +22,7 @@ public class PageController {
     @Autowired
     private PageService pageService;
 
-    @ModelAttribute("menu")
-    private List<MenuBean> getMenu() {
-        return pageService.findMenu();
-    }
+    private List<ModuleBean> menu;
 
     @ModelAttribute("readOnly")
     private boolean isReadOnly(HttpSession httpSession) {
@@ -33,6 +32,11 @@ public class PageController {
 
     @GetMapping("/")
     public String getIndex(Model model) {
+        model.addAttribute("menu", pageService.findMenu());
+        model.addAttribute("page", null);
+        model.addAttribute("action", "index");
+
+
         return "index";
     }
 
@@ -62,15 +66,21 @@ public class PageController {
     }
 
 
+    private void getPage(String module, String name, String action, Model model) {
+        PageBean pageBean = pageService.getPageContent(module, name);
+        List<ModuleBean> menu;
+        menu = pageService.findMenu();
 
+        ModuleBean moduleBean = menu.stream().filter(c -> c.getName().equals(module)).findFirst().get();
 
-    private void getPage(String module, String name, String action, Model model){
-        PageBean pageBean = pageService.getPageContent(module, name );
+        model.addAttribute("menu", menu);
+        model.addAttribute("module", menu.stream().filter(c -> c.getName().equals(module)).findFirst().get());
+
         model.addAttribute("page", pageService.getPageContent(module, name));
         model.addAttribute("url", "/page/" + module + "/index");
 
 
-        if(action == null) action =  (pageBean.getId() != null) ? "read" : "write";
+        if (action == null) action = (pageBean.getId() != null) ? "read" : "edit";
 
 
         model.addAttribute("action", action);

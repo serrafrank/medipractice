@@ -14,6 +14,8 @@ public class ModuleBean {
 
     private String label;
 
+    private String icon;
+
     private List<PageBean> pages;
 
 }

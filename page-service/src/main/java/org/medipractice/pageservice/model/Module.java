@@ -21,6 +21,9 @@ public class Module {
     @Column(unique = true, nullable = false)
     private String label;
 
+
+    private String icon;
+
     @OneToMany(mappedBy = "module")
     private List<Page> pages;
 

@@ -22,24 +22,19 @@ public class LoginController {
     private ProxyManager proxyManager;
 
     @GetMapping("/login")
-    public String getToken(HttpSession request, Model model) {
+    public String getToken() {
         return "login";
     }
 
     @PostMapping("/login")
-    public RedirectView  postToken(@RequestParam String login, @RequestParam String password, HttpServletResponse request, Model model) {
+    public RedirectView  postToken(@RequestParam String login, @RequestParam String password, HttpServletResponse request) {
 
         TokenBean tokenBean = this.proxyManager.getAuth().postLogin("password", "medipractice", "medipractice", login, password, "clientui");
 
-        Cookie tokenAccess = new Cookie("token_access", tokenBean.getAccessToken());
-        tokenAccess.setMaxAge(tokenBean.getExpiresIn());
+        log.info(tokenBean.toString());
 
-        Cookie tokenType = new Cookie("token_type", tokenBean.getTokenType());
-        tokenType.setMaxAge(tokenBean.getExpiresIn());
-
-
-        request.addCookie(tokenAccess);
-        request.addCookie(tokenType);
+        request.addCookie( new Cookie("token_access", tokenBean.getAccessToken()));
+        request.addCookie(new Cookie("token_type", tokenBean.getTokenType()));
 
         return new RedirectView("/");
     }

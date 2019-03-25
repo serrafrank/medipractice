@@ -49,7 +49,7 @@
                                 <div class="page-body">
                                     <!-- [ page content ] start -->
                                     <div th:if="${action} == create" class="row">
-                                        <div th:if="!${page.module.label}" class="col-md-6 mb-3">
+                                        <div th:if="!${module.label}" class="col-md-6 mb-3">
                                             <label for="label">Label</label>
                                             <input type="text" class="form-control" id="label" placeholder="" value=""
                                                    required>
@@ -123,7 +123,7 @@
 
 <div th:include="fragment/footer" th:remove="tag"/>
 
-<script th:if="${page} && ${action} == read" type="text/javascript">
+<script th:if="${action} == read" type="text/javascript">
     Formio.icons = 'fontawesome';
     Formio.createForm(document.getElementById('formio'), [(${page.schema})], {}).then(function(form) {
         form.on('submit', (submission) => {
@@ -135,7 +135,7 @@
     });
 
 </script>
-<script th:if="${page} && ${action} != read" type="text/javascript">
+<script th:if="${action} == edit" type="text/javascript">
     $(document).ready(function () {
         $("#submit").prop('disabled', true);
         let formio;
@@ -159,7 +159,7 @@
                     data: JSON.stringify({
                         'id': '[[${page.id}]]',
                         'name': '[[${page.name}]]',
-                        'module': {'name': '[[${page.module.name}]]', 'label': $("#label").val()},
+                        'module': {'name': '[[${module.name}]]', 'label': $("#label").val()},
                         'title': ('[[${page.title}]]' == '') ? $("#title").val() : '[[${page.title}]]',
                         'subTitle': ('[[${page.subTitle}]]' == '') ? $("#subTitle").val() : '[[${page.subTitle}]]',
                         'schema': JSON.stringify(formio).toString()
