@@ -6,15 +6,14 @@ import org.json.JSONObject;
 import org.medipractice.pageservice.dao.DaoManager;
 import org.medipractice.pageservice.exception.ResourceNotFoundException;
 import org.medipractice.pageservice.model.Field;
-import org.medipractice.pageservice.model.Module;
 import org.medipractice.pageservice.model.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -99,8 +98,7 @@ public class PageService {
                 JSONObject component = components.getJSONObject(i);
                 UUID uuid;
                 try {
-                    uuid = UUID.fromString(component.getString(COMPO_KEY));
-                    Field field = daoManager.getFieldRepository().findById(uuid).orElse(new Field());
+                    Field field = daoManager.getFieldRepository().findByKey(component.getString(COMPO_KEY)).orElse(new Field());
                     component = new JSONObject(field.getParameters());
                 } catch (Exception e) {
                     component = buildForms(component);
@@ -128,36 +126,39 @@ public class PageService {
                 //recuperation de l'objet
                 JSONObject component = components.getJSONObject(i);
 
-                UUID uuid;
-
-                try {
-                    uuid = UUID.fromString(component.getString(COMPO_KEY));
-                } catch (Exception ignore) {
-                    uuid = UUID.randomUUID();
-                }
-
-
+                String key = component.getString(COMPO_KEY);
 
                 //recuperation du field en base de donnée s'il existe, sinon creation d'un nouveau field
-                Field field = daoManager.getFieldRepository().findById(uuid).orElse(new Field());
+                Field field = daoManager.getFieldRepository().findByKey(key).orElse(new Field());
 
                 //verification si le componement ne contient pas d'autres elements impbriqués
-                if (field.getId() == null && component.has(COMPO_TYPE) && this.supportedComponents.contains(component.getString(COMPO_TYPE))) {
+                if (component.has(COMPO_TYPE) && this.supportedComponents.contains(component.getString(COMPO_TYPE))) {
                     //mise a jour de la clef du componement
 
-                    component.put(COMPO_KEY, uuid);
+                    if (field.getId() == null) {
+                        key = Normalizer
+                                .normalize(component.getString(COMPO_LABEL), Normalizer.Form.NFD)
+                                .replaceAll("[^\\p{ASCII}]", "")
+                                .replaceAll(" ", "_")
+                                .toLowerCase();
 
-                    log.info(uuid.toString());
+                        field.setKey(key);
+
+                    } else {
+                        key = field.getKey();
+                    }
+
+                    component.put(COMPO_KEY, key);
+
+
                     //mise a jour des données en base
-                    field.setId(uuid);
                     field.setCategory(component.getString(COMPO_TYPE));
                     field.setParameters(component.toString());
 
                     //enregistrement / mise a jour
-                    field = daoManager.getFieldRepository().save(field);
+                    daoManager.getFieldRepository().save(field);
 
-                    log.info(field.getId().toString());
-                    component = new JSONObject().put(COMPO_KEY, uuid);
+                    component = new JSONObject().put(COMPO_KEY, key);
 
                 } else {
                     //si le component comporte des elements imbriqués, recursion

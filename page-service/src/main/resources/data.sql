@@ -1,14 +1,10 @@
-INSERT INTO field (id, category, parameters)
-VALUES ('d356a263-6127-40bc-813d-be0422d79b84', 'index',
-        '{"input":false,"alwaysEnabled":false,"tableView":true,"className":"","label":"index","refreshOnChange":false,"type":"htmlelement","content":"<h2>Bienvenue !<\/h2>","key":"d356a263-6127-40bc-813d-be0422d79b84","attrs":[],"mask":false}');
-
-
-INSERT into module (id, label, name)
-VALUES ('43828d5b-75f8-4281-ae1b-e370329846e2', 'General', 'homepage'),
-        ('0e172969-1841-48f1-a353-d27ccd4642c6', 'Administratif', 'admin'),
-        ('747fbf5f-0840-47db-9dc9-46c88d08378f', 'Medical', 'medical');
-
-
-INSERT INTO page (id, module_id, name, schema, sub_title, title, icon)
-VALUES ('90889339-e314-4a76-bb7f-dfb5593af0a8', '43828d5b-75f8-4281-ae1b-e370329846e2', 'index',
-        '{"components":[{"key":"d356a263-6127-40bc-813d-be0422d79b84"}],"display":"form"}', null, 'Accueil', 'icon-home');
+INSERT INTO public.module (id, icon, label, name) VALUES ('43828d5b-75f8-4281-ae1b-e370329846e2', null, 'General', 'homepage');
+INSERT INTO public.module (id, icon, label, name) VALUES ('0e172969-1841-48f1-a353-d27ccd4642c6', null, 'Administratif', 'admin');
+INSERT INTO public.module (id, icon, label, name) VALUES ('747fbf5f-0840-47db-9dc9-46c88d08378f', null, 'Medical', 'medical');
+INSERT INTO public.field (id, category, key, parameters) VALUES ('d356a263-6127-40bc-813d-be0422d79b84', 'index', 'welcome', '{"input":false,"alwaysEnabled":false,"tableView":true,"className":"","label":"index","refreshOnChange":false,"type":"htmlelement","content":"<h2>Bienvenue !<\/h2>","key":"welcome","attrs":[],"mask":false}');
+INSERT INTO public.field (id, category, key, parameters) VALUES ('61597f01-3a9a-49ad-8f86-4c4455501987', 'textfield', 'prenom', '{"allowMultipleMasks":false,"widget":{"type":""},"conditional":{"show":"","json":"","when":""},"defaultValue":"","tableView":true,"reorder":false,"label":"Prénom","type":"textfield","inputFormat":"plain","showWordCount":false,"input":true,"alwaysEnabled":false,"encrypted":false,"logic":[],"showCharCount":false,"key":"prenom","properties":{},"validate":{"customMessage":"","json":""},"customConditional":""}');
+INSERT INTO public.field (id, category, key, parameters) VALUES ('c1190d54-0455-4e1f-8ee6-1182994e7b3d', 'textfield', 'nom_de_famille', '{"allowMultipleMasks":false,"widget":{"type":""},"conditional":{"show":"","json":"","when":""},"defaultValue":"","tableView":true,"reorder":false,"label":"Nom de famille","type":"textfield","inputFormat":"plain","showWordCount":false,"input":true,"alwaysEnabled":false,"encrypted":false,"logic":[],"showCharCount":false,"key":"nom_de_famille","properties":{},"validate":{"customMessage":"","json":""},"customConditional":""}');
+INSERT INTO public.field (id, category, key, parameters) VALUES ('be5b114e-c333-4ff7-81dc-a601f5480bbf', 'textfield', 'nom_de_naissance', '{"allowMultipleMasks":false,"widget":{"type":""},"conditional":{"show":"","json":"","when":""},"defaultValue":"","tableView":true,"reorder":false,"label":"Nom de naissance","type":"textfield","inputFormat":"plain","showWordCount":false,"input":true,"alwaysEnabled":false,"encrypted":false,"logic":[],"showCharCount":false,"key":"nom_de_naissance","properties":{},"validate":{"customMessage":"","json":""},"customConditional":""}');
+INSERT INTO public.field (id, category, key, parameters) VALUES ('79e7951f-3ce6-48d0-9028-4f3dd857288d', 'button', 'submit', '{"input":true,"tableView":true,"theme":"primary","label":"Submit","type":"button","key":"submit","disableOnInvalid":true}');
+INSERT INTO public.page (id, icon, name, schema, sub_title, title, module_id) VALUES ('90889339-e314-4a76-bb7f-dfb5593af0a8', 'icon-home', 'index', '{"components":[{"key":"welcome"}],"display":"form"}', null, 'Accueil', '43828d5b-75f8-4281-ae1b-e370329846e2');
+INSERT INTO public.page (id, icon, name, schema, sub_title, title, module_id) VALUES ('1a616c2c-0ea9-4003-9452-66e3c7ae5038', null, 'index', '{"components":[{"key":"prenom"},{"key":"nom_de_famille"},{"key":"nom_de_naissance"},{"key":"submit"}]}', null, 'Identité', '0e172969-1841-48f1-a353-d27ccd4642c6');

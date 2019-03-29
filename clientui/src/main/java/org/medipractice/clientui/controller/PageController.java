@@ -2,8 +2,10 @@ package org.medipractice.clientui.controller;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.medipractice.clientui.beans.data.DataFileBean;
 import org.medipractice.clientui.beans.page.ModuleBean;
 import org.medipractice.clientui.beans.page.PageBean;
+import org.medipractice.clientui.service.DataService;
 import org.medipractice.clientui.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,26 +15,48 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @Slf4j
 public class PageController {
 
+    private final PageService pageService;
+    private final DataService dataService;
+    private final HttpSession httpSession;
+
+    private List<ModuleBean> menu = new ArrayList<>();
+
     @Autowired
-    private PageService pageService;
+    public PageController(PageService pageService, HttpSession httpSession, DataService dataService) {
+        this.pageService = pageService;
+        this.httpSession = httpSession;
+        this.dataService = dataService;
+    }
 
-    private List<ModuleBean> menu;
+    @ModelAttribute("datafile")
+    private DataFileBean getDatafile() {
+        //UUID datafileId = (UUID) this.httpSession.getAttribute("datafile");
+        UUID datafileId = UUID.fromString("15b37039-47f4-4a43-bd48-a88acd793db2");
 
-    @ModelAttribute("readOnly")
-    private boolean isReadOnly(HttpSession httpSession) {
-        return (httpSession.getAttribute("datafile") == null);
+        if(datafileId != null){
+            return this.dataService.getDatas(datafileId);
+        }else{
+            return null;
+        }
+    }
+
+    @ModelAttribute("menu")
+    private List<ModuleBean> getMenu() {
+        this.menu = this.pageService.findMenu();
+        return this.menu;
     }
 
 
     @GetMapping("/")
     public String getIndex(Model model) {
-        model.addAttribute("menu", pageService.findMenu());
         model.addAttribute("page", null);
         model.addAttribute("action", "index");
 
@@ -73,9 +97,7 @@ public class PageController {
 
         ModuleBean moduleBean = menu.stream().filter(c -> c.getName().equals(module)).findFirst().get();
 
-        model.addAttribute("menu", menu);
         model.addAttribute("module", menu.stream().filter(c -> c.getName().equals(module)).findFirst().get());
-
         model.addAttribute("page", pageService.getPageContent(module, name));
         model.addAttribute("url", "/page/" + module + "/index");
 

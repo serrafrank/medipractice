@@ -11,8 +11,13 @@ import java.util.UUID;
 @Table
 public class Field {
 
+
     @Id
-    private UUID id = UUID.randomUUID();
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id ;
+
+    @Column(unique = true)
+    private String key;
 
     @Column(unique = true)
     @Type(type="text")

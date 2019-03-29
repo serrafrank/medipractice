@@ -31,6 +31,14 @@ public class DataFileController  {
         return  dataFileService.findById(id);
 
     }
+        @GetMapping(value = "/{id}/history")
+    public DataFile getDataFilewithHistory(@PathVariable UUID id) {
+        return  dataFileService.findByIdWithHistory(id);
+
+    }
+
+
+
     @GetMapping(value = "/{types}/{value}")
     public List<DataFile> getDataFile(@PathVariable List<String> types, @PathVariable String value ) {
         return  dataFileService.findAllByDataTypesAndValue(types, value);

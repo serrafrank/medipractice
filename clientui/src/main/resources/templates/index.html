@@ -122,6 +122,10 @@
 <![endif]-->
 
 <div th:include="fragment/footer" th:remove="tag"/>
+<script>
+    console.log('[(${datafile})]');
+</script>
+
 
 <script th:if="${action} == read" type="text/javascript">
     Formio.icons = 'fontawesome';

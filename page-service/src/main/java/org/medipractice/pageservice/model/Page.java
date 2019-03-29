@@ -18,7 +18,8 @@ import java.util.UUID;
 public class Page {
 
     @Id
-    private UUID id = UUID.randomUUID();
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id ;
 
     @Column(nullable = false)
     private String name;

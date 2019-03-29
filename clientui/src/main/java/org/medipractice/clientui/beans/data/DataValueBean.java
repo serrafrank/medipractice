@@ -1,9 +1,6 @@
 package org.medipractice.clientui.beans.data;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -13,6 +10,7 @@ import java.util.UUID;
 @EqualsAndHashCode(of = {"id", "value", "date"}, callSuper = false)
 @ToString(of = {"id", "value", "date"})
 @NoArgsConstructor
+@AllArgsConstructor
 public class DataValueBean extends Auditable<String> {
 
     private UUID id;

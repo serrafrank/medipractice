@@ -26,9 +26,6 @@ public class DataObject {
 
     private String type;
 
-    @JsonIgnore
-    private UUID dataFileId;
-
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<DataValue> values = new ArrayList<>();
 

@@ -18,7 +18,7 @@ public class DataFile extends Auditable<String> {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL )
     private List<DataObject> datas = new ArrayList<>();
 
     public DataObject getDataType(String dataType) {

@@ -13,7 +13,8 @@ import java.util.UUID;
 public class Module {
 
     @Id
-    private UUID id = UUID.randomUUID();
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id ;
 
     @Column(unique = true, nullable = false)
     private String name;

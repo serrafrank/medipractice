@@ -11,4 +11,6 @@ public interface DataFileService {
     DataFile save(DataFile dataFile);
 
     List<DataFile> findAllByDataTypesAndValue(List<String> types, String value);
+
+    DataFile findByIdWithHistory(UUID id);
 }

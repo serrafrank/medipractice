@@ -13,4 +13,5 @@ import java.util.UUID;
 public interface FieldRepository extends JpaRepository<Field, UUID> {
 
 
+    Optional<Field> findByKey(String key);
 }

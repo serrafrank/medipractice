@@ -1,8 +1,10 @@
 package org.medipractice.clientui.beans.data;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +13,8 @@ import java.util.UUID;
 
 @Data
 @EqualsAndHashCode(of = {"id", "type", "dataFileId", "values"}, callSuper = false)
+@NoArgsConstructor
+@AllArgsConstructor
 public class DataObjectBean {
 
     private UUID id;
