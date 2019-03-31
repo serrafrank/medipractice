@@ -5,16 +5,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.medipractice.datafileserver.model.DataFile;
-import org.medipractice.datafileserver.model.DataObject;
-import org.medipractice.datafileserver.model.DataValue;
 import org.medipractice.datafileserver.service.DataFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,18 +24,24 @@ public class DataFileServiceImplTest {
     @Autowired
     private DataFileService dataFileService;
 
+    private UUID datafileId = UUID.randomUUID();
+
     @Before
     public void setUp() throws Exception {
-        dataFile = new DataFile();
-        dataFile.getDatas().add( new DataObject("lastname",  Arrays.asList( new DataValue("Martin"), new DataValue("Marc") ) ) );
-        dataFile.getDatas().add( new DataObject("firstname", Arrays.asList(new DataValue("Jean")) ));
-        dataFileService.save(dataFile);
+
+        List<DataFile> dataFileList = Arrays.asList(
+                new DataFile(datafileId, "prenom", "Martin", LocalDateTime.now() ),
+                new DataFile(datafileId, "nom_de_famille", "DUPONT", LocalDateTime.now() ),
+                new DataFile(datafileId, "prenom", "Jean", LocalDateTime.now() )
+        );
+
+        dataFileService.save(dataFileList);
 
     }
 
     @Test
     public void findById() {
-        DataFile df = dataFileService.findById(dataFile.getId());
+        List<DataFile> df = dataFileService.findByDatafileId(datafileId);
         Assert.assertNotNull(df);
     }
 

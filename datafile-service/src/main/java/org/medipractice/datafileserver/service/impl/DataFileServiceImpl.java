@@ -8,7 +8,10 @@ import org.medipractice.datafileserver.service.DataFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.OneToMany;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service("dataFileService")
@@ -23,54 +26,35 @@ public class DataFileServiceImpl implements DataFileService {
 
 
     @Override
-    public DataFile findById(UUID id) {
-        DataFile dataFile = this.dataFileRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not found : " + id));
-
-
-        DataFile dataFileReturn = dataFile;
-
-        //todo
-        /*
-        DataFile dataFileReturn = dataFile.getDatas()
-                .forEach(o -> o = o.getValues().stream().filter(v -> (v.getParentId() != null) ).map(Arrays) );
-*/
-        return dataFileReturn;
+    public List<DataFile> findByDatafileId(UUID id) {
+        return this.dataFileRepository.findAllByDataFile(id).orElseThrow(() -> new ResourceNotFoundException("Id not found : " + id));
     }
 
     @Override
-    public DataFile findByIdWithHistory(UUID id) {
-        return this.dataFileRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not found : " + id));
+    public void save(List<DataFile> list){
+        list.forEach(this::save);
     }
 
     @Override
-    public DataFile save(DataFile dataFile) {
-        if (dataFile.getId() != null) {
-            DataFile dataFileToUpdate = findById(dataFile.getId());
+    public void save(DataFile dataFile) {
 
-            dataFile.getDatas().forEach(dataObject -> {
+//            Optional<DataFile> dataFileToArchived =  this.dataFileRepository.findById(dataFile.getId());
+            Optional<DataFile> dataFileToArchived =  this.dataFileRepository.findByDataFileAndType(dataFile.getDataFile(), dataFile.getType());
+        if (dataFileToArchived.isPresent()) {
+            DataFile df = dataFileToArchived.get();
+//            df.setId(UUID.randomUUID());
+            df.setArchivedAt(LocalDateTime.now());
+            dataFileRepository.save(df);
 
-                if (dataFileToUpdate.getDataType(dataObject.getType()) != null) {
-
-                    dataObject.getValues().forEach(dataValue ->
-                            dataFileToUpdate.getDataType(dataObject.getType()).setValue(dataValue)
-                    );
-
-                } else {
-                    dataFileToUpdate.getDatas().add(dataObject);
-                }
-            });
-            dataFile = dataFileToUpdate;
-
+            dataFile.setArchived(df);
         }
 
         dataFileRepository.save(dataFile);
 
-        return dataFile;
     }
-
 
     @Override
     public List<DataFile> findAllByDataTypesAndValue(List<String> types, String value) {
-        return dataFileRepository.findAllByDataTypesAndValue(types, value).orElseThrow((BadRequestException::new));
+        return dataFileRepository.findAllByTypeInAndValueContaining(types, value).orElseThrow((BadRequestException::new));
     }
 }

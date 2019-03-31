@@ -6,11 +6,12 @@ import java.util.List;
 import java.util.UUID;
 
 public interface DataFileService {
-    DataFile findById(UUID id);
+    List<DataFile> findByDatafileId(UUID id);
 
-    DataFile save(DataFile dataFile);
+    void save(List<DataFile> dataFile);
+
+    void save(DataFile dataFile);
 
     List<DataFile> findAllByDataTypesAndValue(List<String> types, String value);
 
-    DataFile findByIdWithHistory(UUID id);
 }
