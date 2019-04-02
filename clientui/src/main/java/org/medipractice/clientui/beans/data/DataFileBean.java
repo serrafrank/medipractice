@@ -4,31 +4,41 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-public class DataFileBean extends Auditable<String> {
+public class DataFileBean {
 
     private UUID id;
-    private List<DataObjectBean> datas = new ArrayList<>();
 
-    public DataObjectBean getDataType(String dataType) {
-        return datas.stream()
-                .filter(t -> t.getType().equals(dataType))
-                .findAny().orElse(null);
+    private UUID dataFile;
+
+    private String type;
+
+    private String value;
+
+    private LocalDateTime date = LocalDateTime.now();
+
+    private LocalDateTime createdAt;
+
+    private String createdBy;
+
+    private LocalDateTime updatedAt;
+
+    private String updatedBy;
+
+    private LocalDateTime archivedAt;
+
+    private String archivedBy;
+
+
+    public DataFileBean(UUID dataFile, String type, String value) {
+        this.dataFile = dataFile;
+        this.type = type;
+        this.value = value;
     }
-
-    public void setDataType(String dataType, DataValueBean dataValueBean){
-        datas.add(new DataObjectBean(dataType, dataValueBean));
-    }
-
-    public void setDataType(String dataType, List<DataValueBean> dataValueBean){
-        datas.add(new DataObjectBean(dataType, dataValueBean));
-    }
-
-
 }

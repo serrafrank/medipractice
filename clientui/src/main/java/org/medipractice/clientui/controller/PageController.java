@@ -2,6 +2,7 @@ package org.medipractice.clientui.controller;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
 import org.medipractice.clientui.beans.data.DataFileBean;
 import org.medipractice.clientui.beans.page.ModuleBean;
 import org.medipractice.clientui.beans.page.PageBean;
@@ -15,9 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @Slf4j
@@ -36,13 +35,18 @@ public class PageController {
         this.dataService = dataService;
     }
 
+
     @ModelAttribute("datafile")
-    private DataFileBean getDatafile() {
+    private JSONObject getDatafile() {
         //UUID datafileId = (UUID) this.httpSession.getAttribute("datafile");
-        UUID datafileId = UUID.fromString("15b37039-47f4-4a43-bd48-a88acd793db2");
+        UUID datafileId = UUID.fromString("77d2f026-0e20-4cc6-9ac4-66c4aa1f214b");
 
         if(datafileId != null){
-            return this.dataService.getDatas(datafileId);
+
+            List<DataFileBean> dataFile = this.dataService.getDatas(datafileId);
+            Map<String, String> datas = new HashMap<>();
+            dataFile.forEach(d -> datas.put(d.getType(), d.getValue()));
+            return new JSONObject(datas);
         }else{
             return null;
         }
@@ -59,8 +63,6 @@ public class PageController {
     public String getIndex(Model model) {
         model.addAttribute("page", null);
         model.addAttribute("action", "index");
-
-
         return "index";
     }
 

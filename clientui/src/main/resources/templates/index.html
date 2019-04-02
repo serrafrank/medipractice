@@ -28,7 +28,7 @@
                             <div class="col-lg-8">
                                 <div class="page-header-title">
                                     <i th:if="${page}" class="feather bg-c-blue" th:classappend="${page.icon}"></i>
-                                    <div class="d-inline" th:if="${page}" >
+                                    <div class="d-inline" th:if="${page}">
                                         <h3 th:text="${page.title}"></h3>
                                         <span th:text="${page.subTitle}"></span>
                                     </div>
@@ -92,7 +92,7 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div th:if="${page}"  class="card-block">
+                                                <div th:if="${page}" class="card-block">
                                                     <div id="formio" class="card-block"></div>
 
                                                     <button th:if="${action} != read" id="submit"
@@ -122,20 +122,15 @@
 <![endif]-->
 
 <div th:include="fragment/footer" th:remove="tag"/>
-<script>
-    console.log('[(${datafile})]');
-</script>
-
 
 <script th:if="${action} == read" type="text/javascript">
     Formio.icons = 'fontawesome';
-    Formio.createForm(document.getElementById('formio'), [(${page.schema})], {}).then(function(form) {
-        form.on('submit', (submission) => {
-            console.log('The form was just submitted!!!');
-        });
-        form.on('error', (errors) => {
-            console.log('We have errors!');
-        })
+    Formio.createForm(document.getElementById('formio'), [(${page.schema})], {}).then(function (builder) {
+        builder.url = '[(${#httpServletRequest.requestURL})]';
+        builder.nosubmit = false;
+        builder.submission = {
+            data: [(${datafile})]
+        };
     });
 
 </script>

@@ -27,7 +27,6 @@ public class DataFile implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id ;
 
-    @JsonIgnore
     @Column(nullable = false, updatable = false)
     private UUID dataFile;
 

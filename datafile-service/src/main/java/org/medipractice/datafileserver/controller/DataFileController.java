@@ -3,11 +3,8 @@ package org.medipractice.datafileserver.controller;
 import org.medipractice.datafileserver.model.DataFile;
 import org.medipractice.datafileserver.service.DataFileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,8 +33,9 @@ public class DataFileController  {
 
 
     @PostMapping
-    public void postDataFile(@RequestBody DataFile dataFile){
-        dataFileService.save(dataFile);
+    public List<DataFile> postDataFile(@RequestBody List<DataFile> dataFile){
+        return dataFileService.save(dataFile);
+
     }
 
 }

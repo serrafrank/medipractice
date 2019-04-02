@@ -1,5 +1,6 @@
 package org.medipractice.datafileserver.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.medipractice.datafileserver.exception.BadRequestException;
 import org.medipractice.datafileserver.exception.ResourceNotFoundException;
 import org.medipractice.datafileserver.model.DataFile;
@@ -27,19 +28,19 @@ public class DataFileServiceImpl implements DataFileService {
 
     @Override
     public List<DataFile> findByDatafileId(UUID id) {
-        return this.dataFileRepository.findAllByDataFile(id).orElseThrow(() -> new ResourceNotFoundException("Id not found : " + id));
+        return this.dataFileRepository.findAllByDataFileAndArchivedAtIsNull(id).orElseThrow(() -> new ResourceNotFoundException("Id not found : " + id));
     }
 
     @Override
-    public void save(List<DataFile> list){
-        list.forEach(this::save);
+    public List<DataFile> save(List<DataFile> list){
+        list.forEach(d -> d = this.save(d));
+        return list;
     }
 
     @Override
-    public void save(DataFile dataFile) {
-
+    public DataFile save(DataFile dataFile) {
 //            Optional<DataFile> dataFileToArchived =  this.dataFileRepository.findById(dataFile.getId());
-            Optional<DataFile> dataFileToArchived =  this.dataFileRepository.findByDataFileAndType(dataFile.getDataFile(), dataFile.getType());
+            Optional<DataFile> dataFileToArchived =  this.dataFileRepository.findByDataFileAndTypeAndArchivedAtIsNull(dataFile.getDataFile(), dataFile.getType());
         if (dataFileToArchived.isPresent()) {
             DataFile df = dataFileToArchived.get();
 //            df.setId(UUID.randomUUID());
@@ -49,12 +50,12 @@ public class DataFileServiceImpl implements DataFileService {
             dataFile.setArchived(df);
         }
 
-        dataFileRepository.save(dataFile);
+        return dataFileRepository.save(dataFile);
 
     }
 
     @Override
     public List<DataFile> findAllByDataTypesAndValue(List<String> types, String value) {
-        return dataFileRepository.findAllByTypeInAndValueContaining(types, value).orElseThrow((BadRequestException::new));
+        return dataFileRepository.findAllByTypeInAndValueContainingAndArchivedAtIsNull(types, value).orElseThrow((BadRequestException::new));
     }
 }

@@ -8,9 +8,9 @@ import java.util.UUID;
 public interface DataFileService {
     List<DataFile> findByDatafileId(UUID id);
 
-    void save(List<DataFile> dataFile);
+    List<DataFile> save(List<DataFile> dataFile);
 
-    void save(DataFile dataFile);
+    DataFile save(DataFile dataFile);
 
     List<DataFile> findAllByDataTypesAndValue(List<String> types, String value);
 
