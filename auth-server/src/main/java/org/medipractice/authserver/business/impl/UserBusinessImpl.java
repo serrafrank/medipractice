@@ -2,16 +2,17 @@ package org.medipractice.authserver.business.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.medipractice.authserver.business.UserBusiness;
-import org.medipractice.authserver.model.User;
+import org.medipractice.authserver.model.UserAccount;
 import org.medipractice.authserver.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 @Slf4j
-@Service
-public class UserBusinessImpl implements UserBusiness {
+@Service("userAccountBusiness")
+public class UserBusinessImpl implements UserBusiness, UserDetailsService {
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -19,13 +20,17 @@ public class UserBusinessImpl implements UserBusiness {
     private UserRepository userRepository;
 
     @Override
-    public void createUser(User user) {
-        User existing = userRepository.findByUsername(user.getUsername());
-        Assert.isNull(existing, "user already exists: " + user.getUsername());
+    public void createUser(UserAccount userAccount) throws Exception {
+        if(userRepository.findByUsername(userAccount.getUsername()).isPresent())
+            throw new Exception("Username already exists: " + userAccount.getUsername());
 
-        String hash = encoder.encode(user.getPassword());
-        user.setPassword(hash);
-        userRepository.save(user);
-        log.info("new user has been created: {}", user.getUsername());
+        String hash = encoder.encode(userAccount.getPassword());
+        userAccount.setPassword(hash);
+        userRepository.save(userAccount);
+        log.info("new userAccount has been created: {}", userAccount.getUsername());
+    }
+
+    public UserAccount loadUserByUsername(String username) {
+        return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
     }
 }

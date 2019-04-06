@@ -34,10 +34,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
     @Autowired
     private RedisConnectionFactory connectionFactory;
+
     @Autowired
-    private UserDetailsService userDetailsServiceImpl;
+    private UserDetailsService userAccountBusiness;
 
     @Bean
     public RedisTokenStore tokenStore() {
@@ -47,7 +49,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
                 .authenticationManager(authenticationManager)
-                .userDetailsService(userDetailsServiceImpl)
+                .userDetailsService(userAccountBusiness)
                 .tokenStore(tokenStore());
     }
 

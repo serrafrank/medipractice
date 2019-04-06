@@ -33,4 +33,4 @@ security:
 medipractice:
     client:
         id: 'medipractice'
-        secret: 'medipractice'
+        secret: '$2a$10$EKpd38dpn/Whtkf3FoK9/OXJU.EKkv5DiwKn5eIwuQ6aICniaPPde'

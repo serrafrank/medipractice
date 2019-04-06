@@ -21,7 +21,7 @@ INSERT INTO RESOURCE (id, path, method, server_id) VALUES (12, 'authorities', 'P
 INSERT INTO RESOURCE (id, path, method, server_id) VALUES (13, 'authorities/*', 'PUT', 1);
 INSERT INTO RESOURCE (id, path, method, server_id) VALUES (14, 'authorities/*', 'DELETE', 1);
 INSERT INTO RESOURCE (id, path, method, server_id) VALUES (15, 'authorities/*', 'GET', 1);
-INSERT INTO RESOURCE (id, path, method, server_id) VALUES (16, 'authorities/user/*', 'GET', 1);
+INSERT INTO RESOURCE (id, path, method, server_id) VALUES (16, 'authorities/userAccount/*', 'GET', 1);
 INSERT INTO RESOURCE (id, path, method, server_id) VALUES (17, 'authorities/services', 'GET', 1);
 
 INSERT INTO RESOURCE (id, path, method, server_id) VALUES (18, 'resources/', 'GET', 1);

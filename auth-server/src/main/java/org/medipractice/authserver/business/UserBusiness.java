@@ -1,8 +1,8 @@
 package org.medipractice.authserver.business;
 
-import org.medipractice.authserver.model.User;
+import org.medipractice.authserver.model.UserAccount;
 
 
 public interface UserBusiness {
-    void createUser(User user);
+    void createUser(UserAccount userAccount) throws Exception;
 }

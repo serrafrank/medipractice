@@ -15,8 +15,8 @@ import java.util.Set;
 
 @Entity
 @Data
-@Table(name="user_account")
-public class User  implements UserDetails, Serializable {
+@Table
+public class UserAccount implements UserDetails, Serializable {
 	@Id
     @GeneratedValue
     private Long id;
@@ -27,10 +27,18 @@ public class User  implements UserDetails, Serializable {
     private String password;
 
     private String firstname;
+
     private String lastname;
 
     private String email;
 
+    private boolean accountNonExpired = true;
+
+    private boolean accountNonLocked = true;
+
+    private boolean credentialsNonExpired = true;
+
+    private boolean enabled = true;
 
     @JsonIgnore
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
@@ -48,24 +56,5 @@ public class User  implements UserDetails, Serializable {
         return authorities;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 
 }
