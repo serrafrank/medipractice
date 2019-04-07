@@ -1,10 +1,11 @@
 package org.medipractice.authserver.business.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.medipractice.authserver.business.UserBusiness;
+import org.medipractice.authserver.business.UserAccountBusiness;
 import org.medipractice.authserver.model.UserAccount;
 import org.medipractice.authserver.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service("userAccountBusiness")
-public class UserBusinessImpl implements UserBusiness, UserDetailsService {
+public class UserAccountBusinessImpl implements UserAccountBusiness, UserDetailsService {
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -30,7 +31,13 @@ public class UserBusinessImpl implements UserBusiness, UserDetailsService {
         log.info("new userAccount has been created: {}", userAccount.getUsername());
     }
 
-    public UserAccount loadUserByUsername(String username) {
+    @Override
+    public UserAccount findByUsername(String username) {
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        return findByUsername(username);
     }
 }

@@ -3,6 +3,8 @@ package org.medipractice.authserver.business;
 import org.medipractice.authserver.model.UserAccount;
 
 
-public interface UserBusiness {
+public interface UserAccountBusiness {
     void createUser(UserAccount userAccount) throws Exception;
+
+    UserAccount findByUsername(String username);
 }

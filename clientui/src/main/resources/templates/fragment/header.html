@@ -34,104 +34,20 @@
         </li>
     </ul>
     <ul class="nav-right">
-        <li class="header-notification">
-            <div class="dropdown-primary dropdown">
-                <div class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="feather icon-bell"></i>
-                    <span class="badge bg-c-red">5</span>
-                </div>
-                <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn"
-                    data-dropdown-out="fadeOut">
-                    <li>
-                        <h6>Notifications</h6>
-                        <label class="label label-danger">New</label>
-                    </li>
-                    <li>
-                        <div class="media">
-                            <img class="img-radius"
-                                 src="https://colorlib.com/polygon/admindek/files/assets/images/avatar-4.jpg"
-                                 alt="Generic placeholder image">
-                            <div class="media-body">
-                                <h5 class="notification-userAccount">John Doe</h5>
-                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                <span class="notification-time">30 minutes ago</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="media">
-                            <img class="img-radius"
-                                 src="https://colorlib.com/polygon/admindek/files/assets/images/avatar-3.jpg"
-                                 alt="Generic placeholder image">
-                            <div class="media-body">
-                                <h5 class="notification-userAccount">Joseph William</h5>
-                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                <span class="notification-time">30 minutes ago</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="media">
-                            <img class="img-radius"
-                                 src="https://colorlib.com/polygon/admindek/files/assets/images/avatar-4.jpg"
-                                 alt="Generic placeholder image">
-                            <div class="media-body">
-                                <h5 class="notification-userAccount">Sara Soudein</h5>
-                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                <span class="notification-time">30 minutes ago</span>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="header-notification">
-            <div class="dropdown-primary dropdown">
-                <div class="displayChatbox dropdown-toggle" data-toggle="dropdown">
-                    <i class="feather icon-message-square"></i>
-                    <span class="badge bg-c-green">3</span>
-                </div>
-            </div>
-        </li>
-        <li class="userAccount-profile header-notification">
+        <li class="user-profile header-notification">
 
             <div class="dropdown-primary dropdown">
                 <div class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="https://colorlib.com/polygon/admindek/files/assets/images/avatar-4.jpg" class="img-radius"
+                    <img th:src="@{/static/img/user.png}" class="img-radius"
                          alt="User-Profile-Image">
-                    <span>John Doe</span>
+                    <span th:text="${user.firstname} + ' ' + ${user.lastname}"></span>
                     <i class="feather icon-chevron-down"></i>
                 </div>
                 <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn"
                     data-dropdown-out="fadeOut">
                     <li>
-                        <a href="#!">
-                            <i class="feather icon-settings"></i> Settings
-
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="feather icon-userAccount"></i> Profile
-
-                        </a>
-                    </li>
-                    <li>
-                        <a href="email-inbox.html">
-                            <i class="feather icon-mail"></i> My Messages
-
-                        </a>
-                    </li>
-                    <li>
-                        <a href="auth-lock-screen.html">
-                            <i class="feather icon-lock"></i> Lock Screen
-
-                        </a>
-                    </li>
-                    <li>
-                        <a href="auth-sign-in-social.html">
-                            <i class="feather icon-log-out"></i> Logout
-
+                        <a th:href="@{/logout}">
+                            <i class="feather icon-log-out"></i>Se déconnecter
                         </a>
                     </li>
                 </ul>

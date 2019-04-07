@@ -6,8 +6,6 @@ import org.json.JSONObject;
 import org.medipractice.clientui.beans.data.DataFileBean;
 import org.medipractice.clientui.beans.page.ModuleBean;
 import org.medipractice.clientui.beans.page.PageBean;
-import org.medipractice.clientui.service.DataService;
-import org.medipractice.clientui.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,21 +18,7 @@ import java.util.*;
 
 @Controller
 @Slf4j
-public class PageController {
-
-    private final PageService pageService;
-    private final DataService dataService;
-    private final HttpSession httpSession;
-
-    private List<ModuleBean> menu = new ArrayList<>();
-
-    @Autowired
-    public PageController(PageService pageService, HttpSession httpSession, DataService dataService) {
-        this.pageService = pageService;
-        this.httpSession = httpSession;
-        this.dataService = dataService;
-    }
-
+public class PageController extends AbstractController {
 
     @ModelAttribute("datafile")
     private JSONObject getDatafile() {
@@ -43,7 +27,7 @@ public class PageController {
 
         if(datafileId != null){
 
-            List<DataFileBean> dataFile = this.dataService.getDatas(datafileId);
+            List<DataFileBean> dataFile = this.serviceManager.getDataService().getDatas(datafileId);
             Map<String, String> datas = new HashMap<>();
             dataFile.forEach(d -> datas.put(d.getType(), d.getValue()));
             return new JSONObject(datas);
@@ -51,13 +35,6 @@ public class PageController {
             return null;
         }
     }
-
-    @ModelAttribute("menu")
-    private List<ModuleBean> getMenu() {
-        this.menu = this.pageService.findMenu();
-        return this.menu;
-    }
-
 
     @GetMapping("/")
     public String getIndex(Model model) {
@@ -93,14 +70,14 @@ public class PageController {
 
 
     private void getPage(String module, String name, String action, Model model) {
-        PageBean pageBean = pageService.getPageContent(module, name);
+        PageBean pageBean = this.serviceManager.getPageService().getPageContent(module, name);
         List<ModuleBean> menu;
-        menu = pageService.findMenu();
+        menu = this.serviceManager.getPageService().findMenu();
 
         ModuleBean moduleBean = menu.stream().filter(c -> c.getName().equals(module)).findFirst().get();
 
         model.addAttribute("module", menu.stream().filter(c -> c.getName().equals(module)).findFirst().get());
-        model.addAttribute("page", pageService.getPageContent(module, name));
+        model.addAttribute("page", this.serviceManager.getPageService().getPageContent(module, name));
         model.addAttribute("url", "/page/" + module + "/index");
 
 
