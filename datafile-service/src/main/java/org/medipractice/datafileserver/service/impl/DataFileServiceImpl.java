@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -55,7 +56,7 @@ public class DataFileServiceImpl implements DataFileService {
     }
 
     @Override
-    public List<DataFile> findAllByDataTypesAndValue(List<String> types, String value) {
-        return dataFileRepository.findAllByTypeInAndValueContainingAndArchivedAtIsNull(types, value).orElseThrow((BadRequestException::new));
+    public List<DataFile> findAllByDataTypesAndValue( String[] types, String value) {
+        return dataFileRepository.findAllByTypeInAndValueContainingIgnoreCaseAndArchivedAtIsNull(types, value).orElse(Collections.emptyList());
     }
 }

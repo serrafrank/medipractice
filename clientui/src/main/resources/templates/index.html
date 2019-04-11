@@ -27,7 +27,7 @@
                         <div class="row align-items-end">
                             <div class="col-lg-8">
                                 <div class="page-header-title">
-                                    <i th:if="${page}" class="feather bg-c-blue" th:classappend="${page.icon}"></i>
+                                    <i th:if="${page != null && page.icon != null}" class="feather bg-c-blue" th:classappend="${page.icon}"></i>
                                     <div class="d-inline" th:if="${page}">
                                         <h3 th:text="${page.title}"></h3>
                                         <span th:text="${page.subTitle}"></span>
@@ -92,6 +92,7 @@
                                                         </ul>
                                                     </div>
                                                 </div>
+                                                <div  th:include="fragment/home"></div>
                                                 <div th:if="${page}" class="card-block">
                                                     <div id="formio" class="card-block"></div>
 
@@ -129,7 +130,7 @@
         builder.url = '[(${#httpServletRequest.requestURL})]';
         builder.nosubmit = false;
         builder.submission = {
-            data: [(${datafile})]
+            data: [(${DataFile})]
         };
     });
 

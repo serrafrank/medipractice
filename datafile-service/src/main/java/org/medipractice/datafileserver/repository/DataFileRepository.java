@@ -18,9 +18,9 @@ public interface DataFileRepository extends JpaRepository<DataFile, UUID> {
 
     Optional<DataFile> findByDataFileAndTypeAndArchivedAtIsNull(UUID id, String type);
 
-    Optional<List<DataFile>> findAllByDataFileAndTypeInAndArchivedAtIsNull(UUID id, List<String> types);
+    Optional<List<DataFile>> findAllByDataFileAndTypeInAndArchivedAtIsNull(UUID id,  String[] types);
 
-    Optional<List<DataFile>> findAllByTypeInAndValueContainingAndArchivedAtIsNull(List<String> types, String value);
+    Optional<List<DataFile>> findAllByTypeInAndValueContainingIgnoreCaseAndArchivedAtIsNull( String[] types, String value);
 
 }
 

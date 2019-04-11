@@ -7,8 +7,10 @@ import org.medipractice.clientui.proxy.ProxyManager;
 import org.medipractice.clientui.service.AbstractService;
 import org.medipractice.clientui.service.contract.DataService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -16,6 +18,17 @@ import java.util.UUID;
 @Slf4j
 @Service("dataService")
 public class DataServiceImpl extends AbstractService implements DataService {
+
+    private final HttpServletRequest request;
+
+    @Autowired
+    public DataServiceImpl(HttpServletRequest request) {
+        this.request = request;
+
+
+    }
+
+
 
     @Override
     public List<DataFileBean> getDatas(UUID datafile, List<String> datas) {
@@ -27,6 +40,15 @@ public class DataServiceImpl extends AbstractService implements DataService {
         return this.proxyManager.getData().getDataFile(this.tokenService.getToken(), datafile);
     }
 
+    @Override
+    public List<DataFileBean> getDatafiles(String[] fields, String value) {
+        return this.proxyManager.getData().getDataFiles(this.tokenService.getToken(), fields,value );
+    }
+
+    @Override
+    public ResponseEntity<?> setDatafile(UUID value) {
+        return null;
+    }
 
     @Override
     public DataFileDto postDatas(DataFileDto datas) {

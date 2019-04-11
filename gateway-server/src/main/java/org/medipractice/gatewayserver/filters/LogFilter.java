@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Component
 @Slf4j
@@ -14,7 +15,7 @@ public class LogFilter extends ZuulFilter {
 
     @Override
     public String filterType() {
-        return "pre";
+        return "post";
     }
 
     @Override
@@ -31,9 +32,11 @@ public class LogFilter extends ZuulFilter {
     public Object run() throws ZuulException {
 
         HttpServletRequest req = RequestContext.getCurrentContext().getRequest();
-
-        log.info("**** {} : {}" , req.getMethod(), req.getRequestURL());
+        HttpServletResponse res = RequestContext.getCurrentContext().getResponse();
+        log.info("**** {}, ({}) : {}" , req.getMethod(), res.getStatus(), req.getRequestURL());
 
         return null;
     }
 }
+
+

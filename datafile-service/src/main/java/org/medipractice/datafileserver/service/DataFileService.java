@@ -12,6 +12,6 @@ public interface DataFileService {
 
     DataFile save(DataFile dataFile);
 
-    List<DataFile> findAllByDataTypesAndValue(List<String> types, String value);
+    List<DataFile> findAllByDataTypesAndValue(String[] types, String value);
 
 }
