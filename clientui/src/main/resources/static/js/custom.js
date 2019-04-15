@@ -29,13 +29,14 @@ $(document).ready(function () {
         }
     });
 
-    $('#select').click(
+    $('#select').click(function () {
         $.ajax({
             url: '/setDatafile', // on appelle le script JSON
             dataType: 'json', // on spécifie bien que le type de données est en JSON
             data: {
                 value: uuid // on donne la chaîne de caractère tapée dans le champ de recherche
             },
-
-        }));
+            success: window.location.replace("/")
+        });
+    })
 });

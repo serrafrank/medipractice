@@ -14,4 +14,5 @@ public interface DataFileService {
 
     List<DataFile> findAllByDataTypesAndValue(String[] types, String value);
 
+    List<DataFile> findAllByDataTypes(String[] types);
 }

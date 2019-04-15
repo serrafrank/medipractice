@@ -22,7 +22,9 @@ public interface DataProxy {
     @PostMapping
     List<DataFileBean> postDataFile(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody List<DataFileBean> dataFile);
 
-    @GetMapping(value = "{types}/{value}")
-    List<DataFileBean> getDataFiles(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable(name = "types") String[] types, @PathVariable(name = "value") String value );
+//    @GetMapping(value = "{types}/{value}")
+//    List<DataFileBean> getDataFiles(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable(name = "types") String[] types, @PathVariable(name = "value") String value );
 
+    @GetMapping(value = "{types}/all")
+    List<DataFileBean> getAllDataFiles(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable(name = "types") String[] types);
 }

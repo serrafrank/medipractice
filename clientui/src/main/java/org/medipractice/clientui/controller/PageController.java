@@ -9,10 +9,7 @@ import org.medipractice.clientui.beans.page.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.*;
@@ -21,18 +18,7 @@ import java.util.*;
 @Slf4j
 public class PageController extends AbstractController {
 
-    @ModelAttribute("DataFile")
-    private JSONObject getDatafile(@SessionAttribute("datafile") String datafile) {
-        if(!datafile.isEmpty()) {
-            UUID datafileId = UUID.fromString(datafile);
-            List<DataFileBean> dataFile = this.serviceManager.getDataService().getDatas(datafileId);
-            Map<String, String> datas = new HashMap<>();
-            dataFile.forEach(d -> datas.put(d.getType(), d.getValue()));
-            return new JSONObject(datas);
-        }else {
-            return null;
-        }
-    }
+
 
     @GetMapping("/")
     public String getIndex(Model model) {
@@ -60,9 +46,7 @@ public class PageController extends AbstractController {
 
     @GetMapping("/page/{module}/{name}/{action}")
     public String getIndex(@PathVariable String module, @PathVariable String name, @PathVariable String action, Model model) {
-
         getPage(module, name, action, model);
-
         return "index";
     }
 

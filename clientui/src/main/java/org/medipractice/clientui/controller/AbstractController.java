@@ -1,6 +1,9 @@
 package org.medipractice.clientui.controller;
 
+import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
 import org.medipractice.clientui.UserAccountBean;
+import org.medipractice.clientui.beans.data.DataFileBean;
 import org.medipractice.clientui.beans.page.ModuleBean;
 import org.medipractice.clientui.proxy.ProxyManager;
 import org.medipractice.clientui.service.ServiceManager;
@@ -11,11 +14,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.*;
 
-@SessionAttributes(value = "datafile" , types = {String.class})
+@Slf4j
 public abstract class AbstractController {
 
 
@@ -31,13 +34,26 @@ public abstract class AbstractController {
     }
 
     @ModelAttribute("user")
-    private UserAccountBean getUser(){
+    private UserAccountBean getUser() {
         return this.serviceManager.getUserService().getCurrentUser();
     }
 
     @ModelAttribute("datafile")
-    private String setDatafile(){
-        return " ";
+    private JSONObject getDatafile(HttpSession httpSession) {
+        Map<String, String> datas = new HashMap<>();
+        if (httpSession.getAttribute("datafile_id") != null) {
+            String datafile_id = (String) httpSession.getAttribute("datafile_id");
+            log.info("--- getDatafile " + datafile_id);
+            UUID datafileId = UUID.fromString(datafile_id);
+            List<DataFileBean> dataFile = this.serviceManager.getDataService().getDatas(datafileId);
+
+            dataFile.forEach(d -> datas.put(d.getType(), d.getValue()));
+
+        } else {
+            log.info("--- getDatafile NULL");
+        }
+        return new JSONObject(datas);
+
     }
 
 }

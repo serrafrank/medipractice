@@ -1,18 +1,22 @@
 package org.medipractice.clientui.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
 import org.medipractice.clientui.beans.data.DataFileBean;
 import org.medipractice.clientui.beans.data.DataFileDto;
 import org.medipractice.clientui.beans.page.PageBean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.*;
 
 @Slf4j
 @RestController
 public class AjaxController extends AbstractController {
+
 
 
     @PostMapping(value = "/page")
@@ -27,22 +31,25 @@ public class AjaxController extends AbstractController {
     }
 
     @GetMapping(value = "/setDatafile")
-    public void setDatafiles(@ModelAttribute("datafile") String value) {
-       //return this.serviceManager.getDataService().setDatafile(value);
+    public ResponseEntity<?> setDatafiles(@RequestParam String value, HttpServletRequest request, HttpSession httpSession) {
+       httpSession.setAttribute("datafile_id", value);
+
+        log.info("--- setDatafile " + value);
+       return ResponseEntity.ok().build();
     }
 
     @GetMapping(value = "/getDatafiles", produces = "application/json")
-    public List<Map<String, Object>> getDatafiles(@RequestParam String value) {
+    public List<Map<String, Object>> getDatafiles() {
 
         String[] fields = {"prenom", "nom_de_famille"};
-        List<DataFileBean> dataFileBeanList = this.serviceManager.getDataService().getDatafiles(fields, value);
+        List<DataFileBean> dataFileBeanList = this.serviceManager.getDataService().getAllDatafiles(fields);
 
         Map<UUID, Map<String, String>> selected = new HashMap<>();
 
         dataFileBeanList.forEach(d -> {
-            if (!selected.containsKey((d.getId())))
-                selected.put(d.getId(), new HashMap<>());
-            selected.get(d.getId()).put(d.getType(), d.getValue());
+            if (!selected.containsKey((d.getDataFile())))
+                selected.put(d.getDataFile(), new HashMap<>());
+            selected.get(d.getDataFile()).put(d.getType(), d.getValue());
         });
 
         List<Map<String, Object>> returnedList = new ArrayList<>();
@@ -62,6 +69,10 @@ public class AjaxController extends AbstractController {
         );
         return returnedList;
     }
+
+
+
+
 
 
 }

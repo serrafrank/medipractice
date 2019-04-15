@@ -28,9 +28,15 @@ public class DataFileController  {
 
     }
 
-    @GetMapping(value = "{types}/{value}")
-    public List<DataFile> getDataFile(@PathVariable String[] types, @PathVariable String value ) {
-        return  dataFileService.findAllByDataTypesAndValue(types, value);
+//    @GetMapping(value = "{types}/{value}")
+//    public List<DataFile> getDataFiles(@PathVariable String[] types, @PathVariable String value ) {
+//        return  dataFileService.findAllByDataTypesAndValue(types, value);
+//
+//    }
+
+    @GetMapping(value = "{types}/all")
+    public List<DataFile> getAllDataFiles(@PathVariable String[] types ) {
+        return  dataFileService.findAllByDataTypes(types);
 
     }
 

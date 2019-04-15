@@ -28,8 +28,6 @@ public class DataServiceImpl extends AbstractService implements DataService {
 
     }
 
-
-
     @Override
     public List<DataFileBean> getDatas(UUID datafile, List<String> datas) {
         return this.proxyManager.getData().getDataFile(this.tokenService.getToken(), datafile);
@@ -40,9 +38,14 @@ public class DataServiceImpl extends AbstractService implements DataService {
         return this.proxyManager.getData().getDataFile(this.tokenService.getToken(), datafile);
     }
 
+//    @Override
+//    public List<DataFileBean> getDatafiles(String[] fields, String value) {
+//        return this.proxyManager.getData().getDataFiles(this.tokenService.getToken(), fields,value );
+//    }
+
     @Override
-    public List<DataFileBean> getDatafiles(String[] fields, String value) {
-        return this.proxyManager.getData().getDataFiles(this.tokenService.getToken(), fields,value );
+    public List<DataFileBean> getAllDatafiles(String[] fields) {
+        return this.proxyManager.getData().getAllDataFiles(this.tokenService.getToken(), fields );
     }
 
     @Override

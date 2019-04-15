@@ -92,8 +92,8 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div  th:include="fragment/home"></div>
-                                                <div th:if="${page}" class="card-block">
+                                                <div th:if="${action == 'index'}" class="card-block" th:include="fragment/home"></div>
+                                                <div th:if="${action!= 'index'}" class="card-block">
                                                     <div id="formio" class="card-block"></div>
 
                                                     <button th:if="${action} != read" id="submit"
@@ -130,7 +130,7 @@
         builder.url = '[(${#httpServletRequest.requestURL})]';
         builder.nosubmit = false;
         builder.submission = {
-            data: [(${DataFile})]
+            data: [(${datafile})]
         };
     });
 

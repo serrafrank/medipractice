@@ -59,4 +59,9 @@ public class DataFileServiceImpl implements DataFileService {
     public List<DataFile> findAllByDataTypesAndValue( String[] types, String value) {
         return dataFileRepository.findAllByTypeInAndValueContainingIgnoreCaseAndArchivedAtIsNull(types, value).orElse(Collections.emptyList());
     }
+
+    @Override
+    public List<DataFile> findAllByDataTypes(String[] types) {
+        return dataFileRepository.findAllByTypeInAndArchivedAtIsNull(types).orElse(Collections.emptyList());
+    }
 }

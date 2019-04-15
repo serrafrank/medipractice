@@ -22,6 +22,7 @@ public interface DataFileRepository extends JpaRepository<DataFile, UUID> {
 
     Optional<List<DataFile>> findAllByTypeInAndValueContainingIgnoreCaseAndArchivedAtIsNull( String[] types, String value);
 
+    Optional<List<DataFile>> findAllByTypeInAndArchivedAtIsNull(String[] types);
 }
 
 

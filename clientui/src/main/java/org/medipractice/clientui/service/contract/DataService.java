@@ -14,7 +14,9 @@ public interface DataService {
 
     DataFileDto postDatas(DataFileDto datas);
 
-    List<DataFileBean> getDatafiles(String[] fields, String value);
+//    List<DataFileBean> getDatafiles(String[] fields, String value);
+
+    List<DataFileBean> getAllDatafiles(String[] fields);
 
     ResponseEntity<?> setDatafile(UUID value);
 }
