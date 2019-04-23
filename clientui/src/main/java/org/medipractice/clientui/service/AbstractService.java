@@ -9,6 +9,6 @@ public abstract class AbstractService {
     protected ProxyManager proxyManager;
 
     @Autowired
-    protected TokenServiceImpl tokenService;
+    protected ServiceManager serviceManager;
 
 }

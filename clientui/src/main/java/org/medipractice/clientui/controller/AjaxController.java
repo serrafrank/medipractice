@@ -30,14 +30,6 @@ public class AjaxController extends AbstractController {
         return this.serviceManager.getDataService().postDatas(datafile);
     }
 
-    @GetMapping(value = "/setDatafile")
-    public ResponseEntity<?> setDatafiles(@RequestParam String value, HttpServletRequest request, HttpSession httpSession) {
-       httpSession.setAttribute("datafile_id", value);
-
-        log.info("--- setDatafile " + value);
-       return ResponseEntity.ok().build();
-    }
-
     @GetMapping(value = "/getDatafiles", produces = "application/json")
     public List<Map<String, Object>> getDatafiles() {
 

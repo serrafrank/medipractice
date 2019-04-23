@@ -21,7 +21,7 @@ public class PageServiceImpl extends AbstractService implements PageService {
     public PageBean getPageContent(String module, String name) {
         PageBean pageBean;
         try {
-            pageBean = this.proxyManager.getPage().getPage(this.tokenService.getToken(), module, name);
+            pageBean = this.proxyManager.getPage().getPage(this.serviceManager.getTokenService().getToken(), module, name);
         } catch (Exception e) {
             pageBean = new PageBean();
             pageBean.setName(name);
@@ -34,19 +34,19 @@ public class PageServiceImpl extends AbstractService implements PageService {
     @Override
     public List<ModuleBean> findMenu() {
         List<ModuleBean> moduleBeans = new ArrayList<>();
-        if (this.tokenService.isConnected())
-            moduleBeans = this.proxyManager.getPage().findMenu(this.tokenService.getToken());
+        if (this.serviceManager.getTokenService().isConnected())
+            moduleBeans = this.proxyManager.getPage().findMenu(this.serviceManager.getTokenService().getToken());
 
         return moduleBeans;
     }
 
     @Override
     public PageBean getIndex() {
-        return this.proxyManager.getPage().getIndex(this.tokenService.getToken());
+        return this.proxyManager.getPage().getIndex(this.serviceManager.getTokenService().getToken());
     }
 
     @Override
     public ResponseEntity<?> postPage(PageBean page) {
-        return this.proxyManager.getPage().postPage(this.tokenService.getToken(), page);
+        return this.proxyManager.getPage().postPage(this.serviceManager.getTokenService().getToken(), page);
     }
 }

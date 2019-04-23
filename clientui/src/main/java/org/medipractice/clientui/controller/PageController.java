@@ -30,9 +30,7 @@ public class PageController extends AbstractController {
 
     @GetMapping("/page/{module}")
     public String getIndex(@PathVariable String module, Model model) {
-
         getPage(module, "index", null, model);
-
         return "index";
     }
 

@@ -1,6 +1,18 @@
 <html lang="en">
-<form>
-    <input type="text" class="form-control" id="recherche"  />
-    <button id="select" class="btn btn-primary m-b-0" disabled>Selectionner</button>
+
+<form method="post" action="/setDatafile">
+
+    <input type="hidden" id="datafileId" name="datafileId"/>
+    <div class="input-group input-group-button ui-widget">
+    <span class="input-group-prepend">
+      <label class="input-group-text"><i
+              class="fa fa-search"></i></label>
+    </span>
+        <input id="findFile" name="findFile" type="text" class="form-control" placeholder="Rechercher un patient"/>
+        <div class="input-group-append">
+            <button id="submit" name="submit" class="btn btn-primary" type="submit" disabled>Selectionner</button>
+        </div>
+    </div>
 </form>
+
 </html>

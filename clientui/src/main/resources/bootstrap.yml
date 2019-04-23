@@ -9,3 +9,6 @@ spring:
 
 
 
+pager:
+    homepage:
+        index: /page/homepage/index

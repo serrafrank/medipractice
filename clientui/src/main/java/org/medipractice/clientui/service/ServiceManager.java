@@ -1,16 +1,16 @@
 package org.medipractice.clientui.service;
 
 import lombok.Data;
-import org.medipractice.clientui.service.contract.DataService;
-import org.medipractice.clientui.service.contract.PageService;
-import org.medipractice.clientui.service.contract.TokenService;
-import org.medipractice.clientui.service.contract.UserService;
+import org.medipractice.clientui.service.contract.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Data
 @Service
 public class ServiceManager {
+
+    @Autowired
+    private AuthService authService;
 
     @Autowired
     private DataService dataService;

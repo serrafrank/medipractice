@@ -1,7 +1,6 @@
 package org.medipractice.clientui.service.contract;
 
-import org.medipractice.clientui.UserAccountBean;
-import org.springframework.stereotype.Service;
+import org.medipractice.clientui.beans.UserAccountBean;
 
 
 public interface UserService {

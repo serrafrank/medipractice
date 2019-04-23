@@ -19,7 +19,7 @@
             <div class="pcoded-wrapper">
                 <!-- [ navigation menu ] start -->
 
-                <div th:if="${menu}" th:include="fragment/menu/menu" th:with="menu_list=${menu}" th:remove="tag"/>
+                <div th:if="${menu}" th:include="fragment/menu/menu" th:with="menu_list=${menu},disabledMenu=${disabledMenu}" th:remove="tag"/>
                 <!-- [ navigation menu ] end -->
                 <div class="pcoded-content">
                     <!-- [ breadcrumb ] start -->
