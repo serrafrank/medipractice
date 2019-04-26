@@ -48,15 +48,7 @@
                             <div class="page-wrapper">
                                 <div class="page-body">
                                     <!-- [ page content ] start -->
-                                    <div th:if="${action} == create" class="row">
-                                        <div th:if="!${module.label}" class="col-md-6 mb-3">
-                                            <label for="label">Label</label>
-                                            <input type="text" class="form-control" id="label" placeholder="" value=""
-                                                   required>
-                                            <div class="invalid-feedback">
-                                                Le label est requis
-                                            </div>
-                                        </div>
+                                    <div th:if="${action} == edit" class="row">
                                         <div class="col-md-6 mb-3">
                                             <label for="title">Titre</label>
                                             <input type="text" class="form-control" id="title" placeholder="" value=""
@@ -64,11 +56,6 @@
                                             <div class="invalid-feedback">
                                                 Le titre est requis
                                             </div>
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="subTitle">Sous titre</label>
-                                            <input type="text" class="form-control" id="subTitle" placeholder=""
-                                                   value="">
                                         </div>
                                     </div>
 

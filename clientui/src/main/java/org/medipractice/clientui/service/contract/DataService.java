@@ -12,11 +12,13 @@ public interface DataService {
 
     List<DataFileBean> getDatas(UUID datafile);
 
-    DataFileDto postDatas(DataFileDto datas);
+    DataFileDto postDatas(DataFileDto datas, String datafileId);
 
-//    List<DataFileBean> getDatafiles(String[] fields, String value);
+    List<DataFileBean> getDatafiles(String[] fields, String value);
 
     List<DataFileBean> getAllDatafiles(String[] fields);
 
     ResponseEntity<?> setDatafile(UUID value);
+
+    String postNewPatient();
 }

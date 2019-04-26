@@ -22,28 +22,33 @@ public class DataFileController  {
         this.dataFileService = dataFileService;
     }
 
-    @GetMapping(value = "{id}")
+    @GetMapping(value = "get/{id}")
     public List<DataFile> getDataFile(@PathVariable UUID id) {
         return  dataFileService.findByDatafileId(id);
 
     }
 
-//    @GetMapping(value = "{types}/{value}")
-//    public List<DataFile> getDataFiles(@PathVariable String[] types, @PathVariable String value ) {
-//        return  dataFileService.findAllByDataTypesAndValue(types, value);
-//
-//    }
-
-    @GetMapping(value = "{types}/all")
-    public List<DataFile> getAllDataFiles(@PathVariable String[] types ) {
-        return  dataFileService.findAllByDataTypes(types);
+    @GetMapping(value = "find/{types}/{value}")
+    public List<DataFile> getDataFiles(@PathVariable String[] types, @PathVariable String value ) {
+        return  dataFileService.findAllByDataTypesAndValue(types, value);
 
     }
+
+//    @GetMapping(value = "find/{types}/all")
+//    public List<DataFile> getAllDataFiles(@PathVariable String[] types ) {
+//        return  dataFileService.findAllByDataTypes(types);
+//
+//    }
 
 
     @PostMapping
     public List<DataFile> postDataFile(@RequestBody List<DataFile> dataFile){
         return dataFileService.save(dataFile);
+
+    }
+    @GetMapping(value = "new_patient")
+    public String newPatient(){
+        return dataFileService.newPatient().toString();
 
     }
 

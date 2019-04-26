@@ -24,8 +24,6 @@ public class DataServiceImpl extends AbstractService implements DataService {
     @Autowired
     public DataServiceImpl(HttpServletRequest request) {
         this.request = request;
-
-
     }
 
     @Override
@@ -38,10 +36,10 @@ public class DataServiceImpl extends AbstractService implements DataService {
         return this.proxyManager.getData().getDataFile(this.serviceManager.getTokenService().getToken(), datafile);
     }
 
-//    @Override
-//    public List<DataFileBean> getDatafiles(String[] fields, String value) {
-//        return this.proxyManager.getData().getDataFiles(this.serviceManager.getTokenService().getToken(), fields,value );
-//    }
+    @Override
+    public List<DataFileBean> getDatafiles(String[] fields, String value) {
+        return this.proxyManager.getData().getDataFiles(this.serviceManager.getTokenService().getToken(), fields,value );
+    }
 
     @Override
     public List<DataFileBean> getAllDatafiles(String[] fields) {
@@ -53,14 +51,20 @@ public class DataServiceImpl extends AbstractService implements DataService {
         return null;
     }
 
-    @Override
-    public DataFileDto postDatas(DataFileDto datas) {
 
-        UUID datafileId = UUID.fromString("77d2f026-0e20-4cc6-9ac4-66c4aa1f214b");
+    @Override
+    public String postNewPatient() {
+        return this.proxyManager.getData().postNewPatient(this.serviceManager.getTokenService().getToken());
+    }
+
+    @Override
+    public DataFileDto postDatas(DataFileDto datas, String datafileId) {
+
+
         DataFileDto dataFileDto = new DataFileDto();
 
         List<DataFileBean> dataFileList = new ArrayList<>();
-        datas.getData().forEach((k, v) -> dataFileList.add(new DataFileBean(datafileId, k, v))
+        datas.getData().forEach((k, v) -> dataFileList.add(new DataFileBean(UUID.fromString(datafileId), k, v))
         );
 
         List<DataFileBean> dataFileBeans = this.proxyManager.getData().postDataFile(this.serviceManager.getTokenService().getToken(), dataFileList);

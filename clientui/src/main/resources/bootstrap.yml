@@ -11,4 +11,4 @@ spring:
 
 pager:
     homepage:
-        index: /page/homepage/index
+        index: /page/admin/index

@@ -16,15 +16,18 @@ import java.util.UUID;
 @RequestMapping("api/datafile")
 public interface DataProxy {
 
-    @GetMapping(value = "{id}")
+    @GetMapping(value = "get/{id}")
     List<DataFileBean> getDataFile(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable(name = "id") UUID id);
 
     @PostMapping
     List<DataFileBean> postDataFile(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody List<DataFileBean> dataFile);
 
-//    @GetMapping(value = "{types}/{value}")
-//    List<DataFileBean> getDataFiles(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable(name = "types") String[] types, @PathVariable(name = "value") String value );
+    @GetMapping(value = "find/{types}/{value}")
+    List<DataFileBean> getDataFiles(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable(name = "types") String[] types, @PathVariable(name = "value") String value );
 
-    @GetMapping(value = "{types}/all")
+    @GetMapping(value = "find/{types}/all")
     List<DataFileBean> getAllDataFiles(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable(name = "types") String[] types);
+
+    @GetMapping(value = "new_patient")
+    String postNewPatient(@RequestHeader(HttpHeaders.AUTHORIZATION) String token);
 }

@@ -17,24 +17,22 @@ import java.util.*;
 @RestController
 public class AjaxController extends AbstractController {
 
-
-
     @PostMapping(value = "/page")
-    public ResponseEntity<?> postIndex(@RequestBody PageBean page) {
+    public ResponseEntity<?> postIndex(@RequestBody PageBean page, @RequestBody String module) {
         return this.serviceManager.getPageService().postPage(page);
     }
 
 
     @PostMapping("/page/{module}/{name}/submission")
-    public DataFileDto postDataFile(@Valid @RequestBody DataFileDto datafile) {
-        return this.serviceManager.getDataService().postDatas(datafile);
+    public DataFileDto postDataFile(@Valid @RequestBody DataFileDto datafile, HttpSession httpSession) {
+        return this.serviceManager.getDataService().postDatas(datafile, httpSession.getAttribute(HTTPSESSION_DATAFILE).toString() );
     }
 
     @GetMapping(value = "/getDatafiles", produces = "application/json")
-    public List<Map<String, Object>> getDatafiles() {
+    public List<Map<String, Object>> getDatafiles(@RequestParam(name = "value") String value) {
 
         String[] fields = {"prenom", "nom_de_famille"};
-        List<DataFileBean> dataFileBeanList = this.serviceManager.getDataService().getAllDatafiles(fields);
+        List<DataFileBean> dataFileBeanList = this.serviceManager.getDataService().getDatafiles(fields, value);
 
         Map<UUID, Map<String, String>> selected = new HashMap<>();
 

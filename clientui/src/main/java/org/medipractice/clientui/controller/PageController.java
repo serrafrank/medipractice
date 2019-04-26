@@ -18,8 +18,6 @@ import java.util.*;
 @Slf4j
 public class PageController extends AbstractController {
 
-
-
     @GetMapping("/")
     public String getIndex(Model model) {
         model.addAttribute("page", null);
@@ -36,9 +34,7 @@ public class PageController extends AbstractController {
 
     @GetMapping("/page/{module}/{name}")
     public String getIndex(@PathVariable String module, @PathVariable String name, Model model) {
-
         getPage(module, name, null, model);
-
         return "index";
     }
 

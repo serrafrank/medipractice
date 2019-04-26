@@ -11,10 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service("dataFileService")
 public class DataFileServiceImpl implements DataFileService {
@@ -29,7 +26,7 @@ public class DataFileServiceImpl implements DataFileService {
 
     @Override
     public List<DataFile> findByDatafileId(UUID id) {
-        return this.dataFileRepository.findAllByDataFileAndArchivedAtIsNull(id).orElseThrow(() -> new ResourceNotFoundException("Id not found : " + id));
+        return this.dataFileRepository.findAllByDataFileAndArchivedAtIsNull(id);
     }
 
     @Override
@@ -57,11 +54,30 @@ public class DataFileServiceImpl implements DataFileService {
 
     @Override
     public List<DataFile> findAllByDataTypesAndValue( String[] types, String value) {
-        return dataFileRepository.findAllByTypeInAndValueContainingIgnoreCaseAndArchivedAtIsNull(types, value).orElse(Collections.emptyList());
+        List<DataFile> datafilesFounds = dataFileRepository.findAllByTypeInAndValueContainingIgnoreCaseAndArchivedIsNull(types, value);
+        List<DataFile> datafilesReturned = new ArrayList<>();
+
+        datafilesFounds.forEach( d -> datafilesReturned.addAll(
+                dataFileRepository.findAllByDataFileAndTypeInAndArchivedAtIsNull(d.getDataFile(), types)
+        ));
+
+        return datafilesReturned;
+        
     }
 
     @Override
     public List<DataFile> findAllByDataTypes(String[] types) {
-        return dataFileRepository.findAllByTypeInAndArchivedAtIsNull(types).orElse(Collections.emptyList());
+        return dataFileRepository.findAllByTypeInAndArchivedAtIsNull(types);
+    }
+
+    @Override
+    public UUID newPatient() {
+        UUID id = UUID.randomUUID();
+        DataFile dataFile = new DataFile();
+        dataFile.setType("new");
+        dataFile.setValue("new");
+        dataFile.setDataFile(id);
+        dataFileRepository.save(dataFile);
+        return id ;
     }
 }
