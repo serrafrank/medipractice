@@ -18,7 +18,9 @@ import java.util.*;
 public class AjaxController extends AbstractController {
 
     @PostMapping(value = "/page")
-    public ResponseEntity<?> postIndex(@RequestBody PageBean page, @RequestBody String module) {
+    public ResponseEntity<?> postIndex(@RequestBody PageBean page) {
+
+        log.info(page.toString());
         return this.serviceManager.getPageService().postPage(page);
     }
 

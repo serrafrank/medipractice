@@ -48,17 +48,6 @@
                             <div class="page-wrapper">
                                 <div class="page-body">
                                     <!-- [ page content ] start -->
-                                    <div th:if="${action} == edit" class="row">
-                                        <div class="col-md-6 mb-3">
-                                            <label for="title">Titre</label>
-                                            <input type="text" class="form-control" id="title" placeholder="" value=""
-                                                   required>
-                                            <div class="invalid-feedback">
-                                                Le titre est requis
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="card">
@@ -81,11 +70,26 @@
                                                 </div>
                                                 <div th:if="${action == 'index'}" class="card-block" th:include="fragment/home"></div>
                                                 <div th:if="${action!= 'index'}" class="card-block">
+                                                    <div th:if="${action} == edit" class="row">
+                                                        <div class="col-md-6 mb-3">
+                                                            <label for="title">Titre</label>
+                                                            <input class="form-control"
+                                                                   type="text"
+                                                                   th:value="${page.title}" id="title" name="title" required />
+                                                            <div class="invalid-feedback">
+                                                                Le titre est requis
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div id="formio" class="card-block"></div>
 
                                                     <button th:if="${action} != read" id="submit"
                                                             class="btn btn-primary">Enregistrer
                                                     </button>
+                                                    <a th:if="${action} != read" id="cancel"
+                                                            class="btn btn-warning"
+                                                       th:href="${url}" >Annuler
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -124,13 +128,11 @@
 </script>
 <script th:if="${action} == edit" type="text/javascript">
     $(document).ready(function () {
-        $("#submit").prop('disabled', true);
-        let formio;
         const schema = [(${page.schema})];
+        let formio = schema;
 
         Formio.builder(document.getElementById("formio"), schema, {}).then(function (builder) {
             builder.on('saveComponent', function () {
-                $("#submit").prop('disabled', false);
                 formio = builder.schema;
             });
         });
@@ -146,10 +148,9 @@
                     data: JSON.stringify({
                         'id': '[[${page.id}]]',
                         'name': '[[${page.name}]]',
-                        'module': {'name': '[[${module.name}]]', 'label': $("#label").val()},
-                        'title': ('[[${page.title}]]' == '') ? $("#title").val() : '[[${page.title}]]',
-                        'subTitle': ('[[${page.subTitle}]]' == '') ? $("#subTitle").val() : '[[${page.subTitle}]]',
-                        'schema': JSON.stringify(formio).toString()
+                        'title':  $("#title").val(),
+                        'schema': JSON.stringify(formio).toString() != null ? JSON.stringify(formio).toString() : schema,
+                        'module': '[[${module.id}]]'
                     }),
                     complete: function () {
                         window.location.href = '[(${url})]';

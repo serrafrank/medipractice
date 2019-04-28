@@ -72,10 +72,10 @@ public class PageService {
         if (page.getIcon() != null) pageToSave.setIcon(page.getIcon());
         if (page.getSubTitle() != null) pageToSave.setSubTitle(page.getSubTitle());
         if (page.getSchema() != null) {
-            //Recree le schema en etrayant les components
             JSONObject extractFields = extractFields(new JSONObject(page.getSchema()));
             pageToSave.setSchema(extractFields.toString());
         }
+        if (page.getModule() != null) pageToSave.setModule(page.getModule());
 
         //enregistrement en base de donnée
         return daoManager.getPageRepository().save(pageToSave);
