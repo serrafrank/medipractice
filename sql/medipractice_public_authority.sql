@@ -1,0 +1,1 @@
+INSERT INTO public.authority (id, name, value) VALUES (1, 'query', 'query');
