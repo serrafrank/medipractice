@@ -1,5 +1,9 @@
 package org.medipractice.pageservice.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -11,9 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -51,8 +57,7 @@ public class PageService {
      */
     public Page findByName(String module, String name) {
         Page page = daoManager.getPageRepository().findByModule_NameAndName(module, name).orElseThrow(() -> new ResourceNotFoundException("Name not found : " + module + " / " + name));
-        JSONObject json = new JSONObject(page.getSchema());
-        page.setSchema(buildForms(json).toString());
+        page.setSchema(buildForms(page.getSchema()));
         return page;
     }
 
@@ -71,10 +76,8 @@ public class PageService {
         if (page.getTitle() != null) pageToSave.setTitle(page.getTitle());
         if (page.getIcon() != null) pageToSave.setIcon(page.getIcon());
         if (page.getSubTitle() != null) pageToSave.setSubTitle(page.getSubTitle());
-        if (page.getSchema() != null) {
-            JSONObject extractFields = extractFields(new JSONObject(page.getSchema()));
-            pageToSave.setSchema(extractFields.toString());
-        }
+        if (page.getSchema() != null) pageToSave.setSchema(extractFields(page.getSchema()));
+
         if (page.getModule() != null) pageToSave.setModule(page.getModule());
 
         //enregistrement en base de donnée
@@ -88,23 +91,19 @@ public class PageService {
      * @param page
      * @return
      */
-    private JSONObject buildForms(JSONObject page) {
+    private JsonNode buildForms(JsonNode page) {
         if (page.has(COMPO_COMPONENTS)) {
-            //Extraction de la liste des components
-            JSONArray components = page.getJSONArray(COMPO_COMPONENTS);
+            for (int i = 0; i < page.get(COMPO_COMPONENTS).size(); i++) {
+                JsonNode component = page.get(COMPO_COMPONENTS).get(i);
 
-            for (int i = 0; i < components.length(); i++) {
-                //recuperation de l'objet
-                JSONObject component = components.getJSONObject(i);
-                UUID uuid;
                 try {
-                    Field field = daoManager.getFieldRepository().findByKey(component.getString(COMPO_KEY)).orElse(new Field());
-                    component = new JSONObject(field.getParameters());
+                    Field field = daoManager.getFieldRepository().findByKey(component.get(COMPO_KEY).asText()).orElse(new Field());
+                    component = field.getParameters();
                 } catch (Exception e) {
                     component = buildForms(component);
                 }
 
-                components.put(i, component);
+                ((ArrayNode) page.get(COMPO_COMPONENTS)).set(i, component);
             }
         }
 
@@ -117,56 +116,72 @@ public class PageService {
      * @param page
      * @return
      */
-    private JSONObject extractFields(JSONObject page) {
-
+    private JsonNode extractFields(JsonNode page) {
         if (page.has(COMPO_COMPONENTS)) {
             //Extraction de la liste des components
-            JSONArray components = page.getJSONArray(COMPO_COMPONENTS);
-            for (int i = 0; i < components.length(); i++) {
-                //recuperation de l'objet
-                JSONObject component = components.getJSONObject(i);
-
-                String key = component.getString(COMPO_KEY);
-
-                //recuperation du field en base de donnée s'il existe, sinon creation d'un nouveau field
-                Field field = daoManager.getFieldRepository().findByKey(key).orElse(new Field());
-
-                //verification si le componement ne contient pas d'autres elements impbriqués
-                if (component.has(COMPO_TYPE) && this.supportedComponents.contains(component.getString(COMPO_TYPE))) {
-                    //mise a jour de la clef du componement
-
-                    if (field.getId() == null) {
-                        key = Normalizer
-                                .normalize(component.getString(COMPO_LABEL), Normalizer.Form.NFD)
-                                .replaceAll("[^\\p{ASCII}]", "")
-                                .replaceAll(" ", "_")
-                                .toLowerCase();
-
-                        field.setKey(key);
-
-                    } else {
-                        key = field.getKey();
-                    }
-
-                    component.put(COMPO_KEY, key);
-
-
-                    //mise a jour des données en base
-                    field.setCategory(component.getString(COMPO_TYPE));
-                    field.setParameters(component.toString());
-
-                    //enregistrement / mise a jour
-                    daoManager.getFieldRepository().save(field);
-
-                    component = new JSONObject().put(COMPO_KEY, key);
-
+            for (int i = 0; i < page.get(COMPO_COMPONENTS).size(); i++) {
+                JsonNode component = page.get(COMPO_COMPONENTS).get(i);
+                String key;
+                if (component.has(COMPO_KEY)) {
+                    key = component.get(COMPO_KEY).asText();
                 } else {
-                    //si le component comporte des elements imbriqués, recursion
-                    component = extractFields(component);
+                    key = Normalizer
+                            .normalize((component.get(COMPO_TYPE).asText() + "_" + component.get(COMPO_LABEL).asText()), Normalizer.Form.NFD)
+                            .replaceAll("[^\\p{ASCII}]", "")
+                            .replaceAll(" ", "_")
+                            .toLowerCase();
                 }
 
-                //mise a jour de la page
-                page.getJSONArray(COMPO_COMPONENTS).put(i, component);
+                log.info(key);
+
+                //recuperation du field en base de donnée s'il existe
+                Optional<Field> optField = daoManager.getFieldRepository().findByKey(key);
+
+                //verification si le componement ne contient pas d'autres elements impbriqués
+                if (component.has(COMPO_TYPE)) {
+
+                    if (this.supportedComponents.contains(component.get(COMPO_TYPE).asText())) {
+                        //mise a jour de la clef du componement
+
+                        if (!optField.isPresent()) {
+                            Field field = new Field();
+                            field.setKey(key);
+                            //mise a jour des données en base
+                            field.setCategory(component.get(COMPO_TYPE).asText());
+                            field.setParameters(component);
+
+                            //enregistrement / mise a jour
+                            daoManager.getFieldRepository().save(field);
+                        }
+
+                        try {
+                            component = new ObjectMapper().readTree("{\"" + COMPO_KEY + "\":\"" + key + "\"}");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    } else {
+                        //si le component comporte des elements imbriqués, recursion
+                        switch (component.get(COMPO_TYPE).asText()) {
+                            case "columns":
+                                for (int col = 0; col < component.get("columns").size(); col++)
+                                    ((ArrayNode) component.get("columns")).set(col, extractFields(component.get("columns").get(col)));
+
+                                break;
+
+                            case "table":
+                                for (int row = 0; row < component.get("rows").size(); row++) {
+                                    for (int line = 0; line < component.get("rows").get(row).size(); line++)
+                                        ((ArrayNode) component.get("rows").get(row)).set(line, extractFields(component.get("rows").get(row).get(line)));
+                                }
+                                break;
+                            default:
+                                component = extractFields(component);
+                        }
+                    }
+
+                    ((ArrayNode) page.get(COMPO_COMPONENTS)).set(i, component);
+                }
             }
         }
         return page;

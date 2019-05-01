@@ -9,16 +9,14 @@ import lombok.*;
 import org.medipractice.clientui.service.ServiceManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
-import javax.xml.ws.Service;
 import java.io.*;
+
 
 public class ErrorResponseDecoder implements ErrorDecoder {
 
     private final ErrorDecoder errorDecoder = new Default();
-
-    @Autowired
-    private ServiceManager serviceManager;
 
 
     @Override
@@ -37,10 +35,9 @@ public class ErrorResponseDecoder implements ErrorDecoder {
             //just in case you missed an attribute in the Pojo
             mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
             //init the Pojo
-            ExceptionMessage exceptionMessage = mapper.readValue(result,
-                    ExceptionMessage.class);
+         //   ExceptionMessage exceptionMessage = mapper.readValue(result, ExceptionMessage.class);
 
-            message = exceptionMessage.message;
+            message = result;
 
         } catch (IOException e) {
 

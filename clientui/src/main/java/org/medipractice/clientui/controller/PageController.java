@@ -50,15 +50,11 @@ public class PageController extends AbstractController {
         List<ModuleBean> menu;
         menu = this.serviceManager.getPageService().findMenu();
 
-        ModuleBean moduleBean = menu.stream().filter(c -> c.getName().equals(module)).findFirst().get();
-
         model.addAttribute("module", menu.stream().filter(c -> c.getName().equals(module)).findFirst().get());
         model.addAttribute("page", this.serviceManager.getPageService().getPageContent(module, name));
-        model.addAttribute("url", "/page/" + module + "/index");
-
+        model.addAttribute("url", "/page/" + module + "/" + name);
 
         if (action == null) action = (pageBean.getId() != null) ? "read" : "edit";
-
 
         model.addAttribute("action", action);
 

@@ -1,12 +1,14 @@
 package org.medipractice.clientui.beans.page;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Data
-public class PageBean {
+public class PageBean implements Serializable {
 
     private UUID id;
 
@@ -18,7 +20,7 @@ public class PageBean {
 
     private String subTitle;
 
-    private String schema;
+    private JsonNode schema;
 
     private UUID module;
 

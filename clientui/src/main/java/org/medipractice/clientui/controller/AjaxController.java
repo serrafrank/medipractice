@@ -27,6 +27,7 @@ public class AjaxController extends AbstractController {
 
     @PostMapping("/page/{module}/{name}/submission")
     public DataFileDto postDataFile(@Valid @RequestBody DataFileDto datafile, HttpSession httpSession) {
+
         return this.serviceManager.getDataService().postDatas(datafile, httpSession.getAttribute(HTTPSESSION_DATAFILE).toString() );
     }
 

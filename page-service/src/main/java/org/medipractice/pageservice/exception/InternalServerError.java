@@ -1,16 +1,15 @@
 package org.medipractice.pageservice.exception;
 
-import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@Log
+
 @SuppressWarnings("serial")
 @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-public final class InternalServerError extends RuntimeException {
+public final class InternalServerError extends GenericException {
 
     public InternalServerError() {
-        super();
+        super("Internal Server Exception");
     }
 
     public InternalServerError(String message, Throwable cause, boolean enableSuppression,

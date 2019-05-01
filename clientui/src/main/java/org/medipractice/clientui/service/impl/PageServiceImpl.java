@@ -1,5 +1,9 @@
 package org.medipractice.clientui.service.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import org.medipractice.clientui.beans.page.ModuleBean;
 import org.medipractice.clientui.beans.page.PageBean;
@@ -25,7 +29,7 @@ public class PageServiceImpl extends AbstractService implements PageService {
         } catch (Exception e) {
             pageBean = new PageBean();
             pageBean.setName(name);
-            pageBean.setSchema("{}");
+            pageBean.setSchema( JsonNodeFactory.instance.objectNode() );
         }
 
         return pageBean;

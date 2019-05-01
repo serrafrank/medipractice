@@ -149,7 +149,7 @@
                         'id': '[[${page.id}]]',
                         'name': '[[${page.name}]]',
                         'title':  $("#title").val(),
-                        'schema': JSON.stringify(formio).toString() != null ? JSON.stringify(formio).toString() : schema,
+                        'schema': formio != null ? formio : schema,
                         'module': '[[${module.id}]]'
                     }),
                     complete: function () {

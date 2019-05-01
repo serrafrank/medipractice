@@ -1,16 +1,15 @@
 package org.medipractice.pageservice.exception;
 
-import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@Log
+
 @SuppressWarnings("serial")
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-public final class ResourceNotFoundException extends RuntimeException {
+public final class ResourceNotFoundException extends GenericException {
 
     public ResourceNotFoundException() {
-        super();
+        super("Entity Not Found Exception");
     }
 
     public ResourceNotFoundException(String message, Throwable cause, boolean enableSuppression,

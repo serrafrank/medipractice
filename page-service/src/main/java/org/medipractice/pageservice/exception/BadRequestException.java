@@ -1,16 +1,16 @@
 package org.medipractice.pageservice.exception;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@Log
+@Slf4j
 @SuppressWarnings("serial")
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-public final class BadRequestException extends RuntimeException {
+public final class BadRequestException extends GenericException {
 
     public BadRequestException() {
-        super();
+        super("Bad Request Exception");
     }
 
     public BadRequestException(String message, Throwable cause, boolean enableSuppression,
