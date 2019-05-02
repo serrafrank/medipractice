@@ -67,8 +67,7 @@ public class PageService {
         if (page.getIcon() != null) pageToSave.setIcon(page.getIcon());
         if (page.getSubTitle() != null) pageToSave.setSubTitle(page.getSubTitle());
         if (page.getSchema() != null) {
-            pageToSave.setSchema(new Schema());
-            pageToSave.getSchema().setDisplay(page.getSchema().getDisplay());
+            pageToSave.setSchema(page.getSchema());
             pageToSave.getSchema().setComponents(extractFields(page.getSchema().getComponents()));
         }
         if (page.getModule() != null) pageToSave.setModule(page.getModule());
@@ -98,9 +97,8 @@ public class PageService {
     private Components buildForms(Components component) {
         String key = component.getInternalKey();
 
-
-        if (component.getInternalKey() != null) {
-            Field field = daoManager.getFieldRepository().findByKey(component.getInternalKey()).orElseThrow(() -> new ResourceNotFoundException("Field not found with internalKey = "));
+        if (key != null) {
+            Field field = daoManager.getFieldRepository().findByKey(key).orElseThrow(() -> new ResourceNotFoundException("Field not found with internalKey = "));
             component = field.getParameters();
         } else if (component.getComponents().size() > 0) {
             component.setComponents(buildForms(component.getComponents()));
@@ -133,12 +131,10 @@ public class PageService {
 
 
         if (supportedComponents.contains(component.getType())) {
-
             String key;
 
-
             key = Normalizer
-                    .normalize((component.getType() + "_" + component.getLabel()), Normalizer.Form.NFD)
+                    .normalize((component.getType() + "_" + component.getLabel()+ "_" + component.getKey()), Normalizer.Form.NFD)
                     .replaceAll("[^\\p{ASCII}]", "")
                     .replaceAll(" ", "_")
                     .toLowerCase();
