@@ -57,7 +57,7 @@ public class PageService {
      */
     public Page findByName(String module, String name) {
         Page page = daoManager.getPageRepository().findByModule_NameAndName(module, name).orElseThrow(() -> new ResourceNotFoundException("Name not found : " + module + " / " + name));
-        page.setSchema(buildForms(page.getSchema()));
+       // page.setSchema(buildForms(page.getSchema()));
         return page;
     }
 
@@ -76,7 +76,7 @@ public class PageService {
         if (page.getTitle() != null) pageToSave.setTitle(page.getTitle());
         if (page.getIcon() != null) pageToSave.setIcon(page.getIcon());
         if (page.getSubTitle() != null) pageToSave.setSubTitle(page.getSubTitle());
-        if (page.getSchema() != null) pageToSave.setSchema(extractFields(page.getSchema()));
+   //     if (page.getSchema() != null) pageToSave.setSchema(extractFields(page.getSchema()));
 
         if (page.getModule() != null) pageToSave.setModule(page.getModule());
 

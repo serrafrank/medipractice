@@ -3,15 +3,13 @@ package org.medipractice.pageservice.model;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.vladmihalcea.hibernate.type.json.JsonNodeBinaryType;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-import org.medipractice.pageservice.utils.NormalizeName;
+import org.medipractice.pageservice.model.components.AbstractComponent;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -48,7 +46,7 @@ public class Page  implements Serializable {
 
     @Type( type = "jsonb-node" )
     @Column(columnDefinition = "jsonb")
-    private JsonNode schema;
+    private org.medipractice.pageservice.model.components.Page schema;
 
 
     @JsonSetter("module")

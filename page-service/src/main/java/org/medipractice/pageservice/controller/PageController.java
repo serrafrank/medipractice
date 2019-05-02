@@ -35,10 +35,12 @@ public class PageController {
     }
 
     @PostMapping
-    public ResponseEntity<?> postPage(
-            @RequestBody Page Page
-            ) {
-        Page page = pageService.save(Page);
+    public ResponseEntity<?> postPage(  @RequestBody Page page ) {
+
+        log.info(page.getSchema().toString());
+
+
+//        Page page = pageService.save(page);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
