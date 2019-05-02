@@ -1,10 +1,12 @@
 package org.medipractice.pageservice.model;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import com.vladmihalcea.hibernate.type.json.JsonNodeBinaryType;
 import lombok.Data;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
+import org.medipractice.pageservice.model.components.Components;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,10 +15,9 @@ import java.util.UUID;
 @Data
 @Entity
 @Table
-@TypeDef(
-        name = "jsonb-node",
-        typeClass = JsonNodeBinaryType.class
-)
+@TypeDefs({
+        @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+})
 public class Field  implements Serializable {
 
 
@@ -28,9 +29,9 @@ public class Field  implements Serializable {
     private String key;
 
 
-    @Type( type = "jsonb-node" )
+    @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb")
-    private JsonNode parameters;
+    private Components parameters;
 
     private String category;
 

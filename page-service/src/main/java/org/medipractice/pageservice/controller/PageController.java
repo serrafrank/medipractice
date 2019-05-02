@@ -1,7 +1,9 @@
 package org.medipractice.pageservice.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.medipractice.pageservice.model.Page;
+import org.medipractice.pageservice.model.components.Schema;
 import org.medipractice.pageservice.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,17 +37,14 @@ public class PageController {
     }
 
     @PostMapping
-    public ResponseEntity<?> postPage(  @RequestBody Page page ) {
+    public ResponseEntity<?> postPage(  @RequestBody Page page ) throws JsonProcessingException {
 
-        log.info(page.getSchema().toString());
-
-
-//        Page page = pageService.save(page);
+        page = pageService.save(page);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(page.getId())
+                .buildAndExpand("0")
                 .toUri();
         return ResponseEntity.created(location).build();
     }

@@ -1,21 +1,16 @@
 package org.medipractice.pageservice.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.medipractice.pageservice.dao.DaoManager;
 import org.medipractice.pageservice.exception.ResourceNotFoundException;
 import org.medipractice.pageservice.model.Field;
 import org.medipractice.pageservice.model.Page;
+import org.medipractice.pageservice.model.components.Components;
+import org.medipractice.pageservice.model.components.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.io.IOException;
 import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.List;
@@ -32,11 +27,6 @@ public class PageService {
     //Couche DAO
     private final DaoManager daoManager;
 
-    //clefs json
-    private final static String COMPO_KEY = "key";
-    private final static String COMPO_TYPE = "type";
-    private final static String COMPO_COMPONENTS = "components";
-    private final static String COMPO_LABEL = "label";
 
     //list des components supportés
     private List<String> supportedComponents = Arrays.asList("address", "button", "checkbox", "content", "currency", "custom", "dateTime", "day", "email", "file", "hidden", "htmlelement", "number", "password", "phoneNumber", "radio", "resource", "select", "selectboxes", "signature", "survey", "textarea", "textfield", "time");
@@ -57,7 +47,7 @@ public class PageService {
      */
     public Page findByName(String module, String name) {
         Page page = daoManager.getPageRepository().findByModule_NameAndName(module, name).orElseThrow(() -> new ResourceNotFoundException("Name not found : " + module + " / " + name));
-       // page.setSchema(buildForms(page.getSchema()));
+        page.getSchema().setComponents(buildForms(page.getSchema().getComponents()));
         return page;
     }
 
@@ -76,8 +66,11 @@ public class PageService {
         if (page.getTitle() != null) pageToSave.setTitle(page.getTitle());
         if (page.getIcon() != null) pageToSave.setIcon(page.getIcon());
         if (page.getSubTitle() != null) pageToSave.setSubTitle(page.getSubTitle());
-   //     if (page.getSchema() != null) pageToSave.setSchema(extractFields(page.getSchema()));
-
+        if (page.getSchema() != null) {
+            pageToSave.setSchema(new Schema());
+            pageToSave.getSchema().setDisplay(page.getSchema().getDisplay());
+            pageToSave.getSchema().setComponents(extractFields(page.getSchema().getComponents()));
+        }
         if (page.getModule() != null) pageToSave.setModule(page.getModule());
 
         //enregistrement en base de donnée
@@ -88,103 +81,96 @@ public class PageService {
     /**
      * Creation de la page
      *
-     * @param page
+     * @param components
      * @return
      */
-    private JsonNode buildForms(JsonNode page) {
-        if (page.has(COMPO_COMPONENTS)) {
-            for (int i = 0; i < page.get(COMPO_COMPONENTS).size(); i++) {
-                JsonNode component = page.get(COMPO_COMPONENTS).get(i);
 
-                try {
-                    Field field = daoManager.getFieldRepository().findByKey(component.get(COMPO_KEY).asText()).orElse(new Field());
-                    component = field.getParameters();
-                } catch (Exception e) {
-                    component = buildForms(component);
-                }
+    private List<Components> buildForms(List<Components> components) {
 
-                ((ArrayNode) page.get(COMPO_COMPONENTS)).set(i, component);
-            }
+        for (int i = 0; i < components.size(); i++) {
+            Components build = buildForms(components.get(i));
+            components.set(i, build);
+        }
+        return components;
+
+    }
+
+    private Components buildForms(Components component) {
+        String key = component.getInternalKey();
+
+
+        if (component.getInternalKey() != null) {
+            Field field = daoManager.getFieldRepository().findByKey(component.getInternalKey()).orElseThrow(() -> new ResourceNotFoundException("Field not found with internalKey = "));
+            component = field.getParameters();
+        } else if (component.getComponents().size() > 0) {
+            component.setComponents(buildForms(component.getComponents()));
         }
 
-        return page;
+        return component;
     }
+
 
     /**
      * Extraction des champs
      *
-     * @param page
+     * @param components
      * @return
      */
-    private JsonNode extractFields(JsonNode page) {
-        if (page.has(COMPO_COMPONENTS)) {
-            //Extraction de la liste des components
-            for (int i = 0; i < page.get(COMPO_COMPONENTS).size(); i++) {
-                JsonNode component = page.get(COMPO_COMPONENTS).get(i);
-                String key;
-                if (component.has(COMPO_KEY)) {
-                    key = component.get(COMPO_KEY).asText();
-                } else {
-                    key = Normalizer
-                            .normalize((component.get(COMPO_TYPE).asText() + "_" + component.get(COMPO_LABEL).asText()), Normalizer.Form.NFD)
-                            .replaceAll("[^\\p{ASCII}]", "")
-                            .replaceAll(" ", "_")
-                            .toLowerCase();
-                }
 
-                log.info(key);
 
-                //recuperation du field en base de donnée s'il existe
-                Optional<Field> optField = daoManager.getFieldRepository().findByKey(key);
+    private List<Components> extractFields(List<Components> components) {
 
-                //verification si le componement ne contient pas d'autres elements impbriqués
-                if (component.has(COMPO_TYPE)) {
-
-                    if (this.supportedComponents.contains(component.get(COMPO_TYPE).asText())) {
-                        //mise a jour de la clef du componement
-
-                        if (!optField.isPresent()) {
-                            Field field = new Field();
-                            field.setKey(key);
-                            //mise a jour des données en base
-                            field.setCategory(component.get(COMPO_TYPE).asText());
-                            field.setParameters(component);
-
-                            //enregistrement / mise a jour
-                            daoManager.getFieldRepository().save(field);
-                        }
-
-                        try {
-                            component = new ObjectMapper().readTree("{\"" + COMPO_KEY + "\":\"" + key + "\"}");
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                    } else {
-                        //si le component comporte des elements imbriqués, recursion
-                        switch (component.get(COMPO_TYPE).asText()) {
-                            case "columns":
-                                for (int col = 0; col < component.get("columns").size(); col++)
-                                    ((ArrayNode) component.get("columns")).set(col, extractFields(component.get("columns").get(col)));
-
-                                break;
-
-                            case "table":
-                                for (int row = 0; row < component.get("rows").size(); row++) {
-                                    for (int line = 0; line < component.get("rows").get(row).size(); line++)
-                                        ((ArrayNode) component.get("rows").get(row)).set(line, extractFields(component.get("rows").get(row).get(line)));
-                                }
-                                break;
-                            default:
-                                component = extractFields(component);
-                        }
-                    }
-
-                    ((ArrayNode) page.get(COMPO_COMPONENTS)).set(i, component);
-                }
-            }
+        for (int i = 0; i < components.size(); i++) {
+            Components extracted = extractFields(components.get(i));
+            components.set(i, extracted);
         }
-        return page;
+        return components;
+
+    }
+
+
+    private Components extractFields(Components component) {
+
+
+        if (supportedComponents.contains(component.getType())) {
+
+            String key;
+
+
+            key = Normalizer
+                    .normalize((component.getType() + "_" + component.getLabel()), Normalizer.Form.NFD)
+                    .replaceAll("[^\\p{ASCII}]", "")
+                    .replaceAll(" ", "_")
+                    .toLowerCase();
+
+
+            //recuperation du field en base de donnée s'il existe
+            Optional<Field> optField = daoManager.getFieldRepository().findByKey(key);
+
+            if (!optField.isPresent()) {
+                Field field = new Field();
+                field.setKey(key);
+                //mise a jour des données en base
+                field.setCategory(component.getType());
+                field.setParameters(component);
+
+                //enregistrement / mise a jour
+                daoManager.getFieldRepository().save(field);
+
+            }
+            component = new Components();
+            component.setInternalKey(key);
+
+
+        } else if (component.getComponents().size() > 0) {
+
+            component.setComponents(extractFields(component.getComponents()));
+
+        }
+
+        log.info(">>>> component extracted = " + component);
+
+        return component;
     }
 
 }

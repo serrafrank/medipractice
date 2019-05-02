@@ -19,7 +19,7 @@
             <div class="pcoded-wrapper">
                 <!-- [ navigation menu ] start -->
 
-                <div th:if="${menu}" th:include="fragment/menu/menu" th:with="menu_list=${menu},disabledMenu=${disabledMenu}" th:remove="tag"/>
+                <div th:if="${menu}" th:include="fragment/menu" th:with="menu_list=${menu}" th:remove="tag"/>
                 <!-- [ navigation menu ] end -->
                 <div class="pcoded-content">
                     <!-- [ breadcrumb ] start -->
@@ -117,7 +117,7 @@
 
 <script th:if="${action} == read" type="text/javascript">
     Formio.icons = 'fontawesome';
-    Formio.createForm(document.getElementById('formio'), [(${page.schema})], {}).then(function (builder) {
+    Formio.createForm(document.getElementById('formio'), [(${page.schema})], {readOnly: [(${readOnly})]}).then(function (builder) {
         builder.url = '[(${#httpServletRequest.requestURL})]';
         builder.nosubmit = false;
         builder.submission = {

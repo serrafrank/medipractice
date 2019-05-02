@@ -50,8 +50,8 @@ public abstract class AbstractController {
 
     }
 
-    @ModelAttribute("disabledMenu")
-    private Boolean isDisabled(HttpSession httpSession){
+    @ModelAttribute("readOnly")
+    private Boolean readOnly(HttpSession httpSession){
         return (httpSession.getAttribute(HTTPSESSION_DATAFILE) == null);
     }
 

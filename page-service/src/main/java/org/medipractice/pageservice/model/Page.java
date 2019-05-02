@@ -3,16 +3,20 @@ package org.medipractice.pageservice.model;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.vladmihalcea.hibernate.type.json.JsonNodeBinaryType;
+import com.vladmihalcea.hibernate.type.json.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-import org.medipractice.pageservice.model.components.AbstractComponent;
+import org.hibernate.annotations.TypeDefs;
+import org.medipractice.pageservice.model.components.Components;
+import org.medipractice.pageservice.model.components.Schema;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -20,10 +24,9 @@ import java.util.UUID;
 @Entity
 @Table
 @NoArgsConstructor
-@TypeDef(
-        name = "jsonb-node",
-        typeClass = JsonNodeBinaryType.class
-)
+@TypeDefs({
+        @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+})
 public class Page  implements Serializable {
 
     @Id
@@ -44,9 +47,11 @@ public class Page  implements Serializable {
     @Type(type="text")
     private String subTitle;
 
-    @Type( type = "jsonb-node" )
+    private String display;
+
+    @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb")
-    private org.medipractice.pageservice.model.components.Page schema;
+    private Schema schema = new Schema();
 
 
     @JsonSetter("module")
@@ -57,6 +62,6 @@ public class Page  implements Serializable {
 
     @JsonGetter("module")
     public UUID getModule(){
-        return this.module.getId();
+        return (this.module != null )?  this.module.getId() : null;
     }
 }
