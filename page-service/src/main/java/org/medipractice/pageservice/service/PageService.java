@@ -6,7 +6,6 @@ import org.medipractice.pageservice.exception.ResourceNotFoundException;
 import org.medipractice.pageservice.model.Field;
 import org.medipractice.pageservice.model.Page;
 import org.medipractice.pageservice.model.components.Components;
-import org.medipractice.pageservice.model.components.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,6 @@ import javax.transaction.Transactional;
 import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -29,7 +27,7 @@ public class PageService {
 
 
     //list des components supportés
-    private List<String> supportedComponents = Arrays.asList("address", "button", "checkbox", "content", "currency", "custom", "dateTime", "day", "email", "file", "hidden", "htmlelement", "number", "password", "phoneNumber", "radio", "resource", "select", "selectboxes", "signature", "survey", "textarea", "textfield", "time");
+    private List<String> supportedComponents = Arrays.asList("address", "button", "checkbox", "content", "currency", "custom", "datetime", "day", "email", "file", "hidden", "htmlelement", "number", "password", "phoneNumber", "radio", "resource", "select", "selectboxes", "signature", "survey", "textarea", "textfield", "time");
 
     //Injection des repository dans le constructeur
     @Autowired
@@ -100,8 +98,20 @@ public class PageService {
         if (key != null) {
             Field field = daoManager.getFieldRepository().findByKey(key).orElseThrow(() -> new ResourceNotFoundException("Field not found with internalKey = "));
             component = field.getParameters();
-        } else if (component.getComponents().size() > 0) {
+        } else if (component.getComponents() != null && component.getComponents().size() > 0) {
             component.setComponents(buildForms(component.getComponents()));
+        } else if (component.getColumns() != null && component.getColumns().size() > 0) {
+            for (int i = 0; i < component.getColumns().size(); i++) {
+                component.getColumns().get(i).setComponents(
+                        buildForms(component.getColumns().get(i).getComponents())
+                );
+            }
+        } else if (component.getRows() != null && component.getRows().size() > 0) {
+            for (int i = 0; i < component.getRows().size(); i++) {
+                component.getRows().get(i).setComponents(
+                        buildForms(component.getRows().get(i).getComponents())
+                );
+            }
         }
 
         return component;
@@ -129,39 +139,45 @@ public class PageService {
 
     private Components extractFields(Components component) {
 
-
         if (supportedComponents.contains(component.getType())) {
             String key;
 
             key = Normalizer
-                    .normalize((component.getType() + "_" + component.getLabel()+ "_" + component.getKey()), Normalizer.Form.NFD)
+                    .normalize((component.getType() + "_" + component.getLabel() + "_" + component.getKey()), Normalizer.Form.NFD)
                     .replaceAll("[^\\p{ASCII}]", "")
                     .replaceAll(" ", "_")
                     .toLowerCase();
 
 
             //recuperation du field en base de donnée s'il existe
-            Optional<Field> optField = daoManager.getFieldRepository().findByKey(key);
+            Field field = daoManager.getFieldRepository().findByKey(key).orElse(new Field());
+            field.setKey(key);
+            //mise a jour des données en base
+            field.setCategory(component.getType());
+            field.setParameters(component);
 
-            if (!optField.isPresent()) {
-                Field field = new Field();
-                field.setKey(key);
-                //mise a jour des données en base
-                field.setCategory(component.getType());
-                field.setParameters(component);
+            //enregistrement / mise a jour
+            daoManager.getFieldRepository().save(field);
 
-                //enregistrement / mise a jour
-                daoManager.getFieldRepository().save(field);
 
-            }
             component = new Components();
             component.setInternalKey(key);
 
 
-        } else if (component.getComponents().size() > 0) {
-
+        } else if (component.getComponents() != null && component.getComponents().size() > 0) {
             component.setComponents(extractFields(component.getComponents()));
-
+        } else if (component.getColumns() != null && component.getColumns().size() > 0) {
+            for (int i = 0; i < component.getColumns().size(); i++) {
+                component.getColumns().get(i).setComponents(
+                        extractFields(component.getColumns().get(i).getComponents())
+                );
+            }
+        } else if (component.getRows() != null && component.getRows().size() > 0) {
+            for (int i = 0; i < component.getRows().size(); i++) {
+                component.getRows().get(i).setComponents(
+                        extractFields(component.getRows().get(i).getComponents())
+                );
+            }
         }
 
         log.info(">>>> component extracted = " + component);

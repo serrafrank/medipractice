@@ -45,12 +45,27 @@ public class Components implements Serializable {
     private Boolean encrypted;
 
     private String customConditional;
+    private String format;
 
     private Widget widget;
 
     @Data
     static class Widget implements Serializable {
         private String type;
+        private String displayInTimezone;
+        private String language;
+        private Boolean useLocaleSettings;
+        private Boolean allowInput;
+        private String mode;
+        private Boolean enableTime;
+        private Boolean noCalendar;
+        private String format;
+        private String defaultDate;
+        private Integer hourIncrement;
+        private Integer minuteIncrement;
+        private Boolean time_24hr;
+        private String minDate;
+        private String maxDate;
     }
 
     private Boolean reorder;
@@ -167,20 +182,8 @@ public class Components implements Serializable {
     private Boolean hideOnChildrenHidden;
 
     private List<Components> components;
-
-    private List<Columns> columns;
-
-    @Data
-    static class Columns implements Serializable {
-        private List<Components> components;
-    }
-
-    private List<Rows> rows;
-
-    @Data
-    static class Rows implements Serializable {
-        private List<Components> components;
-    }
+    private List<Components> columns;
+    private List<Components> rows;
 
 
     private Boolean disableAddingRemovingRows;
