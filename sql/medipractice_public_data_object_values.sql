@@ -1,0 +1,3 @@
+INSERT INTO public.data_object_values (data_object_id, values_id) VALUES ('77d2f026-0e20-4cc6-9ac4-66c4aa1f214b', '0411502c-dcd3-4a82-9617-5b423109f495');
+INSERT INTO public.data_object_values (data_object_id, values_id) VALUES ('77d2f026-0e20-4cc6-9ac4-66c4aa1f214b', 'f39cb8c7-b982-4908-af4b-f5c1278ec3ca');
+INSERT INTO public.data_object_values (data_object_id, values_id) VALUES ('76e80974-74a3-4aaf-b4b4-3479ac203172', 'cddf2679-141b-44fc-9fc4-e26077d74c1b');

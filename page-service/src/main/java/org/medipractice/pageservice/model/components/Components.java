@@ -15,6 +15,7 @@ public class Components implements Serializable {
     private String internalKey;
 
     private String label;
+    private String title;
     private Boolean allowMultipleMasks;
     private Boolean showWordCount;
     private Boolean showCharCount;

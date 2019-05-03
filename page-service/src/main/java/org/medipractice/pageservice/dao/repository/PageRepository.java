@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -12,5 +13,7 @@ import java.util.UUID;
 public interface PageRepository extends JpaRepository<Page, UUID> {
 
     Optional<Page> findByModule_NameAndName(@Param("Module") String module, @Param("name") String name);
+
+    List<Page> findAllByOrderBySortAsc();
 
 }

@@ -1,2 +1,2 @@
-INSERT INTO public.module (id, icon, label, name) VALUES ('0e172969-1841-48f1-a353-d27ccd4642c6', null, 'Administratif', 'admin');
-INSERT INTO public.module (id, icon, label, name) VALUES ('747fbf5f-0840-47db-9dc9-46c88d08378f', null, 'Medical', 'medical');
+INSERT INTO public.module (id, icon, label, name, sort) VALUES ('747fbf5f-0840-47db-9dc9-46c88d08378f', null, 'Administratif', 'admin', 1);
+INSERT INTO public.module (id, icon, label, name, sort) VALUES ('0e172969-1841-48f1-a353-d27ccd4642c6', null, 'Medical', 'medical', 2);

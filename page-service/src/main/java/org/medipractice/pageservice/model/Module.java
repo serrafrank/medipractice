@@ -20,6 +20,8 @@ public class Module  implements Serializable {
     @Column(unique = true, nullable = false)
     private String name;
 
+    private Integer sort;
+
     @Column(unique = true, nullable = false)
     private String label;
 
@@ -27,6 +29,7 @@ public class Module  implements Serializable {
     private String icon;
 
     @OneToMany(mappedBy = "module")
+    @OrderBy("sort ASC")
     private List<Page> pages;
 
 }

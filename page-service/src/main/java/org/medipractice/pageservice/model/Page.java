@@ -37,6 +37,8 @@ public class Page  implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id ;
 
+    private Integer sort;
+
     @Column(nullable = false)
     private String name;
 

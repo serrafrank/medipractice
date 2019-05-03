@@ -22,7 +22,7 @@ public class MenuService {
     }
 
     public List<Module> findAll(){
-       return this.moduleRepository.findAll();
+        return this.moduleRepository.findAllByOrderBySortAsc();
     }
 
 }
