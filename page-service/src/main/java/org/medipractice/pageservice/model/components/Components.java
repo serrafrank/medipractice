@@ -182,6 +182,7 @@ public class Components implements Serializable {
     private Integer push;
     private Integer pull;
     private Boolean hideOnChildrenHidden;
+    private Boolean hideLabel;
 
     private List<Components> components;
     private List<Components> columns;

@@ -25,9 +25,11 @@ public abstract class AbstractController {
     @Autowired
     protected ProxyManager proxyManager;
 
+    protected List<ModuleBean> menu = new ArrayList<>();
+
     @ModelAttribute("menu")
     private List<ModuleBean> getMenu() {
-        return this.serviceManager.getPageService().findMenu();
+        return this.getMenuList();
     }
 
     @ModelAttribute("user")
@@ -58,7 +60,7 @@ public abstract class AbstractController {
                 } catch (ParseException ignore) {}
             }
         }else{
-            val = "Aucun dossier patient sélectionné";
+            val = "Aucun dossier patient selectionné";
         }
         return val;
 
@@ -69,4 +71,26 @@ public abstract class AbstractController {
         return (httpSession.getAttribute(HTTPSESSION_DATAFILE) == null);
     }
 
+
+    @ModelAttribute("moduleList")
+    private List getModuleList() {
+        List<Map<String, String>> moduleList = new ArrayList<>();
+        this.getMenuList().forEach(m -> {
+            Map<String, String> moduleMap = new HashMap<>();
+            moduleMap.put("value", m.getName());
+            moduleMap.put("text", m.getLabel());
+            moduleList.add(moduleMap);
+        });
+        return moduleList;
+    }
+
+
+    private List<ModuleBean> getMenuList(){
+        if(this.serviceManager.getTokenService().isConnected()) {
+            if (this.menu.size() == 0)
+                this.menu = this.serviceManager.getPageService().findMenu();
+        }
+        return this.menu;
+
+    }
 }

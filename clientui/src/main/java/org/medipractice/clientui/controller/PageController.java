@@ -23,6 +23,7 @@ public class PageController extends AbstractController {
     public String getIndex(Model model) {
         model.addAttribute("page", null);
         model.addAttribute("action", "index");
+
         return "index";
     }
 
@@ -48,13 +49,11 @@ public class PageController extends AbstractController {
 
     private void getPage(String module, String name, String action, Model model, HttpSession httpSession) {
         PageBean pageBean = this.serviceManager.getPageService().getPageContent(module, name);
-        List<ModuleBean> menu;
-        menu = this.serviceManager.getPageService().findMenu();
 
-
-        model.addAttribute("module", menu.stream().filter(c -> c.getName().equals(module)).findFirst().get());
+        model.addAttribute("module", this.menu.stream().filter(c -> c.getName().equals(module)).findFirst().get());
         model.addAttribute("page", pageBean);
         model.addAttribute("url", "/page/" + module + "/" + name);
+
 
         if (action == null) action = (pageBean.getId() != null) ? "read" : "edit";
 
@@ -70,4 +69,5 @@ public class PageController extends AbstractController {
         model.addAttribute("action", action);
 
     }
+
 }

@@ -28,4 +28,12 @@ $(document).ready(function () {
         }
     });
 
+
+    $('#createPage').click(function () {
+        var module = $('#createPageModule').val();
+        var page = $('#createPageName').val();
+        window.location.href = "/page/" + module + "/" + page;
+    })
+    ;
+
 });
