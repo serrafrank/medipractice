@@ -24,26 +24,63 @@ public class DataFileServiceImplTest {
     @Autowired
     private DataFileService dataFileService;
 
-    private UUID datafileId = UUID.randomUUID();
+    private UUID datafileId ;
 
     @Before
     public void setUp() throws Exception {
-
+        this.datafileId = UUID.randomUUID();
         List<DataFile> dataFileList = Arrays.asList(
-                new DataFile(datafileId, "prenom", "Martin", LocalDateTime.now() ),
-                new DataFile(datafileId, "nom_de_famille", "DUPONT", LocalDateTime.now() ),
-                new DataFile(datafileId, "prenom", "Jean", LocalDateTime.now() )
+                new DataFile(datafileId, "test_prenom", "Martin", LocalDateTime.now() ),
+                new DataFile(datafileId, "test_nom_de_famille", "DUPONT", LocalDateTime.now() ),
+                new DataFile(datafileId, "test_prenom", "Jean", LocalDateTime.now() )
         );
 
         dataFileService.save(dataFileList);
+    }
+
+    @Test
+    public void save(){
+        List<DataFile> dataFileList = Arrays.asList(
+                new DataFile(datafileId, "test_prenom", "Martin", LocalDateTime.now() ),
+                new DataFile(datafileId, "test_nom_de_famille", "DUPONT", LocalDateTime.now() ),
+                new DataFile(datafileId, "test_prenom", "Jean", LocalDateTime.now() )
+        );
+
+        Assert.assertNotNull( dataFileService.save(dataFileList) );
+    }
+
+    @Test
+    public void findByDatafileId() {
+        List<DataFile> df = dataFileService.findByDatafileId(datafileId);
+        Assert.assertNotNull(df);
 
     }
 
     @Test
-    public void findById() {
-        List<DataFile> df = dataFileService.findByDatafileId(datafileId);
+    public void findByDatafileIdAndFields() {
+        String[] fields = {"test_prenom",  "test_nom_de_famille"};
+        List<DataFile> df = dataFileService.findByDatafileIdAndFields(datafileId, fields);
         Assert.assertNotNull(df);
     }
 
+    @Test
+    public void findAllByDataTypesAndValue() {
+        String[] fields = {"test_prenom",  "test_nom_de_famille"};
+        String value = "DUPONT";
+        List<DataFile> df = dataFileService.findAllByDataTypesAndValue(fields, value);
+        Assert.assertNotNull(df);
+    }
 
+    @Test
+    public void findAllByDataTypes() {
+        String[] fields = {"test_prenom",  "test_nom_de_famille"};
+        List<DataFile> df = dataFileService.findAllByDataTypes(fields);
+        Assert.assertNotNull(df);
+    }
+
+    @Test
+    public void newPatient() {
+        UUID id = dataFileService.newPatient();
+        Assert.assertNotNull(id);
+    }
 }
