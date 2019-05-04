@@ -1,7 +1,6 @@
 package org.medipractice.clientui.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
 import org.medipractice.clientui.beans.UserAccountBean;
 import org.medipractice.clientui.beans.data.DataFileBean;
 import org.medipractice.clientui.beans.page.ModuleBean;
@@ -11,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Slf4j
@@ -34,24 +35,37 @@ public abstract class AbstractController {
         return this.serviceManager.getUserService().getCurrentUser();
     }
 
-    @ModelAttribute("datafile")
-    private JSONObject getDatafile(HttpSession httpSession) {
+    @ModelAttribute("patient_name")
+    private String getDatafile(HttpSession httpSession) {
+
+        String[] fields = {"textfield_nom_de_naissance", "textfield_prenom", "datetime_date_de_naissance"};
         Map<String, String> datas = new HashMap<>();
+        String val = "";
 
         if (httpSession.getAttribute(HTTPSESSION_DATAFILE) != null) {
             String datafile_id = (String) httpSession.getAttribute(HTTPSESSION_DATAFILE);
             UUID datafileId = UUID.fromString(datafile_id);
             List<DataFileBean> dataFile = this.serviceManager.getDataService().getDatas(datafileId);
-
             dataFile.forEach(d -> datas.put(d.getType(), d.getValue()));
-
+            if (datas.containsKey("textfield_prenom"))
+                val += datas.get("textfield_prenom") + " ";
+            if (datas.containsKey("textfield_nom_de_naissance"))
+                val += datas.get("textfield_nom_de_naissance").toUpperCase();
+            if (datas.containsKey("datetime_date_de_naissance")) {
+                try {
+                    Date ddn =  new SimpleDateFormat("yyyy-MM-dd").parse(datas.get("datetime_date_de_naissance").split("T")[0]);
+                    val += " - né(e) le " + new SimpleDateFormat("dd/MM/yyyy").format(ddn);
+                } catch (ParseException ignore) {}
+            }
+        }else{
+            val = "Aucun dossier patient sélectionné";
         }
-        return new JSONObject(datas);
+        return val;
 
     }
 
     @ModelAttribute("readOnly")
-    private Boolean readOnly(HttpSession httpSession){
+    private Boolean readOnly(HttpSession httpSession) {
         return (httpSession.getAttribute(HTTPSESSION_DATAFILE) == null);
     }
 

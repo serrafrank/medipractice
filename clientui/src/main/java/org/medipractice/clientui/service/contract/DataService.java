@@ -5,10 +5,11 @@ import org.medipractice.clientui.beans.data.DataFileDto;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public interface DataService {
-    List<DataFileBean> getDatas(UUID datafile, List<String> datas);
+    List<DataFileBean> getDatas(UUID datafile, Set<String> datas);
 
     List<DataFileBean> getDatas(UUID datafile);
 

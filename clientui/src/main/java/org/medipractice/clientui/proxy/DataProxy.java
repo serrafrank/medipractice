@@ -19,6 +19,9 @@ public interface DataProxy {
     @GetMapping(value = "get/{id}")
     List<DataFileBean> getDataFile(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable(name = "id") UUID id);
 
+    @GetMapping(value = "get/{id}/{fields}")
+    List<DataFileBean> getDataFile(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable(name = "id") UUID id, @PathVariable(name = "fields") String[] fields );
+
     @PostMapping
     List<DataFileBean> postDataFile(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody List<DataFileBean> dataFile);
 

@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.text.Normalizer;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Service de gestion des pages
@@ -24,6 +22,8 @@ public class PageService {
 
     //Couche DAO
     private final DaoManager daoManager;
+
+    private Set<String> fields = new HashSet<>();
 
 
     //list des components supportés
@@ -57,6 +57,7 @@ public class PageService {
      */
     @Transactional
     public Page save(Page page) {
+        fields = new HashSet<>();
         UUID id = (page.getId() != null) ? page.getId() : UUID.randomUUID();
         Page pageToSave = daoManager.getPageRepository().findById(id).orElse(new Page());
 
@@ -69,7 +70,7 @@ public class PageService {
             pageToSave.getSchema().setComponents(extractFields(page.getSchema().getComponents()));
         }
         if (page.getModule() != null) pageToSave.setModule(page.getModule());
-
+        pageToSave.setFields(fields);
         //enregistrement en base de donnée
         return daoManager.getPageRepository().save(pageToSave);
     }
@@ -148,9 +149,10 @@ public class PageService {
                     .replaceAll(" ", "_")
                     .toLowerCase();
 
-
+            fields.add(key);
             //recuperation du field en base de donnée s'il existe
             Field field = daoManager.getFieldRepository().findByKey(key).orElse(new Field());
+            if(field.getId() == null) component.setKey(key);
             field.setKey(key);
             //mise a jour des données en base
             field.setCategory(component.getType());

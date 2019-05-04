@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Slf4j
@@ -27,8 +28,9 @@ public class DataServiceImpl extends AbstractService implements DataService {
     }
 
     @Override
-    public List<DataFileBean> getDatas(UUID datafile, List<String> datas) {
-        return this.proxyManager.getData().getDataFile(this.serviceManager.getTokenService().getToken(), datafile);
+    public List<DataFileBean> getDatas(UUID datafile, Set<String> fieldList) {
+        String[] fields = fieldList.toArray(new String[0]);
+        return this.proxyManager.getData().getDataFile(this.serviceManager.getTokenService().getToken(), datafile, fields);
     }
 
     @Override

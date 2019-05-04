@@ -76,6 +76,7 @@ public class Components implements Serializable {
     private Boolean requireDecimal;
     private Boolean isUploadEnabled;
     private String wysiwyg;
+    private String editor;
     private String uploadUrl;
     private String uploadOptions;
     private String uploadDir;
@@ -174,7 +175,7 @@ public class Components implements Serializable {
         private String maxDate;
     }
 
-    private Integer nbRows;
+    private Integer nbrRows;
 
     private Integer width;
     private Integer offset;

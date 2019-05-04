@@ -33,7 +33,7 @@ public class DataFile implements Serializable {
     @Column(nullable = false, updatable = false)
     private String type;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 8192)
     private String value;
 
     @Column(nullable = false)

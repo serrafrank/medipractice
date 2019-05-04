@@ -28,6 +28,12 @@ public class DataFileController  {
 
     }
 
+    @GetMapping(value = "get/{id}/{fields}")
+    public List<DataFile> getDataFile(@PathVariable UUID id, @PathVariable String[] fields) {
+        return  dataFileService.findByDatafileIdAndFields(id, fields);
+
+    }
+
     @GetMapping(value = "find/{types}/{value}")
     public List<DataFile> getDataFiles(@PathVariable String[] types, @PathVariable String value ) {
         return  dataFileService.findAllByDataTypesAndValue(types, value);

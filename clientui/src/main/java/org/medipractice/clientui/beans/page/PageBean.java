@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -19,6 +20,8 @@ public class PageBean implements Serializable {
     private String icon;
 
     private String subTitle;
+
+    private Set<String> fields;
 
     private JsonNode schema;
 

@@ -17,4 +17,6 @@ public interface DataFileService {
     List<DataFile> findAllByDataTypes(String[] types);
 
    UUID newPatient();
+
+    List<DataFile> findByDatafileIdAndFields(UUID id, String[] fields);
 }

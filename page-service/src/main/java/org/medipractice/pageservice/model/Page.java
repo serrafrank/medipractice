@@ -21,6 +21,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Slf4j
@@ -54,6 +55,9 @@ public class Page  implements Serializable {
     private String subTitle;
 
     private String display;
+
+    @ElementCollection
+    private Set<String> fields;
 
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb")

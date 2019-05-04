@@ -1,5 +1,6 @@
 package org.medipractice.datafileserver.service.impl;
 
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.medipractice.datafileserver.exception.BadRequestException;
 import org.medipractice.datafileserver.exception.ResourceNotFoundException;
@@ -27,6 +28,11 @@ public class DataFileServiceImpl implements DataFileService {
     @Override
     public List<DataFile> findByDatafileId(UUID id) {
         return this.dataFileRepository.findAllByDataFileAndArchivedAtIsNull(id);
+    }
+
+    @Override
+    public List<DataFile> findByDatafileIdAndFields(UUID id, String[] fields) {
+        return this.dataFileRepository.findAllByDataFileAndTypeInAndArchivedAtIsNull(id, fields);
     }
 
     @Override
