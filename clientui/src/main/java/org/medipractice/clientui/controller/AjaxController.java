@@ -36,7 +36,7 @@ public class AjaxController extends AbstractController {
     @GetMapping(value = "/getDatafiles", produces = "application/json")
     public List<Map<String, Object>> getDatafiles(@RequestParam(name = "value") String value) {
 
-        String[] fields = {"textfield_nom_de_naissance", "textfield_prenom", "datetime_date_de_naissance"};
+        String[] fields = {"textfield_nom_de_naissance_nomdenaissance", "textfield_prenom_prenom", "datetime_date_de_naissance_datedenaissance"};
         List<DataFileBean> dataFileBeanList = this.serviceManager.getDataService().getDatafiles(fields, value);
 
         Map<UUID, Map<String, String>> selected = new HashMap<>();
@@ -50,13 +50,11 @@ public class AjaxController extends AbstractController {
         List<Map<String, Object>> returnedList = new ArrayList<>();
         selected.forEach((k, v) -> {
                     String val = "";
-                    if (v.containsKey("textfield_prenom"))
-                        val += v.get("textfield_prenom") + " ";
-                    if (v.containsKey("textfield_nom_de_naissance"))
-                        val += v.get("textfield_nom_de_naissance").toUpperCase();
-                    if (v.containsKey("datetime_date_de_naissance")) {
+                        val += v.getOrDefault("textfield_prenom_prenom", "Prenom inconnu") + " ";
+                        val += v.getOrDefault("textfield_nom_de_naissance_nomdenaissance", "Nom inconnu").toUpperCase()  + " ";
+                    if (v.containsKey("datetime_date_de_naissance_datedenaissance")) {
                         try {
-                            Date ddn =  new SimpleDateFormat("yyyy-MM-dd").parse(v.get("datetime_date_de_naissance").split("T")[0]);
+                            Date ddn =  new SimpleDateFormat("yyyy-MM-dd").parse(v.get("datetime_date_de_naissance_datedenaissance").split("T")[0]);
                             val += " - né(e) le " + new SimpleDateFormat("dd/MM/yyyy").format(ddn);
                         } catch (ParseException e) {
                             log.error(e.toString());

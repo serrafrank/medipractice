@@ -32,8 +32,6 @@
         <module>auth-server</module>
         <module>datafile-service</module>
         <module>page-service</module>
-
-
         <module>clientui</module>
     </modules>
 

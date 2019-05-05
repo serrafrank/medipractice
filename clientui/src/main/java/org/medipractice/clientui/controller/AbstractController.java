@@ -29,7 +29,7 @@ public abstract class AbstractController {
 
     @ModelAttribute("menu")
     private List<ModuleBean> getMenu() {
-        return this.getMenuList();
+        return  this.serviceManager.getPageService().findMenu();
     }
 
     @ModelAttribute("user")
@@ -40,7 +40,7 @@ public abstract class AbstractController {
     @ModelAttribute("patient_name")
     private String getDatafile(HttpSession httpSession) {
 
-        String[] fields = {"textfield_nom_de_naissance", "textfield_prenom", "datetime_date_de_naissance"};
+        String[] fields = {"textfield_nom_de_naissance_nomdenaissance", "textfield_prenom_prenom", "datetime_date_de_naissance_datedenaissance"};
         Map<String, String> datas = new HashMap<>();
         String val = "";
 
@@ -49,13 +49,11 @@ public abstract class AbstractController {
             UUID datafileId = UUID.fromString(datafile_id);
             List<DataFileBean> dataFile = this.serviceManager.getDataService().getDatas(datafileId);
             dataFile.forEach(d -> datas.put(d.getType(), d.getValue()));
-            if (datas.containsKey("textfield_prenom"))
-                val += datas.get("textfield_prenom") + " ";
-            if (datas.containsKey("textfield_nom_de_naissance"))
-                val += datas.get("textfield_nom_de_naissance").toUpperCase();
-            if (datas.containsKey("datetime_date_de_naissance")) {
+            val += datas.getOrDefault("textfield_prenom_prenom", "Prenom inconnu") + " ";
+            val += datas.getOrDefault("textfield_nom_de_naissance_nomdenaissance", "Nom inconnu").toUpperCase()  + " ";
+            if (datas.containsKey("datetime_date_de_naissance_datedenaissance")) {
                 try {
-                    Date ddn =  new SimpleDateFormat("yyyy-MM-dd").parse(datas.get("datetime_date_de_naissance").split("T")[0]);
+                    Date ddn =  new SimpleDateFormat("yyyy-MM-dd").parse(datas.get("datetime_date_de_naissance_datedenaissance").split("T")[0]);
                     val += " - né(e) le " + new SimpleDateFormat("dd/MM/yyyy").format(ddn);
                 } catch (ParseException ignore) {}
             }
@@ -75,7 +73,8 @@ public abstract class AbstractController {
     @ModelAttribute("moduleList")
     private List getModuleList() {
         List<Map<String, String>> moduleList = new ArrayList<>();
-        this.getMenuList().forEach(m -> {
+        this.menu = this.serviceManager.getPageService().findMenu();
+        this.menu.forEach(m -> {
             Map<String, String> moduleMap = new HashMap<>();
             moduleMap.put("value", m.getName());
             moduleMap.put("text", m.getLabel());
@@ -84,13 +83,4 @@ public abstract class AbstractController {
         return moduleList;
     }
 
-
-    private List<ModuleBean> getMenuList(){
-        if(this.serviceManager.getTokenService().isConnected()) {
-            if (this.menu.size() == 0)
-                this.menu = this.serviceManager.getPageService().findMenu();
-        }
-        return this.menu;
-
-    }
 }

@@ -25,7 +25,7 @@ public class Field  implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id ;
 
-    @Column(unique = true)
+    @Column(unique = true, length = 1024)
     private String key;
 
 

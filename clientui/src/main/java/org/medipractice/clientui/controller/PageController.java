@@ -49,7 +49,7 @@ public class PageController extends AbstractController {
 
     private void getPage(String module, String name, String action, Model model, HttpSession httpSession) {
         PageBean pageBean = this.serviceManager.getPageService().getPageContent(module, name);
-
+        this.menu = this.serviceManager.getPageService().findMenu();
         model.addAttribute("module", this.menu.stream().filter(c -> c.getName().equals(module)).findFirst().get());
         model.addAttribute("page", pageBean);
         model.addAttribute("url", "/page/" + module + "/" + name);

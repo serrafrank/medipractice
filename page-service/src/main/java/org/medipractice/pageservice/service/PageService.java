@@ -140,20 +140,31 @@ public class PageService {
 
     private Components extractFields(Components component) {
 
+        Field field;
+        String key;
+
         if (supportedComponents.contains(component.getType())) {
-            String key;
+            Optional<Field> optionalField = daoManager.getFieldRepository().findByKey(component.getKey());
 
-            key = Normalizer
-                    .normalize((component.getType() + "_" + component.getLabel() + "_" + component.getKey()), Normalizer.Form.NFD)
-                    .replaceAll("[^\\p{ASCII}]", "")
-                    .replaceAll(" ", "_")
-                    .toLowerCase();
-
+            if(optionalField.isPresent()){
+                field = optionalField.get();
+                key = component.getKey();
+            }else {
+                key = Normalizer
+                        .normalize((component.getType() + "_" + component.getLabel()) + "_" + component.getKey(), Normalizer.Form.NFD)
+                        .replaceAll("[^\\p{ASCII}]", "")
+                        .replaceAll(" ", "_")
+                        .replaceAll("'", "_")
+                        .toLowerCase();
+                field = daoManager.getFieldRepository().findByKey(key).orElse(new Field());
+                if(field.getId() == null){
+                    component.setKey(key);
+                    field.setKey(key);
+                }
+            }
             fields.add(key);
-            //recuperation du field en base de donnée s'il existe
-            Field field = daoManager.getFieldRepository().findByKey(key).orElse(new Field());
-            if(field.getId() == null) component.setKey(key);
-            field.setKey(key);
+
+
             //mise a jour des données en base
             field.setCategory(component.getType());
             field.setParameters(component);
