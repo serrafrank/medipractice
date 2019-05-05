@@ -8,7 +8,7 @@ spring:
         username: postgres
         password: 123456
         driver-class-name: org.postgresql.Driver
-        url: jdbc:postgresql://localhost:5432/medipractice
+        url: jdbc:postgresql://localhost:5432/medipractice?useUnicode=yes&characterEncoding=UTF-8
     jpa:
         show-sql: true
         hibernate:

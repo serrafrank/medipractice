@@ -97,7 +97,7 @@ public class PageService {
         String key = component.getInternalKey();
 
         if (key != null) {
-            Field field = daoManager.getFieldRepository().findByKey(key).orElseThrow(() -> new ResourceNotFoundException("Field not found with internalKey = "));
+            Field field = daoManager.getFieldRepository().findByKey(key).orElse(new Field());
             component = field.getParameters();
         } else if (component.getComponents() != null && component.getComponents().size() > 0) {
             component.setComponents(buildForms(component.getComponents()));
