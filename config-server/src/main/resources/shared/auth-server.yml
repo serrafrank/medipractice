@@ -41,5 +41,6 @@ spring:
     profiles: docker
     datasource:
         url: jdbc:postgresql://postgresql:5432/medipractice?useUnicode=yes&characterEncoding=UTF-8
+        initialization-mode: never
     redis:
         host: redis
