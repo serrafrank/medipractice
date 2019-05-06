@@ -24,3 +24,16 @@ security:
             id: datafile-service
             user-info-uri: http://localhost:9090/auth/user
             prefer-token-info: false
+---
+spring:
+    profiles: docker
+    datasource:
+        url: jdbc:postgresql://postgresql:5432/medipractice?useUnicode=yes&characterEncoding=UTF-8
+---
+spring:
+    profiles: docker
+
+security:
+    oauth2:
+        resource:
+            user-info-uri: http://gateway-server:9090/auth/user

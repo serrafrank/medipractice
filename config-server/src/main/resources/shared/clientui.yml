@@ -11,3 +11,11 @@ security:
 spring:
     thymeleaf:
         cache: false
+
+---
+spring:
+    profiles: docker
+security:
+    oauth2:
+        resource:
+            user-info-uri: http://gateway-server:9090/auth/user

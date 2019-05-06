@@ -12,3 +12,10 @@ spring:
 pager:
     homepage:
         index: /page/admin/identity
+
+---
+spring:
+    profiles: docker
+    cloud:
+        config:
+            uri: http://config-server:19101

@@ -43,4 +43,15 @@ security:
             prefer-token-info: false
 
 
+---
+spring:
+    profiles: docker
+security:
+    oauth2:
+        client:
+            access-token-uri: http://gateway-server:9090/auth/oauth/token
+            user-authorization-uri: http://gateway-server:9090/auth/oauth/authorize
+        resource:
+            user-info-uri: http://gateway-server:9090/auth/user
+
 

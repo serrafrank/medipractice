@@ -11,7 +11,8 @@ Pour fonctionner, Medipractice demande au minimum l'environement suivant :
 - PostgreSQL 10 
 - Redis 4
 
-Le projet peut facielement être compilé via la commande `mvn package`.
+Le projet peut facielement être compilé en locale via la commande `mvn package`.
+
 
 ## Démarrer des services localement
 Chaque microservice est une application Spring Boot et peut être démarré localement à l'aide de l'IDE ou de la commande `mvn spring-boot:run`. 
@@ -25,6 +26,11 @@ Si tout se passe bien, vous pouvez accéder aux services suivants:
 * page-service      - http://localhost:19113 - Gestion des pages et formulaires
 * gateway-server    - http://localhost:9090 - Service ZUUL
 * clientui          - http://localhost:8080 - Interface client
+
+## Démarrer les services via Docker
+Il est possible de lancer les services dans Docker
+Pour cela, il faut d'abord creer les images par la commande `mvn clean package spring-boot:repackage install -DskipTests`
+Un fois la compilation et la création des images finie, lancer les services via `docker-compose up`
 
 
 ## Comprendre l'application Spring Petclinic

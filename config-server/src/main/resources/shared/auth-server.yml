@@ -34,3 +34,12 @@ medipractice:
     client:
         id: 'medipractice'
         secret: '$2a$10$EKpd38dpn/Whtkf3FoK9/OXJU.EKkv5DiwKn5eIwuQ6aICniaPPde'
+
+
+---
+spring:
+    profiles: docker
+    datasource:
+        url: jdbc:postgresql://postgresql:5432/medipractice?useUnicode=yes&characterEncoding=UTF-8
+    redis:
+        host: redis

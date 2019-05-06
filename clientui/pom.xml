@@ -9,6 +9,11 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
+    <properties>
+        <docker.image.exposed.port>8080</docker.image.exposed.port>
+        <docker.image.dockerfile.dir>${basedir}/../docker</docker.image.dockerfile.dir>
+    </properties>
+
     <artifactId>clientui</artifactId>
     <name>clientui</name>
     <description>Cient</description>
@@ -110,8 +115,12 @@
                     </nonFilteredFileExtensions>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>${docker.plugin.version}</version>
+            </plugin>
         </plugins>
     </build>
-
 
 </project>

@@ -12,6 +12,11 @@
     <artifactId>gateway-server</artifactId>
     <name>gateway-server</name>
 
+    <properties>
+        <docker.image.exposed.port>9090</docker.image.exposed.port>
+        <docker.image.dockerfile.dir>${basedir}/../docker</docker.image.dockerfile.dir>
+    </properties>
+
     <dependencies>
 
         <dependency>
@@ -64,6 +69,8 @@
 
     </dependencies>
 
+
+
     <build>
         <plugins>
             <plugin>
@@ -74,8 +81,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>${docker.plugin.version}</version>
+            </plugin>
         </plugins>
     </build>
-
-
 </project>
