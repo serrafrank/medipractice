@@ -3,6 +3,8 @@
 Medipractice est une application de géstion de données patient.
 Sa grande force est la possibilité de modifier dynamiquement toutes les pages et de créer des formulaires, en fonction des besoins des praticiens.
 
+
+
 ## Prérequis
 Pour fonctionner, Medipractice demande au minimum l'environement suivant :
 
@@ -27,6 +29,7 @@ Si tout se passe bien, vous pouvez accéder aux services suivants:
 * gateway-server    - http://localhost:9090 - Service ZUUL
 * clientui          - http://localhost:8080 - Interface client
 
+
 ## Démarrer les services via Docker
 Il est possible de lancer les services dans Docker
 Pour cela, il faut d'abord creer les images par la commande `mvn clean package spring-boot:repackage install -DskipTests`
@@ -40,6 +43,10 @@ Une fois démarré, vous pouvez accéder à Medipractice ici: http://localhost:8
 Le login et le mot de passe par default est : admin / admin
 
 
+![Exemple de formulaire](docs/pic1.png)
+
 ## Configuration de la base de données
 
 Par défaut, les tables de la base de donnée sont générées au demarrage de l'application, et un jeu de donénes de démo est utilisé
+
+![Base de donnée](docs/bdd.png)

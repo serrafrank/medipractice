@@ -1,2 +1,0 @@
-INSERT INTO public.data_object (id, type) VALUES ('77d2f026-0e20-4cc6-9ac4-66c4aa1f214b', 'lastname');
-INSERT INTO public.data_object (id, type) VALUES ('76e80974-74a3-4aaf-b4b4-3479ac203172', 'firstname');

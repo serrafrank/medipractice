@@ -1,2 +1,0 @@
-INSERT INTO public.data_file_datas (data_file_id, datas_id) VALUES ('15b37039-47f4-4a43-bd48-a88acd793db2', '77d2f026-0e20-4cc6-9ac4-66c4aa1f214b');
-INSERT INTO public.data_file_datas (data_file_id, datas_id) VALUES ('15b37039-47f4-4a43-bd48-a88acd793db2', '76e80974-74a3-4aaf-b4b4-3479ac203172');

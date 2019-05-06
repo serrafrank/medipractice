@@ -9,6 +9,8 @@ services:
             - POSTGRES_DB=medipractice
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=123456
+        volumes:
+            - ./sql/medipractice.sql:/docker-entrypoint-initdb.d/01.sql
         ports:
             - 5555:5432
         expose:
@@ -24,6 +26,8 @@ services:
         hostname: redis
         expose:
             - 6379
+        ports:
+            - 6379:6379
         networks:
             - medipracticenetwork
 

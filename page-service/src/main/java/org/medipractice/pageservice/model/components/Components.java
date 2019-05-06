@@ -31,6 +31,7 @@ public class Components implements Serializable {
     static class Validate implements Serializable {
         private String customMessage;
         private String json;
+        private Boolean required;
     }
 
     private Conditional conditional;
