@@ -42,5 +42,8 @@ spring:
     datasource:
         url: jdbc:postgresql://postgresql:5432/medipractice?useUnicode=yes&characterEncoding=UTF-8
         initialization-mode: never
+    jpa:
+        hibernate:
+            ddl-auto: none
     redis:
         host: redis
