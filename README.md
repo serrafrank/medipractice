@@ -32,7 +32,7 @@ Si tout se passe bien, vous pouvez accéder aux services suivants:
 
 ## Démarrer les services via Docker
 Il est possible de lancer les services dans Docker
-Pour cela, il faut d'abord creer les images par la commande `mvn clean package spring-boot:repackage install -DskipTests`
+Pour cela, il faut d'abord creer les images par la commande `mvn clean install -DskipTests`
 Un fois la compilation et la création des images finie, lancer les services via `docker-compose up`
 
 
