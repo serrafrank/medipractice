@@ -1,0 +1,49 @@
+server:
+    port: 19111
+
+
+spring:
+    datasource:
+        initialization-mode: always
+        username: postgres
+        password: 123456
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:5432/medipractice?useUnicode=yes&characterEncoding=UTF-8
+    jpa:
+        show-sql: true
+        hibernate:
+            ddl-auto: create
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+                jdbc:
+                    lob:
+                        non_contextual_creation: true
+
+    redis:
+        host: localhost
+        port: 6379
+
+
+security:
+    oauth2:
+        resource:
+            filter-order: 3
+
+medipractice:
+    client:
+        id: 'medipractice'
+        secret: '$2a$10$EKpd38dpn/Whtkf3FoK9/OXJU.EKkv5DiwKn5eIwuQ6aICniaPPde'
+
+
+---
+spring:
+    profiles: docker
+    datasource:
+        url: jdbc:postgresql://postgresql:5432/medipractice?useUnicode=yes&characterEncoding=UTF-8
+        initialization-mode: never
+    jpa:
+        hibernate:
+            ddl-auto: none
+    redis:
+        host: redis

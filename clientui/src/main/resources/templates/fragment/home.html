@@ -1,0 +1,20 @@
+<html lang="en">
+
+<form method="post" action="/setDatafile">
+
+    <input type="hidden" id="datafileId" name="datafileId"/>
+    <div class="input-group input-group-button ui-widget">
+    <span class="input-group-prepend">
+      <label class="input-group-text"><i
+              class="fa fa-search"></i></label>
+    </span>
+        <input id="findFile" name="findFile" type="text" class="form-control" placeholder="Rechercher un patient"/>
+        <div class="input-group-append">
+            <button id="submit" name="submit" class="btn btn-primary" type="submit" disabled>Selectionner</button>
+        </div>
+    </div>
+
+    <a th:href="@{/newPatient}" id="new" name="new" class="btn btn-primary" >Créer un nouveau patient</a>
+</form>
+
+</html>

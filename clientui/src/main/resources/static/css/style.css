@@ -143,7 +143,7 @@ code {
 .card .card-header {
     background-color: transparent;
     border-bottom: none;
-    padding: 20px;
+    /*padding: 20px;*/
     position: relative
 }
 
@@ -2995,7 +2995,6 @@ table tbody .border-bottom-info td, table tbody .border-bottom-info th, table th
     text-align: center;
     text-transform: uppercase;
     width: 250px;
-    padding: 20px 10px;
     -webkit-box-shadow: 0 4px 4px -4px rgba(0, 0, 0, .1);
     box-shadow: 0 4px 4px -4px rgba(0, 0, 0, .1)
 }
@@ -11686,4 +11685,14 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > td:first-child:before, table
 
 .pcoded[layout-type=dark] .bg-c-purple {
     background: #536dfe
+}
+
+.form-control-borderless {
+    border: none;
+}
+
+.form-control-borderless:hover, .form-control-borderless:active, .form-control-borderless:focus {
+    border: none;
+    outline: none;
+    box-shadow: none;
 }

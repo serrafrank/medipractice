@@ -1,0 +1,12 @@
+spring:
+    application:
+        name: auth-server
+    cloud:
+        config:
+            uri: http://localhost:19101
+---
+spring:
+    profiles: docker
+    cloud:
+        config:
+            uri: http://config-server:19101

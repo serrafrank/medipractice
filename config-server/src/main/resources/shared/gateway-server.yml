@@ -1,0 +1,57 @@
+server:
+    port: 9090
+
+
+zuul:
+    ignoredServices: "*"
+    routes:
+        auth-server:
+            path: /auth/**
+            service-id: auth-server
+            sensitiveHeaders: "*"
+
+        page-service:
+            path: /api/page/**
+            service-id: page-service
+            sensitiveHeaders: "*"
+
+        datafile-service:
+            path: /api/datafile/**
+            service-id: datafile-service
+            sensitiveHeaders: "*"
+    add-proxy-headers: true
+
+hystrix:
+    command:
+        default:
+            execution:
+                isolation:
+                    thread:
+                        timeoutInMilliseconds: 60000
+
+ribbon:
+    ReadTimeout: 60000
+
+security:
+    oauth2:
+        client:
+            access-token-uri: http://localhost:9090/auth/oauth/token
+            user-authorization-uri: http://localhost:9090/auth/oauth/authorize
+            client-id: webapp
+        resource:
+            user-info-uri: http://localhost:9090/auth/user
+            prefer-token-info: false
+
+
+---
+spring:
+    profiles: docker
+security:
+    oauth2:
+        client:
+            access-token-uri: http://gateway-server:9090/auth/oauth/token
+            user-authorization-uri: http://gateway-server:9090/auth/oauth/authorize
+        resource:
+            user-info-uri: http://gateway-server:9090/auth/user
+
+

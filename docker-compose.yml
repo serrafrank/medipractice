@@ -1,0 +1,127 @@
+version: '2'
+
+services:
+
+    postgresql:
+        image: postgres:10.1-alpine
+        container_name: postgresql
+        environment:
+            - POSTGRES_DB=medipractice
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=123456
+        volumes:
+            - ./sql/medipractice.sql:/docker-entrypoint-initdb.d/01.sql
+        ports:
+            - 5555:5432
+        expose:
+            - 5432
+        networks:
+            - medipracticenetwork
+
+    redis:
+        image: 'bitnami/redis:latest'
+        environment:
+            - ALLOW_EMPTY_PASSWORD=yes
+        container_name: redis
+        hostname: redis
+        expose:
+            - 6379
+        ports:
+            - 6379:6379
+        networks:
+            - medipracticenetwork
+
+    config-server:
+        image: medipractice/config-server
+        container_name: config-server
+        mem_limit: 512M
+        ports:
+            - 19101:19101
+        networks:
+            - medipracticenetwork
+
+    discovery-server:
+        image: medipractice/discovery-server
+        container_name: discovery-server
+        mem_limit: 512M
+        depends_on:
+            - config-server
+        entrypoint: ["./dockerize","-wait=tcp://config-server:19101","-timeout=60s","--","java", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+        ports:
+            - 19102:19102
+        networks:
+            - medipracticenetwork
+
+    auth-server:
+        image: medipractice/auth-server
+        container_name: auth-server
+        mem_limit: 512M
+        depends_on:
+            - config-server
+            - discovery-server
+        entrypoint: ["./dockerize","-wait=tcp://discovery-server:19102","-timeout=60s","--","java", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+        ports:
+            - 19111:19111
+        networks:
+            - medipracticenetwork
+
+
+    datafile-service:
+        image: medipractice/datafile-service
+        container_name: datafile-service
+        mem_limit: 512M
+        depends_on:
+            - config-server
+            - discovery-server
+        entrypoint: ["./dockerize","-wait=tcp://discovery-server:19102","-timeout=60s","--","java", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+        ports:
+            - 19112:19112
+        networks:
+            - medipracticenetwork
+
+
+    page-service:
+        image: medipractice/page-service
+        container_name: page-service
+        mem_limit: 512M
+        depends_on:
+            - config-server
+            - discovery-server
+        entrypoint: ["./dockerize","-wait=tcp://discovery-server:19102","-timeout=60s","--","java", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+        ports:
+            - 19113:19113
+        networks:
+            - medipracticenetwork
+
+
+    gateway-server:
+        image: medipractice/gateway-server
+        container_name: gateway-server
+        mem_limit: 512M
+        depends_on:
+            - config-server
+            - discovery-server
+        entrypoint: ["./dockerize","-wait=tcp://discovery-server:19102","-timeout=60s","--","java", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+        ports:
+            - 9090:9090
+        networks:
+            - medipracticenetwork
+
+
+
+    clientui:
+        image: medipractice/clientui
+        container_name: clientui
+        mem_limit: 512M
+        depends_on:
+            - config-server
+            - discovery-server
+        entrypoint: ["./dockerize","-wait=tcp://discovery-server:19102","-timeout=60s","--","java", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+        ports:
+            - 8080:8080
+        networks:
+            - medipracticenetwork
+
+networks:
+    medipracticenetwork:
+        driver: bridge

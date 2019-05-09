@@ -1,0 +1,21 @@
+server:
+    port: 8080
+
+security:
+    oauth2:
+        resource:
+            id: clientui
+            user-info-uri: http://localhost:9090/auth/user
+            prefer-token-info: false
+
+spring:
+    thymeleaf:
+        cache: false
+
+---
+spring:
+    profiles: docker
+security:
+    oauth2:
+        resource:
+            user-info-uri: http://gateway-server:9090/auth/user

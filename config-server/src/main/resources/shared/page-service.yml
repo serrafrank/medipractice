@@ -1,0 +1,39 @@
+server:
+    port: 19113
+
+spring:
+    datasource:
+        url: jdbc:postgresql://localhost:5432/medipractice?useUnicode=yes&characterEncoding=UTF-8
+        username: postgres
+        password: 123456
+        initialization-mode: always
+    jpa:
+        show-sql: true
+        hibernate:
+            ddl-auto: create
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+                jdbc:
+                    lob:
+                        non_contextual_creation: true
+
+security:
+    oauth2:
+        resource:
+            id: page-service
+            user-info-uri: http://localhost:9090/auth/user
+            prefer-token-info: false
+---
+spring:
+    profiles: docker
+    datasource:
+        url: jdbc:postgresql://postgresql:5432/medipractice?useUnicode=yes&characterEncoding=UTF-8
+        initialization-mode: never
+    jpa:
+        hibernate:
+            ddl-auto: none
+security:
+    oauth2:
+        resource:
+            user-info-uri: http://gateway-server:9090/auth/user

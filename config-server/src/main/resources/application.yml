@@ -1,0 +1,18 @@
+server:
+    port: 19101
+spring:
+    application:
+        name: config-server
+    profiles:
+        active: native
+    cloud:
+        config:
+            server:
+                native:
+                    searchLocations: classpath:shared/
+#                git:
+#                    uri: https://github.com/SERRAFrank/medipractice-repo.git
+endpoints:
+    restart:
+        enabled: true
+

@@ -1,42 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-
-<head>
-    <title>Admindek | Admin Template</title>
-    <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 10]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.3/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <!-- Meta -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/formiojs@latest/dist/formio.full.min.css">
-
-    <!-- Favicon icon -->
-    <link rel="icon" th:src="@{img/favicon.ico}" type="image/x-icon">
-    <!-- Google font-->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Quicksand:500,700" rel="stylesheet">
-
-    <!-- Required Fremwork -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" >
-
-    <!-- waves.css -->
-    <link rel="stylesheet" href="http://fian.my.id/Waves/static/waves.min.css" type="text/css" media="all">
-    <!-- icon icon -->
-    <link rel="stylesheet" type="text/css" th:href="@{icon/feather.css}">
-    <!-- Style.css -->
-    <link rel="stylesheet" type="text/css" th:href="@{css/style.css}">
-
-    <script src="https://unpkg.com/formiojs@latest/dist/formio.full.min.js"></script>
-</head>
-
-<body>
+<head th:include="fragment/head"></head>
+<body themebg-pattern="theme6">
 <!-- [ Pre-loader ] start -->
 <div class="loader-bg">
     <div class="loader-bar"></div>
@@ -46,18 +11,15 @@
     <div class="pcoded-overlay-box"></div>
     <div class="pcoded-container navbar-wrapper">
         <!-- [ Header ] start -->
-        <nav th:include="fragment/header" class="navbar header-navbar pcoded-header[header-theme="theme6"]>
+        <nav th:include="fragment/header" class="navbar header-navbar pcoded-header">
         </nav>
         <!-- [ Header ] end -->
 
-        <div  class="pcoded-main-container">
+        <div class="pcoded-main-container">
             <div class="pcoded-wrapper">
                 <!-- [ navigation menu ] start -->
 
-                <nav class="pcoded-navbar">
-                    <div class="nav-list" th:include="fragment/menu"  th:with="menu_list=${menu_list}"  >
-                    </div>
-                </nav>
+                <div th:if="${menu}" th:include="fragment/menu" th:with="menu_list=${menu}" th:remove="tag"/>
                 <!-- [ navigation menu ] end -->
                 <div class="pcoded-content">
                     <!-- [ breadcrumb ] start -->
@@ -65,9 +27,10 @@
                         <div class="row align-items-end">
                             <div class="col-lg-8">
                                 <div class="page-header-title">
-                                    <i class="feather bg-c-blue" th:classappend="${page.icon}"></i>
-                                    <div class="d-inline">
-                                        <h3 th:text="${page.title}"></h3>
+                                    <h1 th:text="${patient_name}"></h1>
+                                    <i th:if="${page != null && page.icon != null}" class="feather bg-c-blue" th:classappend="${page.icon}"></i>
+                                    <div class="d-inline" th:if="${page}">
+                                        <h2 th:text="${page.title}"></h2>
                                         <span th:text="${page.subTitle}"></span>
                                     </div>
                                 </div>
@@ -87,19 +50,45 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="card">
-                                                <div class="card-header">
+                                                <div th:if="${page}" class="card-header">
                                                     <div class="card-header-right">
                                                         <ul class="list-unstyled card-option">
-                                                            <li class="first-opt"><i class="feather icon-chevron-left open-card-option"></i></li>
+                                                            <li class="first-opt"><i
+                                                                    class="feather icon-chevron-left open-card-option"></i>
+                                                            </li>
                                                             <li><i class="feather icon-maximize full-card"></i></li>
                                                             <li><i class="feather icon-minus minimize-card"></i></li>
                                                             <li><i class="feather icon-refresh-cw reload-card"></i></li>
-                                                            <li><i class="feather icon-trash close-card"></i></li>                                                                 <li><i class="feather icon-chevron-left open-card-option"></i></li>
+                                                            <li><a th:href="${url} + '/edit'"><i
+                                                                    class="feather icon-edit edit-card"></i></a></li>
+                                                            <li>
+                                                                <i class="feather icon-chevron-left open-card-option"></i>
+                                                            </li>
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="card-block">
+                                                <div th:if="${action == 'index'}" class="card-block" th:include="fragment/home"></div>
+                                                <div th:if="${action!= 'index'}" class="card-block">
+                                                    <div th:if="${action} == edit" class="row">
+                                                        <div class="col-md-6 mb-3">
+                                                            <label for="title">Titre</label>
+                                                            <input class="form-control"
+                                                                   type="text"
+                                                                   th:value="${page.title}" id="title" name="title" required />
+                                                            <div class="invalid-feedback">
+                                                                Le titre est requis
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div id="formio" class="card-block"></div>
+
+                                                    <button th:if="${action} != read" id="submit"
+                                                            class="btn btn-primary">Enregistrer
+                                                    </button>
+                                                    <a th:if="${action} != read" id="cancel"
+                                                            class="btn btn-warning"
+                                                       th:href="${url}" >Annuler
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -111,8 +100,7 @@
                     </div>
                 </div>
                 <!-- [ style Customizer ] start -->
-                <div id="styleSelector">
-                </div>
+                <div id="styleSelector"></div>
                 <!-- [ style Customizer ] end -->
             </div>
         </div>
@@ -123,33 +111,54 @@
 <!--[if lt IE 10]>
 <div th:include="fragment/ie-warning" class="ie-warning"></div>
 <![endif]-->
-<!-- Warning Section Ends -->
-<!-- Required Jquery -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" ></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 
+<div th:include="fragment/footer" th:remove="tag"/>
 
-<!-- waves js -->
-<script src="http://fian.my.id/Waves/static/waves.min.js"></script>
-<!-- jquery slimscroll js -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.js"></script>
-
-<script src="https://colorlib.com/polygon/admindek/files/assets/js/pcoded.min.js"></script>
-<script src="https://colorlib.com/polygon/admindek/files/assets/js/vertical/vertical-layout.min.js"></script>
-<!-- Custom js -->
-<script type="text/javascript" src="https://colorlib.com/polygon/admindek/files/assets/js/script.min.js"></script>
-
-<script>
+<script th:if="${action} == read" type="text/javascript">
     Formio.icons = 'fontawesome';
-    Formio.createForm(document.getElementById('formio'), [(${page.schema})], {
-        readOnly: true,
-        //    viewAsHtml: true
+    Formio.createForm(document.getElementById('formio'), [(${page.schema})], {readOnly: [(${readOnly})]}).then(function (builder) {
+        builder.url = '[(${#httpServletRequest.requestURL})]';
+        builder.nosubmit = false;
+        builder.submission = {
+            data: [(${formDatas})]
+        };
     });
 
 </script>
+<script th:if="${action} == edit" type="text/javascript">
+    $(document).ready(function () {
+        const schema = [(${page.schema})];
+        let formio = schema;
 
+        Formio.builder(document.getElementById("formio"), schema, {}).then(function (builder) {
+            builder.on('saveComponent', function () {
+                formio = builder.schema;
+            });
+        });
+
+        $("#submit").click(function () {
+            $.ajax
+            ({
+                    type: 'POST',
+                    url: '/page',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    timeout: 1000,
+                    data: JSON.stringify({
+                        'id': '[[${page.id}]]',
+                        'name': '[[${page.name}]]',
+                        'title':  $("#title").val(),
+                        'schema': formio != null ? formio : schema,
+                        'module': '[[${module.id}]]'
+                    }),
+                    complete: function () {
+                        window.location.href = '[(${url})]';
+                    }
+                }
+            );
+        });
+    });
+</script>
 
 </body>
 </html>
